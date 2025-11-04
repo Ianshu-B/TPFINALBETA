@@ -1,0 +1,5 @@
+package ENUMS;
+
+public enum ROL {
+    ADMINISTRADOR, RECEPCIONISTA, PASAJERO;
+}
