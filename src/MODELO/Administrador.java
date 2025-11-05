@@ -20,7 +20,7 @@ public class Administrador extends Usuario{
                 '}';
     }
 
-    //FALTAN METODOS
+    //METODOS CREARUSUARIO
     public Pasajero crearPasajero(String nombre, String documento, ROL rol, String username, String password, String origen,String domicilio) throws elementoNuloException
     {
         if(nombre == null || documento == null | username == null | password == null | origen == null | documento == null)
@@ -37,6 +37,7 @@ public class Administrador extends Usuario{
         }
         return new Recepcionista(nombre, documento, rol, username, password, ID);
     }
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
