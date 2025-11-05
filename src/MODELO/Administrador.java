@@ -24,7 +24,7 @@ public class Administrador extends Usuario{
     {
         return new Pasajero(nombre,documento,rol,username,password,origen,domicilio);
     }
-    
+
 
 
 }
