@@ -1,6 +1,8 @@
 package MODELO;
 
 import ENUMS.ROL;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Pasajero extends Usuario{
     private String origen; //PAIS DE LA PERSONA
@@ -40,6 +42,21 @@ public class Pasajero extends Usuario{
                 "origen='" + origen + "\n" +
                 ", domicilio='" + domicilio + "\n" +
                 '}';
+    }
+    public JSONObject toJson() throws JSONException
+    {
+        JSONObject jsonObject = super.toJson(); //Paso todo lo de su clase Padre que es Persona y sigo completando con los atributos especificos
+        try {
+            jsonObject.put("origen",this.origen);
+            jsonObject.put("domicilio",this.domicilio);
+
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+
     }
     //FALTAN METODOS
 }
