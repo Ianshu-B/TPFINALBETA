@@ -1,6 +1,8 @@
 package MODELO;
 
 import ENUMS.ROL;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public abstract class Usuario extends Persona {
     protected ROL rol;
@@ -62,7 +64,20 @@ public abstract class Usuario extends Persona {
                 '}';
     }
 
-    //FALTA EL TOJSON
+    public JSONObject toJson() throws JSONException
+    {
+        JSONObject jsonObject = super.toJson(); //Paso todo lo de su clase Padre que es Persona y sigo completando con los atributos especificos
+        try {
+            jsonObject.put("rol",this.rol);
+            jsonObject.put("username",this.username);
+            jsonObject.put("password",this.password);
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return jsonObject;
+
+    }
     //FALTA METODOS
 
 }

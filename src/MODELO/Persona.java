@@ -1,5 +1,8 @@
 package MODELO;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 public abstract class Persona {
@@ -47,5 +50,19 @@ public abstract class Persona {
                 "nombre='" + nombre + "\n" +
                 ", documento='" + documento + "\n" +
                 '}';
+    }
+    public JSONObject toJson() throws JSONException
+    {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("nombre",this.nombre);
+            jsonObject.put("documento",this.documento);
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+
     }
 }
