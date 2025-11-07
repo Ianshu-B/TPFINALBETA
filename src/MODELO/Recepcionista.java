@@ -5,13 +5,15 @@ import EXCEPTIONS.FechaInvalidaExpection;
 import EXCEPTIONS.HabitacionYaRervadaExpection;
 import EXCEPTIONS.sinPermisoParaCheckInExpection;
 import EXCEPTIONS.sinPermisoParaReservaExpection;
+import INTERFACE.ItoJson;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.HashSet;
 
-public class Recepcionista extends Usuario {
+public class Recepcionista extends Usuario implements ItoJson {
     private String ID;
     private boolean puedeReservar;
     private boolean puedeCheckIN;
@@ -112,6 +114,21 @@ public class Recepcionista extends Usuario {
 
     private boolean fechasSeSuperponen(Date inicio1, Date fin1, Date inicio2, Date fin2) {
         return inicio1.before(fin2) && fin1.after(inicio2);
+    }
+    @Override
+    public JSONArray backup() throws JSONException // METODO ESPECIFICO PARA LA CLASE GENERICA
+    {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = super.backup();
+        try {
+            jsonObject.put("ID",this.ID);
+            jsonArray.put(jsonObject);
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return jsonArray;
+
     }
 
 
