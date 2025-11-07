@@ -3,12 +3,14 @@ package GESTORA;
 import EXCEPTIONS.elementoBorradoException;
 import EXCEPTIONS.elementoInsertadoException;
 import EXCEPTIONS.elementoNuloException;
+import EXCEPTIONS.elementoRepetidoException;
 import INTERFACE.ItoJson;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class gestoraHotel <T> {
+public class gestoraHotel <T extends ItoJson> implements ItoJson {
     private ArrayList<T> listaGeneral;
 
     public gestoraHotel() {
@@ -16,19 +18,23 @@ public class gestoraHotel <T> {
     }
 
     //AGREGAR
-    public String agregarElemento(T t) throws elementoNuloException, elementoInsertadoException
+    public String agregarElemento(T t) throws elementoNuloException, elementoInsertadoException, elementoRepetidoException
     {
         StringBuilder sb = new StringBuilder();
         if(t == null)
         {
             throw new elementoNuloException("No se permite agregar elementos nulos al Hotel!");
         }
+        if(listaGeneral.contains(t))
+        {
+            throw new elementoRepetidoException("El elemento ya se encuentra en la lista!");
+        }
         if(listaGeneral.add(t))
         {
-            sb.append("Elemento agregado correctamente!").append("\n");
+            sb.append("Elemento agregado correctamente a la lista del HOTEL!").append("\n");
         }else
         {
-            throw new elementoInsertadoException("No se pudo insertar el elemento!");
+            throw new elementoInsertadoException("No se pudo insertar el elemento a la lista del HOTEL!");
         }
         return sb.toString();
 
@@ -64,26 +70,34 @@ public class gestoraHotel <T> {
         T aux = buscarElemento(t);
         if(aux == null)
         {
-        throw new elementoNuloException("ERROR. ELEMENTO NULO!");
+        throw new elementoNuloException("El elemento a eliminar es nulo!!.!");
         }
         if(listaGeneral.remove(aux))
         {
-            sb.append("Elemento borrado correctamente!").append("\n");
+            sb.append("Elemento borrado correctamente de la lista del HOTEL!").append("\n");
         }else
         {
-            throw new elementoBorradoException("ERROR. no se pudo borrar el elemento!");
+            throw new elementoBorradoException("ERROR. no se pudo borrar el elemento de la lista del HOTEL!");
         }
         return sb.toString();
     }
 
-    /*
+
     @Override
-    public JSONArray backup()
+    public JSONArray backup() throws JSONException //TOJSON de la generica
     {
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for(T t : listaGeneral)
+            {
+                jsonArray.put(t.backup());
+            }
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return jsonArray;
 
     }
-
-     */
-
 
 }

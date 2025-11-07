@@ -1,5 +1,9 @@
 import ENUMS.ROL;
+import EXCEPTIONS.elementoInsertadoException;
 import EXCEPTIONS.elementoNuloException;
+import EXCEPTIONS.elementoRepetidoException;
+import GESTORA.gestoraHotel;
+import INTERFACE.ItoJson;
 import MODELO.Administrador;
 import MODELO.JsonUtiles;
 import MODELO.Pasajero;
@@ -14,6 +18,7 @@ public class Main {
     public static void main(String[] args) {
         String msj;
         Administrador administrador1 = new Administrador("Ian","4545A", ROL.ADMINISTRADOR,"adminIan","454545");
+        gestoraHotel<ItoJson> gestoraHotel  = new gestoraHotel<>();
     try {
         //TESTEANDO CREAR USUARIO
         boolean continuar = true;
@@ -51,6 +56,8 @@ public class Main {
                         System.out.println("Pasajero creado correctamente!");
                         msj = administrador1.agregarUsuarioLista(pasajero);
                         System.out.println(msj);
+                        msj = gestoraHotel.agregarElemento(pasajero);
+                        System.out.println(msj);
                         System.out.println("Listando la informacion del PASAJERO creado :");
                         System.out.println(pasajero.toString());
                         /*
@@ -82,6 +89,8 @@ public class Main {
                     if (recepcionista != null) {
                         System.out.println("Recepcionista creado correctamente!");
                         msj = administrador1.agregarUsuarioLista(recepcionista);
+                        System.out.println(msj);
+                        msj = gestoraHotel.agregarElemento(recepcionista);
                         System.out.println(msj);
                         System.out.println("Listando la informacion del RECEPCIONISTA creado :");
                         System.out.println(recepcionista.toString());
@@ -119,7 +128,7 @@ public class Main {
         jsonArrayTotalElementos = administrador1.backup(); //Guardo el total de elementos en un JSON. No se que tan necesario sea o si esta bien pero lo dejo por las dudas
         JsonUtiles.grabarUnJson(jsonArrayTotalElementos, "TotalElementos.json");
 
-    }catch (elementoNuloException e)
+    }catch (elementoNuloException | elementoRepetidoException | elementoInsertadoException e)
     {
         System.out.println(e.getMessage());
     }
