@@ -17,6 +17,7 @@ public class habitacionPremium extends Habitaciones implements ItoJson {
     public habitacionPremium() {
         super(0, ENUMS.estadoHabitacion.LIBRE, ENUMS.tamanioHabitacion.GRANDE); //Por defecto
         this.miniBar = false; //Por defecto
+        this.costoHabitacion=getCostoHabitacion() * 4;
     }
 
     public boolean isMiniBar() { //Supongo que el is es por el tipo de atributo

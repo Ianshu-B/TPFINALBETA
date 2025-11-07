@@ -1,17 +1,17 @@
 package MODELO;
 
 import ENUMS.ROL;
+import EXCEPTIONS.FechaInvalidaExpection;
+import EXCEPTIONS.HabitacionYaRervadaExpection;
 import EXCEPTIONS.sinPermisoParaCheckInExpection;
 import EXCEPTIONS.sinPermisoParaReservaExpection;
-import INTERFACE.ItoJson;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.HashSet;
 
-public class Recepcionista extends Usuario implements ItoJson {
+public class Recepcionista extends Usuario {
     private String ID;
     private boolean puedeReservar;
     private boolean puedeCheckIN;
@@ -76,20 +76,28 @@ public class Recepcionista extends Usuario implements ItoJson {
         this.puedeCheckIN=valor;
     }
 
-    public String realizarReserva(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin,Boolean estado, int cantidadPersonas) throws sinPermisoParaReservaExpection {
+    public boolean realizarReserva(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas) throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection {
         if (puedeReservar==false){
         throw new sinPermisoParaReservaExpection("No tienes permiso para realizar una reserva");
+        }
+
+        if(fechaFin.before(fechaInico)){
+            throw new FechaInvalidaExpection("La fecha del fin de la reserva no puede ser anterior a la feceha de inicio");
         }
 
         for(Reserva r:reservas){
 
             if(r.getHabitacion().equals(habitacion)){
 
+                if(r.isEstado() && fechasSeSuperponen(fechaInico,fechaFin,r.getFechaInicio(),r.getFechaFin())){
+                    throw new HabitacionYaRervadaExpection("La habitacion ya fue reservada");
+
+                }
             }
         }
 
-
-        return "";
+        Reserva reserva=new Reserva(estado,fechaFin,fechaInico,habitacion,pasajero,cantidadPersonas);
+        return reservas.add(reserva);
     }
     public String realizarCheckIn() throws sinPermisoParaCheckInExpection {
         if(puedeCheckIN==false){
@@ -98,27 +106,12 @@ public class Recepcionista extends Usuario implements ItoJson {
 
 
 
-        return "";
+
+     return "";
     }
 
     private boolean fechasSeSuperponen(Date inicio1, Date fin1, Date inicio2, Date fin2) {
         return inicio1.before(fin2) && fin1.after(inicio2);
-    }
-
-    @Override
-    public JSONArray backup() throws JSONException // METODO ESPECIFICO PARA LA CLASE GENERICA
-    {
-        JSONObject jsonObject = new JSONObject();
-        JSONArray jsonArray = super.backup();
-        try {
-            jsonObject.put("ID",this.ID);
-            jsonArray.put(jsonObject);
-        }catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-        return jsonArray;
-
     }
 
 

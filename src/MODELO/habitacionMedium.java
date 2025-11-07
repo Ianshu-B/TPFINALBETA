@@ -13,6 +13,7 @@ public class habitacionMedium extends Habitaciones implements ItoJson {
     public habitacionMedium(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion, boolean cajaSeguridad) {
         super(numeroHabitacion, estadoHabitacion, tamanioHabitacion);
         this.cajaSeguridad = cajaSeguridad;
+        this.costoHabitacion=getCostoHabitacion()*2;
     }
     public habitacionMedium() {
         super(0, ENUMS.estadoHabitacion.LIBRE, ENUMS.tamanioHabitacion.GRANDE); //Por defecto

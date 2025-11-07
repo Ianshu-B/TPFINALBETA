@@ -11,6 +11,7 @@ public class habitacionEstandar extends Habitaciones implements ItoJson {
     //Sin atributos especificos
     public habitacionEstandar(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion) {
         super(numeroHabitacion, estadoHabitacion, tamanioHabitacion);
+        this.costoHabitacion=getCostoHabitacion();
     }
     public habitacionEstandar() {
         super(0, ENUMS.estadoHabitacion.LIBRE, ENUMS.tamanioHabitacion.GRANDE); //Por defecto

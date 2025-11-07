@@ -16,12 +16,22 @@ public abstract class Habitaciones implements ItoJson {
     protected estadoHabitacion estadoHabitacion;
     protected tamanioHabitacion tamanioHabitacion;
     protected HashSet<Pasajero> listaOcupantesHabitacion;
+    protected double costoHabitacion;
 
-    public Habitaciones(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion) {
+    public Habitaciones(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion ) {
         this.numeroHabitacion = numeroHabitacion;
         this.estadoHabitacion = estadoHabitacion;
         this.tamanioHabitacion = tamanioHabitacion;
         this.listaOcupantesHabitacion = new HashSet<>();
+        this.costoHabitacion=100;
+    }
+
+    public double getCostoHabitacion() {
+        return costoHabitacion;
+    }
+
+    public void setCostoHabitacion(double costoHabitacion) {
+        this.costoHabitacion = costoHabitacion;
     }
 
     public int getNumeroHabitacion() {

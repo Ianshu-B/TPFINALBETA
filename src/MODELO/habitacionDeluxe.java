@@ -16,6 +16,7 @@ public class habitacionDeluxe extends Habitaciones implements ItoJson {
         super(numeroHabitacion, estadoHabitacion, tamanioHabitacion);
         this.jacuzzi = jacuzzi;
         this.hidromasaje = hidromasaje;
+        this.costoHabitacion=getCostoHabitacion() * 6;
     }
     public habitacionDeluxe() {
         super(0, ENUMS.estadoHabitacion.LIBRE, ENUMS.tamanioHabitacion.GRANDE);
