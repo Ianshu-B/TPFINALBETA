@@ -106,6 +106,7 @@ public class Administrador extends Usuario implements ItoJson {
     }
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //METODO BACKUP IMPLEMENTANDO UNA INTERFAZ
+    /*
     @Override
     public JSONArray backup()
     {
@@ -122,8 +123,52 @@ public class Administrador extends Usuario implements ItoJson {
         }
         return jsonArray;
     }
-    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+     */
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //METODO BACKUP SOLUCIONADO, CONSULTAR CON EQUIPO O PROFE JIJIJ
+
+    @Override
+    public JSONArray backup()
+    {
+        JSONArray jsonArrayRecepcionistas = new JSONArray();
+        JSONArray jsonArrayPasajeros = new JSONArray();
+        JSONArray totalElementosJsonArray = new JSONArray();
+        try {
+            for(Usuario u : listaUsuariosCreados)
+            {
+                if(u instanceof Recepcionista)
+                {
+                    jsonArrayRecepcionistas.put(u.toJson());
+                }else
+                {
+                    jsonArrayPasajeros.put(u.toJson());
+                }
+
+            }
+
+            JsonUtiles.grabarUnJson(jsonArrayRecepcionistas,"RecepcionistaRespaldo.json");
+            JsonUtiles.grabarUnJson(jsonArrayPasajeros,"PasajeroRespaldo.json");
+            //No me gusta grabar el JSON dentro de un metodo pero es lo unico que se me ocurrio
+            //Si se les ocurre algo y quieren cambiarlo, mandenle >:D
+
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        //Simplemente para retornar algo en caso de que no sea valido no retornar nada, retorno el total de elementos.
+            try {
+                for(Usuario u : listaUsuariosCreados)
+                {
+                    totalElementosJsonArray.put(u.toJson());
+                }
+        }catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        return totalElementosJsonArray;
+    }
+    //FALTA METODO ASIGNAR PERMISOS QUE NO ME ACUERDO QUE FUNCION CUMPLE EXACTAMENTE
 
 
 }

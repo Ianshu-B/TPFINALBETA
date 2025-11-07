@@ -1,0 +1,19 @@
+[
+    {
+        "password": "4",
+        "domicilio": "ch",
+        "documento": "4",
+        "origen": "Mardelplata",
+        "nombre": "IanPasajero",
+        "rol": "PASAJERO",
+        "username": "IanshulinPasajero"
+    },
+    {
+        "password": "4",
+        "documento": "455",
+        "ID": "1",
+        "nombre": "IansdhulinRecep",
+        "rol": "RECEPCIONISTA",
+        "username": "IanfhuldifnREcep"
+    }
+]

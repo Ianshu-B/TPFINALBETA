@@ -78,6 +78,6 @@ public abstract class Usuario extends Persona {
         return jsonObject;
 
     }
-    //FALTA METODOS
+
 
 }

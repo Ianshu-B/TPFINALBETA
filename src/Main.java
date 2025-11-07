@@ -53,11 +53,14 @@ public class Main {
                         System.out.println(msj);
                         System.out.println("Listando la informacion del PASAJERO creado :");
                         System.out.println(pasajero.toString());
+                        /*
                         System.out.println("REALIZANDO BACKUP DEL PASAJERO :");
                         JSONArray JsonPasajero = new JSONArray();
                         JsonPasajero = administrador1.backup();
                         JsonUtiles.grabarUnJson(JsonPasajero, "BackupPasajero.json");
                         System.out.println("BACKUP CREADO CORRECTAMENTE!");
+
+                         */
                     } else {
                         System.out.println("Hubo un error al crear al pasajero!");
                     }
@@ -82,11 +85,14 @@ public class Main {
                         System.out.println(msj);
                         System.out.println("Listando la informacion del RECEPCIONISTA creado :");
                         System.out.println(recepcionista.toString());
+                        /*
                         System.out.println("REALIZANDO BACKUP DEL RECEPCIONISTA :");
                         JSONArray JsonRecepcionista = new JSONArray();
                         JsonRecepcionista = administrador1.backup();
                         JsonUtiles.grabarUnJson(JsonRecepcionista, "BackupRecepcionista.json");
                         System.out.println("BACKUP CREADO CORRECTAMENTE!");
+
+                         */
                     } else {
                         System.out.println("Hubo un error al crear al Recepcionista!");
                     }
@@ -104,9 +110,14 @@ public class Main {
             }
 
         }
+
         System.out.println("LISTANDO TOTAL DE USUARIOS CREADOS");
         msj = administrador1.listarUsuariosCreados();
         System.out.println(msj);
+        System.out.println("GENERANDO BACKUPS DE LOS USUARIOS CREADOS");
+        JSONArray jsonArrayTotalElementos = new JSONArray();
+        jsonArrayTotalElementos = administrador1.backup(); //Guardo el total de elementos en un JSON. No se que tan necesario sea o si esta bien pero lo dejo por las dudas
+        JsonUtiles.grabarUnJson(jsonArrayTotalElementos, "TotalElementos.json");
 
     }catch (elementoNuloException e)
     {
