@@ -32,10 +32,18 @@ public class Reserva implements ItoJson {
         this.idReserva = idReserva;
         this.pasajero = pasajero;
         this.cantidadPersonas=cantidadPersonas;
-        this.costoReserva=habitacion.getCostoHabitacion();
+        this.costoReserva=calcularCostoReserva();
 
 
         habitacion.setEstadoHabitacion(estadoHabitacion.RESERVADA);
+    }
+
+    public double getCostoReserva() {
+        return costoReserva;
+    }
+
+    public void setCostoReserva(double costoReserva) {
+        this.costoReserva = costoReserva;
     }
 
     public boolean isEstado() {
@@ -134,9 +142,37 @@ public class Reserva implements ItoJson {
         return arregloReserva;
     }
 
-    public void calcularCostoReserva(){
+    public double calcularCostoReserva(){
 
-        long diasTotales= (fechaFin.getTime());
+        long diasTotales= (fechaFin.getTime() - fechaInicio.getTime()) / (1000 * 60 * 60 * 24);
 
+        double extraHidromasaje=100;
+        double extraJacuzzi=100;
+        double extraCajaSeguridad=50;
+        double extraMiniBar=70;
+        double precio_base=diasTotales * habitacion.getCostoHabitacion();
+
+        if(this.habitacion instanceof habitacionDeluxe){
+
+            habitacionDeluxe habitacion1=(habitacionDeluxe) habitacion;
+            if(habitacion1.isJacuzzi()){
+                precio_base=precio_base+extraJacuzzi;
+                if(habitacion1.isHidromasaje()){
+                    precio_base=precio_base+extraHidromasaje;
+                }
+            } else if (this.habitacion instanceof habitacionMedium) {
+                habitacionMedium habitacion2=(habitacionMedium) habitacion;
+                if(habitacion2.isCajaSeguridad()){
+                    precio_base=precio_base+extraCajaSeguridad;
+                }
+            } else if (this.habitacion instanceof habitacionPremium) {
+                habitacionPremium habitacion3=(habitacionPremium) habitacion;
+                if(habitacion3.isMiniBar()){
+                    precio_base=precio_base+extraMiniBar;
+                }
+            }
+        }
+
+        return precio_base;
     }
 }
