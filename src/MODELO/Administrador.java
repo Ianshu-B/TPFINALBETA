@@ -170,5 +170,15 @@ public class Administrador extends Usuario implements ItoJson {
     }
     //FALTA METODO ASIGNAR PERMISOS QUE NO ME ACUERDO QUE FUNCION CUMPLE EXACTAMENTE
 
+    public void otorgarPermisosReserva(Recepcionista recepcionista){
+
+        recepcionista.habilitarReserva(true);
+    }
+
+    public void otorgarPermisosCheckIn(Recepcionista recepcionista){
+        recepcionista.habilitarCheckIn(true);
+    }
+
+
 
 }

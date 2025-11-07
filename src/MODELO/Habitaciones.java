@@ -5,6 +5,7 @@ import EXCEPTIONS.elementoNuloException;
 import EXCEPTIONS.pasajeroRepetidoException;
 
 import java.util.HashSet;
+import java.util.Objects;
 
 public abstract class Habitaciones {
     protected int numeroHabitacion;
@@ -111,5 +112,16 @@ public abstract class Habitaciones {
                 ", tamanioHabitacion=" + tamanioHabitacion + "\n" +
                 ", listaOcupantesHabitacion=" + listarOcupantes() + "\n" +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Habitaciones that)) return false;
+        return numeroHabitacion == that.numeroHabitacion;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(numeroHabitacion);
     }
 }
