@@ -1,23 +1,23 @@
 package MODELO;
 
 import ENUMS.ROL;
-import EXCEPTIONS.FechaInvalidaExpection;
-import EXCEPTIONS.HabitacionYaRervadaExpection;
-import EXCEPTIONS.sinPermisoParaCheckInExpection;
-import EXCEPTIONS.sinPermisoParaReservaExpection;
+import EXCEPTIONS.*;
 import INTERFACE.ItoJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Recepcionista extends Usuario implements ItoJson {
     private String ID;
     private boolean puedeReservar;
     private boolean puedeCheckIN;
-    private HashSet<Reserva>reservas;
+    private HashMap<String,Reserva> reservas;
 
 
     public Recepcionista(String nombre, String documento, ROL rol, String username, String password, String ID) {
@@ -25,18 +25,18 @@ public class Recepcionista extends Usuario implements ItoJson {
         this.ID = ID;
         this.puedeCheckIN=false;
         this.puedeReservar=false;
-        this.reservas=new HashSet<>();
+        this.reservas=new HashMap<>();
     }
     public Recepcionista() {
         super("", "", ROL.RECEPCIONISTA, "", "");
         this.ID = "";
     }
 
-    public HashSet<Reserva> getReservas() {
+    public HashMap<String, Reserva> getReservas() {
         return reservas;
     }
 
-    public void setReservas(HashSet<Reserva> reservas) {
+    public void setReservas(HashMap<String, Reserva> reservas) {
         this.reservas = reservas;
     }
 
@@ -87,7 +87,7 @@ public class Recepcionista extends Usuario implements ItoJson {
             throw new FechaInvalidaExpection("La fecha del fin de la reserva no puede ser anterior a la feceha de inicio");
         }
 
-        for(Reserva r:reservas){
+        for(Reserva r:reservas.values()){
 
             if(r.getHabitacion().equals(habitacion)){
 
@@ -99,17 +99,37 @@ public class Recepcionista extends Usuario implements ItoJson {
         }
 
         Reserva reserva=new Reserva(estado,fechaFin,fechaInico,habitacion,pasajero,cantidadPersonas);
-        return reservas.add(reserva);
+        reservas.put(pasajero.getDocumento(),reserva);
+        return true;
     }
-    public String realizarCheckIn() throws sinPermisoParaCheckInExpection {
+    public String realizarCheckIn(String documento) throws sinPermisoParaCheckInExpection, DocumentoNoCoincideExpection {
         if(puedeCheckIN==false){
             throw new sinPermisoParaCheckInExpection("No tienes permiso para realizar un check in");
         }
 
 
+        LocalDate hoy = LocalDate.now();
+
+        for(Reserva r:reservas.values()){
+            if(!r.getFechaInicio().equals(hoy))
+                throw new FechaDeCheckInInvalidaExpection("Fecha no correspondiente al check in");
+        }
 
 
-     return "";
+        boolean flag=false;
+
+        for (Reserva r: reservas.values()){
+            if(r.getPasajero().getDocumento().equals(documento)){
+                r.setCheckIn(true);
+                flag=true;
+            }
+        }
+        if(!flag){
+            throw new DocumentoNoCoincideExpection("El documento no coincide con una reserva existente");
+        }
+
+
+     return "Check In realizado con exito para el pasajero con documento"+documento;
     }
 
     private boolean fechasSeSuperponen(Date inicio1, Date fin1, Date inicio2, Date fin2) {

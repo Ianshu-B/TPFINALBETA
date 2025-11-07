@@ -84,4 +84,6 @@ public abstract class Persona implements ItoJson {
         }
         return jsonArray;
     }
+
+
 }

@@ -21,7 +21,8 @@ public class Reserva implements ItoJson {
     private boolean estado;
     private int cantidadPersonas;
     private double costoReserva;
-
+    private boolean checkIn;
+    private boolean checkOut;
 
 
     public Reserva(boolean estado, Date fechaFin, Date fechaInicio, Habitaciones habitacion, Pasajero pasajero,int cantidadPersonas) {
@@ -29,13 +30,30 @@ public class Reserva implements ItoJson {
         this.fechaFin = fechaFin;
         this.fechaInicio = fechaInicio;
         this.habitacion = habitacion;
-        this.idReserva = idReserva;
+        this.idReserva = contadorID++;
         this.pasajero = pasajero;
         this.cantidadPersonas=cantidadPersonas;
         this.costoReserva=calcularCostoReserva();
 
 
         habitacion.setEstadoHabitacion(estadoHabitacion.RESERVADA);
+    }
+
+
+    public boolean isCheckIn() {
+        return checkIn;
+    }
+
+    public void setCheckIn(boolean checkIn) {
+        this.checkIn = checkIn;
+    }
+
+    public boolean isCheckOut() {
+        return checkOut;
+    }
+
+    public void setCheckOut(boolean checkOut) {
+        this.checkOut = checkOut;
     }
 
     public double getCostoReserva() {
@@ -133,7 +151,8 @@ public class Reserva implements ItoJson {
             object.put("Habitacion",this.habitacion);
             object.put("Pasajero",this.pasajero);
             object.put("Cantidad Personas",this.cantidadPersonas);
-
+            object.put("ID",this.idReserva);
+            object.put("Costo: ",this.costoReserva);
             arregloReserva.put(object);
 
         } catch (JSONException e) {
@@ -174,5 +193,19 @@ public class Reserva implements ItoJson {
         }
 
         return precio_base;
+    }
+
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "cantidadPersonas=" + cantidadPersonas +
+                ", idReserva=" + idReserva +
+                ", habitacion=" + habitacion +
+                ", pasajero=" + pasajero +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
+                ", estado=" + estado +
+                ", costoReserva=" + costoReserva +
+                '}';
     }
 }
