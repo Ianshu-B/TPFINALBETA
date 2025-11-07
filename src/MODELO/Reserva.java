@@ -117,6 +117,7 @@ public class Reserva implements ItoJson {
         this.cantidadPersonas = cantidadPersonas;
     }
 
+    //metodo para cancelar una reserva, si la reserva no fue ya cancelada
     public String cancelarReserva() throws reservaYaCanceladaExpection {
 
         if(estado == false){
@@ -161,6 +162,9 @@ public class Reserva implements ItoJson {
         return arregloReserva;
     }
 
+
+    //metodo que calcula el costo de una reserva segun:
+    //la cantidad de dias, tipo de habitacion y extras utilizados
     public double calcularCostoReserva(){
 
         long diasTotales= (fechaFin.getTime() - fechaInicio.getTime()) / (1000 * 60 * 60 * 24);

@@ -96,13 +96,13 @@ public class Administrador extends Usuario implements ItoJson {
         }
         return new Pasajero(nombre,documento,rol,username,password,origen,domicilio);
     }
-    public Recepcionista crearRecepcionista(String nombre, String documento, ROL rol, String username, String password, String ID) throws elementoNuloException
+    public Recepcionista crearRecepcionista(String nombre, String documento, ROL rol, String username, String password) throws elementoNuloException
     {
-        if(nombre == null || documento == null | username == null | password == null | ID == null)
+        if(nombre == null || documento == null | username == null | password == null)
         {
             throw new elementoNuloException("Elemento o mas de un elemento nulo ingresado. No esta permitido");
         }
-        return new Recepcionista(nombre, documento, rol, username, password, ID);
+        return new Recepcionista(nombre, documento, rol, username, password);
     }
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //METODO BACKUP IMPLEMENTANDO UNA INTERFAZ

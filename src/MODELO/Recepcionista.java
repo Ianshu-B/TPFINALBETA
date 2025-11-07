@@ -14,22 +14,23 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class Recepcionista extends Usuario implements ItoJson {
-    private String ID;
+    private int ID;
+    private int contador=1;
     private boolean puedeReservar;
     private boolean puedeCheckIN;
     private HashMap<String,Reserva> reservas;
 
 
-    public Recepcionista(String nombre, String documento, ROL rol, String username, String password, String ID) {
+    public Recepcionista(String nombre, String documento, ROL rol, String username, String password ) {
         super(nombre, documento, rol, username, password);
-        this.ID = ID;
+        this.ID = contador++;
         this.puedeCheckIN=false;
         this.puedeReservar=false;
         this.reservas=new HashMap<>();
     }
     public Recepcionista() {
         super("", "", ROL.RECEPCIONISTA, "", "");
-        this.ID = "";
+        this.ID = 0;
     }
 
     public HashMap<String, Reserva> getReservas() {
@@ -40,12 +41,20 @@ public class Recepcionista extends Usuario implements ItoJson {
         this.reservas = reservas;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public boolean isPuedeCheckIN() {
+        return puedeCheckIN;
+    }
+
+    public boolean isPuedeReservar() {
+        return puedeReservar;
     }
 
     @Override
@@ -71,6 +80,11 @@ public class Recepcionista extends Usuario implements ItoJson {
     }
     //FALTAN METODOS ESPECIFICOS
 
+
+    // 2 metodos que van a habilitar al recepcionista a hacer reservas o checkIn
+    //reciben un valor por parametros desde el metodo otorgarPermisos en administrador
+    //si le da true, pueden hacer esas actividades.
+
     public void habilitarReserva(boolean valor){
         this.puedeReservar=valor;
     }
@@ -78,6 +92,10 @@ public class Recepcionista extends Usuario implements ItoJson {
         this.puedeCheckIN=valor;
     }
 
+    //metodo para hacer reservas, recibe todos los valores de una reserva, y antes de crearla
+    //verificamos que tenga permiso, que la fecha de fin no sea anterior a la fecha de inicio y
+    //que las fechas no se superpongan con otras reservas
+    //si esto se cumple se crea la reserva y se la guarda en la coleccion pertinente
     public boolean realizarReserva(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas) throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection {
         if (puedeReservar==false){
         throw new sinPermisoParaReservaExpection("No tienes permiso para realizar una reserva");
@@ -102,6 +120,10 @@ public class Recepcionista extends Usuario implements ItoJson {
         reservas.put(pasajero.getDocumento(),reserva);
         return true;
     }
+
+    //metodo para hacer un check in segun documento de pasajero, verificamos si tenemos los permisos
+    //que la fecha en la q se hace el check in corresponda al incio de su reserva y que el documento coincida
+    //con algun pasajero que haya hecho reserva
     public String realizarCheckIn(String documento) throws sinPermisoParaCheckInExpection, DocumentoNoCoincideExpection {
         if(puedeCheckIN==false){
             throw new sinPermisoParaCheckInExpection("No tienes permiso para realizar un check in");
@@ -132,6 +154,7 @@ public class Recepcionista extends Usuario implements ItoJson {
      return "Check In realizado con exito para el pasajero con documento"+documento;
     }
 
+    //metodo para verificar superposicion de fechas
     private boolean fechasSeSuperponen(Date inicio1, Date fin1, Date inicio2, Date fin2) {
         return inicio1.before(fin2) && fin1.after(inicio2);
     }

@@ -1,15 +1,11 @@
 import ENUMS.ROL;
-import EXCEPTIONS.elementoInsertadoException;
-import EXCEPTIONS.elementoNuloException;
-import EXCEPTIONS.elementoRepetidoException;
+import EXCEPTIONS.*;
 import GESTORA.gestoraHotel;
 import INTERFACE.ItoJson;
-import MODELO.Administrador;
-import MODELO.JsonUtiles;
-import MODELO.Pasajero;
-import MODELO.Recepcionista;
+import MODELO.*;
 import org.json.JSONArray;
 
+import java.util.Date;
 import java.util.Scanner;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
@@ -85,7 +81,7 @@ public class Main {
                     password = sc.next();
                     System.out.println("Ingrese el id del RECEPCIONISTA");
                     ID = sc.next();
-                    Recepcionista recepcionista = administrador1.crearRecepcionista(nombre, documento, ROL.RECEPCIONISTA, username, password, ID);
+                    Recepcionista recepcionista = administrador1.crearRecepcionista(nombre, documento, ROL.RECEPCIONISTA, username, password);
                     if (recepcionista != null) {
                         System.out.println("Recepcionista creado correctamente!");
                         msj = administrador1.agregarUsuarioLista(recepcionista);
@@ -133,6 +129,25 @@ public class Main {
         System.out.println(e.getMessage());
     }
 
+        habitacionPremium h1=new habitacionPremium();
+        Pasajero p1=new Pasajero();
+        Date hoy = new Date();
+        Date fin = new Date(hoy.getTime() + (3 * 24 * 60 * 60 * 1000));
+        Recepcionista r1=new Recepcionista("valentin","4345",ROL.RECEPCIONISTA,"valentindona","123v");
+
+        try {
+            r1.realizarReserva(h1,p1,hoy,fin,false,3);
+        } catch (sinPermisoParaReservaExpection e) {
+            System.out.println(e.getMessage());
+        } catch (FechaInvalidaExpection e) {
+            System.out.println(e.getMessage());
+        } catch (HabitacionYaRervadaExpection e) {
+            System.out.println(e.getMessage());
+        }
+
     }
-    //pruebacomit
+
+
+
+
 }
