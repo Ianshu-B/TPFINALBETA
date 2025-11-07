@@ -3,11 +3,15 @@ import ENUMS.estadoHabitacion;
 import ENUMS.tamanioHabitacion;
 import EXCEPTIONS.elementoNuloException;
 import EXCEPTIONS.pasajeroRepetidoException;
+import INTERFACE.ItoJson;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashSet;
 import java.util.Objects;
 
-public abstract class Habitaciones {
+public abstract class Habitaciones implements ItoJson {
     protected int numeroHabitacion;
     protected estadoHabitacion estadoHabitacion;
     protected tamanioHabitacion tamanioHabitacion;
@@ -124,4 +128,29 @@ public abstract class Habitaciones {
     public int hashCode() {
         return Objects.hashCode(numeroHabitacion);
     }
+    @Override
+    public JSONArray backup() throws JSONException
+    {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArrayAux = new JSONArray();
+        JSONArray jsonArrayAuxFinal = new JSONArray();
+        try {
+            jsonObject.put("numeroHabitacion",this.numeroHabitacion);
+            jsonObject.put("estadoHabitacion",this.estadoHabitacion);
+            jsonObject.put("tamanioHabitacion",this.tamanioHabitacion);
+            for(Pasajero p : listaOcupantesHabitacion)
+            {
+                jsonArrayAux.put(p.toJson());
+            }
+            jsonObject.put("listaOcupantesHabitacion",jsonArrayAux);
+            jsonArrayAuxFinal.put(jsonObject);
+
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return jsonArrayAuxFinal;
+
+    }
 }
+

@@ -8,7 +8,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
-public class gestoraHotel <T>  {
+public class gestoraHotel <T>   {
     private ArrayList<T> listaGeneral;
 
     public gestoraHotel() {
@@ -82,7 +82,7 @@ public class gestoraHotel <T>  {
     {
 
     }
-    
+
      */
 
 

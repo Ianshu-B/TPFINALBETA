@@ -2,8 +2,12 @@ package MODELO;
 
 import ENUMS.estadoHabitacion;
 import ENUMS.tamanioHabitacion;
+import INTERFACE.ItoJson;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class habitacionDeluxe extends Habitaciones{
+public class habitacionDeluxe extends Habitaciones implements ItoJson {
 
     private boolean jacuzzi; //True tiene, false no tiene. NO SE ME OCURRIO OTRA COSA AAAAAAAAA
     private boolean hidromasaje; //True tiene, false no tiene. NO SE ME OCURRIO OTRA COSA AAAAAAAAA
@@ -45,4 +49,19 @@ public class habitacionDeluxe extends Habitaciones{
     }
 
     //Faltan los metodos especificos
+    @Override
+    public JSONArray backup() throws JSONException
+    {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = super.backup();
+        try {
+            jsonObject.put("jacuzzi",this.jacuzzi);
+            jsonObject.put("hidromasaje",this.hidromasaje);
+            jsonArray.put(jsonObject);
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
 }
