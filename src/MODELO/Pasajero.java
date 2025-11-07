@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 public class Pasajero extends Usuario implements ItoJson {
     private String origen; //PAIS DE LA PERSONA
     private String domicilio;
@@ -79,5 +81,9 @@ public class Pasajero extends Usuario implements ItoJson {
 
     }
 
+    public void solicitarReserva(Recepcionista recepcionista,Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas){
+
+        recepcionista.realizarReserva( habitacion,  pasajero,  fechaInico,  fechaFin,  estado,  cantidadPersonas);
+    }
 
 }
