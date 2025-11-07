@@ -1,11 +1,13 @@
 package MODELO;
 
+import INTERFACE.ItoJson;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
 
-public abstract class Persona {
+public abstract class Persona implements ItoJson {
     protected String nombre;
     protected String documento;
 
@@ -51,6 +53,8 @@ public abstract class Persona {
                 ", documento='" + documento + "\n" +
                 '}';
     }
+
+
     public JSONObject toJson() throws JSONException
     {
         JSONObject jsonObject = new JSONObject();
@@ -64,5 +68,20 @@ public abstract class Persona {
 
         return jsonObject;
 
+    }
+    @Override
+    public JSONArray backup() throws JSONException //ESPECIFICO PARA LA CLASE GENERICA
+    {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        try {
+            jsonObject.put("nombre",this.nombre);
+            jsonObject.put("documento",this.documento);
+            jsonArray.put(jsonObject);
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return jsonArray;
     }
 }

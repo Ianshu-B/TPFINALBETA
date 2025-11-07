@@ -1,10 +1,12 @@
 package MODELO;
 
 import ENUMS.ROL;
+import INTERFACE.ItoJson;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public abstract class Usuario extends Persona {
+public abstract class Usuario extends Persona implements ItoJson {
     protected ROL rol;
     protected String username;
     protected String password;
@@ -77,6 +79,23 @@ public abstract class Usuario extends Persona {
         }
         return jsonObject;
 
+    }
+
+    @Override
+    public JSONArray backup() throws JSONException //METODO ESPECIFICO PARA LA CLASE GENERICA
+    {
+        JSONArray jsonArray = super.backup();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("rol",this.rol);
+            jsonObject.put("username",this.username);
+            jsonObject.put("password",this.password);
+            jsonArray.put(jsonObject);
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return jsonArray;
     }
 
 

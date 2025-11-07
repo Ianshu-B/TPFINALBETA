@@ -1,10 +1,12 @@
 package MODELO;
 
 import ENUMS.ROL;
+import INTERFACE.ItoJson;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Pasajero extends Usuario{
+public class Pasajero extends Usuario implements ItoJson {
     private String origen; //PAIS DE LA PERSONA
     private String domicilio;
 
@@ -59,4 +61,21 @@ public class Pasajero extends Usuario{
 
     }
     //FALTAN METODOS
+    @Override
+    public JSONArray backup() throws JSONException //ESPECIFICO PARA LA CLASE GENERICA
+    {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = super.backup();
+        try {
+            jsonObject.put("origen",this.origen);
+            jsonObject.put("domicilio",this.domicilio);
+            jsonArray.put(jsonObject);
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return jsonArray;
+
+
+    }
 }
