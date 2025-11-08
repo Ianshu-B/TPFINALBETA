@@ -396,7 +396,7 @@ public class Main {
                                 System.out.println("Ingrese el documento del pasajero para realizar su checkout: ");
                                 String doc1=sc.nextLine();
 
-                                recepcionista.realizarCheckIn(doc1);
+                                recepcionista.realizarCheckOut(doc1);
                                 break;
 
                             case 3:
