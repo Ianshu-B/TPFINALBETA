@@ -12,8 +12,8 @@ public class Pasajero extends Usuario implements ItoJson {
     private String origen; //PAIS DE LA PERSONA
     private String domicilio;
 
-    public Pasajero(String nombre, String documento, ROL rol, String username, String password, String origen, String domicilio) {
-        super(nombre, documento, rol, username, password);
+    public Pasajero(String nombre, String documento,  String username, String password, String origen, String domicilio) {
+        super(nombre, documento,ROL.PASAJERO, username, password);
         this.origen = origen;
         this.domicilio = domicilio;
     }

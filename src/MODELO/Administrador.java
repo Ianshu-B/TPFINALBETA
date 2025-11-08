@@ -88,13 +88,13 @@ public class Administrador extends Usuario implements ItoJson {
     }
 
     //METODOS CREARUSUARIO
-    public Pasajero crearPasajero(String nombre, String documento, ROL rol, String username, String password, String origen,String domicilio) throws elementoNuloException
+    public Pasajero crearPasajero(String nombre, String documento,String username, String password, String origen,String domicilio) throws elementoNuloException
     {
         if(nombre == null || documento == null | username == null | password == null | origen == null | documento == null)
         {
             throw  new elementoNuloException("Elemento o mas de un elemento nulo ingresado. No esta permitido");
         }
-        return new Pasajero(nombre,documento,rol,username,password,origen,domicilio);
+        return new Pasajero(nombre,documento,username,password,origen,domicilio);
     }
     public Recepcionista crearRecepcionista(String nombre, String documento, ROL rol, String username, String password) throws elementoNuloException
     {
@@ -179,6 +179,24 @@ public class Administrador extends Usuario implements ItoJson {
         recepcionista.habilitarCheckIn(true);
     }
 
+    public Usuario buscarPorContraseña(String contraseña){
+
+            for(Usuario u:listaUsuariosCreados){
+                if(u.getPassword().equals(contraseña)){
+                    return u;
+                }
+            }
+        return null;
+    }
 
 
+    @Override
+    public String[] getOpcionesMenu() {
+        return new String[]{};
+    }
+
+    @Override
+    public void ejecutarOpcion() {
+
+    }
 }

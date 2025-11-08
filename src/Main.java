@@ -5,6 +5,7 @@ import INTERFACE.ItoJson;
 import MODELO.*;
 import org.json.JSONArray;
 
+import java.sql.SQLOutput;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -14,6 +15,17 @@ public class Main {
     public static void main(String[] args) {
         String msj;
         Administrador administrador1 = new Administrador("Ian","4545A", ROL.ADMINISTRADOR,"adminIan","454545");
+        Recepcionista recepcionista1=new Recepcionista("Juan","44.563.345",ROL.RECEPCIONISTA,"JuanRecep123","contraseña123");
+        Recepcionista recepcionista2=new Recepcionista("Pedro","24.332.245",ROL.RECEPCIONISTA,"PedroHotel","pizzaYcoca");
+
+        try {
+            administrador1.agregarUsuarioLista(recepcionista1);
+            administrador1.agregarUsuarioLista(recepcionista2);
+        } catch (elementoNuloException e) {
+            System.out.println(e.getMessage());
+        }
+
+
         gestoraHotel<ItoJson> gestoraHotel  = new gestoraHotel<>();
     try {
         //TESTEANDO CREAR USUARIO
@@ -47,7 +59,7 @@ public class Main {
                     origen = sc.nextLine();
                     System.out.println("Ingrese el domicilio del PASAJERO :");
                     domicilio = sc.nextLine();
-                    Pasajero pasajero = administrador1.crearPasajero(nombre, documento, ROL.PASAJERO, username, password, origen, domicilio);
+                    Pasajero pasajero = administrador1.crearPasajero(nombre, documento, username, password, origen, domicilio);
                     if (pasajero != null) {
                         System.out.println("Pasajero creado correctamente!");
                         msj = administrador1.agregarUsuarioLista(pasajero);
@@ -145,9 +157,54 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
+
+        Scanner sc=new Scanner(System.in);
+        while(true){
+            System.out.println("\n=== BIENVENIDO AL  HOTEl ===");
+            System.out.println("1. Crear cuenta ");
+            System.out.println("2. Iniciar sesión");
+            System.out.println("3. Salir");
+            System.out.print("Opción: ");
+            int opcion = sc.nextInt();
+            sc.nextLine();
+
+            if (opcion==1){
+                System.out.println("Ingrese sus datos: ");
+                System.out.println("Nombre: ");
+                String nombre=sc.nextLine();
+                System.out.println("Documento: ");
+                String documento=sc.nextLine();
+                System.out.println("Pais de origen: ");
+                String nacionalidad=sc.nextLine();
+                System.out.println("Domicilio: ");
+                String domicilio=sc.nextLine();
+                System.out.println("Ingrese un nombre de usuario: ");
+                String userName=sc.nextLine();
+                System.out.println("Ingrese una contraseña: ");
+                String contrasena=sc.nextLine();
+
+                Pasajero nuevoPasajero=new Pasajero(nombre,documento,userName,contrasena,nacionalidad,domicilio);
+                try {
+                    administrador1.agregarUsuarioLista(nuevoPasajero);
+                } catch (elementoNuloException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else if (opcion==2) {
+
+                System.out.println("Ingrese su nombre de usuario: ");
+                String user=sc.nextLine();
+                System.out.println("Ingrese su contraseña");
+                String password=sc.nextLine();
+
+
+                Usuario usuario=administrador1.buscarPorContraseña(password);
+
+                System.out.println("Ingrese ");
+            }
+
+
+        }
+
+
     }
-
-
-
-
 }

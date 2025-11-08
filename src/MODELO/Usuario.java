@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 public abstract class Usuario extends Persona implements ItoJson {
     protected ROL rol;
     protected String username;
@@ -98,5 +100,19 @@ public abstract class Usuario extends Persona implements ItoJson {
         return jsonArray;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Usuario usuario)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.equals(password, usuario.password);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), password);
+    }
+
+    public abstract String[] getOpcionesMenu();
+
+    public abstract void ejecutarOpcion();
 }
