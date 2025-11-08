@@ -1,19 +1,27 @@
 [
     {
-        "password": "4",
-        "domicilio": "ch",
-        "documento": "4",
-        "origen": "Mardelplata",
-        "nombre": "IanPasajero",
-        "rol": "PASAJERO",
-        "username": "IanshulinPasajero"
+        "password": "pizzaYcoca",
+        "documento": "24.332.245",
+        "ID": 1,
+        "nombre": "Pedro",
+        "rol": "RECEPCIONISTA",
+        "username": "PedroHotel"
     },
     {
-        "password": "4",
-        "documento": "455",
-        "ID": "1",
-        "nombre": "IansdhulinRecep",
+        "password": "contraseña123",
+        "documento": "44.563.345",
+        "ID": 1,
+        "nombre": "Juan",
         "rol": "RECEPCIONISTA",
-        "username": "IanfhuldifnREcep"
+        "username": "JuanRecep123"
+    },
+    {
+        "password": "2",
+        "domicilio": "chile",
+        "documento": "4545",
+        "origen": "mardel",
+        "nombre": "Ian",
+        "rol": "PASAJERO",
+        "username": "ianshu"
     }
 ]

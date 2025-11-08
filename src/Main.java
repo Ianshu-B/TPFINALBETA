@@ -344,7 +344,11 @@ public class Main {
                            switch (op){
 
                                case 1:
+                                   /*
+                                   System.out.println("Ingrese el nombre del socilicitante de la reserva :");
+                                   String nombre =  sc.nextLine();
 
+                                    */
                                    System.out.println("Ingrese el numero de habitacion que desea reservar");
                                    int numeroHabitacion= sc.nextInt();
                                    Habitaciones habitacion= gestoraHotel.buscarHabitacionXnumero(numeroHabitacion);

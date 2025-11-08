@@ -214,6 +214,7 @@ public class Administrador extends Usuario implements ItoJson {
             }
 
         }
+        return null;
 
     }
 }
