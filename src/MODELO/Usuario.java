@@ -112,7 +112,7 @@ public abstract class Usuario extends Persona implements ItoJson {
         return Objects.hash(super.hashCode(), password);
     }
 
-    public abstract String[] getOpcionesMenu();
 
-    public abstract void ejecutarOpcion();
+
+
 }

@@ -153,6 +153,10 @@ public class Recepcionista extends Usuario implements ItoJson {
 
      return "Check In realizado con exito para el pasajero con documento"+documento;
     }
+    //TERMINAR
+    public String realizarCheckOut(String documento){
+        return "";
+    }
 
     //metodo para verificar superposicion de fechas
     private boolean fechasSeSuperponen(Date inicio1, Date fin1, Date inicio2, Date fin2) {

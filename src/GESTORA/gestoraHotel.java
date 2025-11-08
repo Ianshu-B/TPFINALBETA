@@ -5,6 +5,7 @@ import EXCEPTIONS.elementoInsertadoException;
 import EXCEPTIONS.elementoNuloException;
 import EXCEPTIONS.elementoRepetidoException;
 import INTERFACE.ItoJson;
+import MODELO.Habitaciones;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -98,6 +99,19 @@ public class gestoraHotel <T extends ItoJson> implements ItoJson {
         }
         return jsonArray;
 
+    }
+    //AGREGAR EXPECTIONS
+    public Habitaciones buscarHabitacionXnumero(int numeroHabitacion){
+
+        for(T e:listaGeneral){
+            if (e instanceof Habitaciones){
+                Habitaciones h=(Habitaciones)e;
+                if(h.getNumeroHabitacion()==numeroHabitacion){
+                    return h;
+                }
+            }
+        }
+        return null;
     }
 
 }

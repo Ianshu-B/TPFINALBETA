@@ -47,7 +47,7 @@ public class Administrador extends Usuario implements ItoJson {
 
         return sb.toString();
     }
-    public String listarUsuariosCreados()
+    public  String listarUsuariosCreados()
     {
         StringBuilder sb = new StringBuilder();
         for(Usuario u : listaUsuariosCreados)
@@ -68,10 +68,10 @@ public class Administrador extends Usuario implements ItoJson {
         return null;
     }
 
-    public String eliminarUsuario(Usuario u) throws elementoNuloException
+    public String eliminarUsuario(String userName) throws elementoNuloException
     {
         StringBuilder sb = new StringBuilder();
-        Usuario aux = buscarUsuario(u);
+        Usuario aux = buscarXUserName(userName);
         if(aux == null)
         {
             throw  new elementoNuloException("No se encontro el usuario a eliminar dentro de la lista!");
@@ -179,6 +179,11 @@ public class Administrador extends Usuario implements ItoJson {
         recepcionista.habilitarCheckIn(true);
     }
 
+    //TERMINAR ACA Y EN RECEPCIONISTA
+    public void otorgarPermisosCheckOut(Recepcionista recepcionista){
+
+    }
+    //ACA FALTA COMPLETAR EXPECTION
     public Usuario buscarPorContraseña(String contraseña){
 
             for(Usuario u:listaUsuariosCreados){
@@ -188,15 +193,27 @@ public class Administrador extends Usuario implements ItoJson {
             }
         return null;
     }
+    //ACA FALTA COMPLETAR CON EXPECTION
+    public Usuario buscarXUserName(String userName){
+        StringBuilder sb=new StringBuilder();
+        for(Usuario u:listaUsuariosCreados){
 
-
-    @Override
-    public String[] getOpcionesMenu() {
-        return new String[]{};
+            if(u.getUsername()==userName){
+                return u;
+            }
+        }
+        return null;
     }
 
-    @Override
-    public void ejecutarOpcion() {
+    public Recepcionista buscarRecepcionista(String nombre){
+
+        for(Usuario u:listaUsuariosCreados){
+            if(u instanceof Recepcionista && u.getUsername()==nombre){
+                Recepcionista recepcionista=(Recepcionista) u;
+                return recepcionista;
+            }
+
+        }
 
     }
 }
