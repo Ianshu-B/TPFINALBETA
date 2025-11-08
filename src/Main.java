@@ -151,15 +151,7 @@ public class Main {
         Date fin = new Date(hoy.getTime() + (3 * 24 * 60 * 60 * 1000));
         Recepcionista r1=new Recepcionista("valentin","4345",ROL.RECEPCIONISTA,"valentindona","123v");
 
-        try {
-            r1.realizarReserva(h1,p1,hoy,fin,false,3);
-        } catch (sinPermisoParaReservaExpection e) {
-            System.out.println(e.getMessage());
-        } catch (FechaInvalidaExpection e) {
-            System.out.println(e.getMessage());
-        } catch (HabitacionYaRervadaExpection e) {
-            System.out.println(e.getMessage());
-        }
+
 
         //----------------------------------------------------------------------------------------//
 
@@ -376,7 +368,7 @@ public class Main {
                                         //AGREGAR EXPECTION
                                         System.out.println("Ingrese la cantidad de personas en la reserva: ");
                                         int cantPersonas = sc.nextInt();
-                                        pasajero.solicitarReserva(recepcionista1, habitacion, pasajero, fechaInicio, fechaFin, true, cantPersonas);
+                                        pasajero.solicitarReserva( habitacion, pasajero, fechaInicio, fechaFin, true, cantPersonas);
                                         break;
                                     case 2:
                                         System.out.println("Saliendo del menu...");
@@ -394,7 +386,9 @@ public class Main {
                             System.out.println("\n--- MENÚ RECEPCIONISTA ---");
                             System.out.println("1: Realizar CheckIn");
                             System.out.println("2: Realizar CheckOut");
-                            System.out.println("3: Salir");
+                            System.out.println("3: Verificar Reservas Pendientes");
+                            System.out.println("4: Realizar una Reserva Pendiente");
+                            System.out.println("5: Salir");
 
                             int op = sc.nextInt();
 
@@ -414,6 +408,16 @@ public class Main {
                                     break;
 
                                 case 3:
+                                    System.out.println(recepcionista.mostrarReservasPendientes());
+                                    break;
+
+                                case 4:
+                                    System.out.println("Ingresar el ID de la reserva a realizar: ");
+                                    int id=sc.nextInt();
+                                    recepcionista.realizarReserva(id);
+                                    break;
+
+                                case 5:
                                     System.out.println("Saliendo...");
                                     continuar = false;
                                     break;

@@ -1,6 +1,7 @@
 package MODELO;
 
 import ENUMS.ROL;
+import ENUMS.estadoHabitacion;
 import EXCEPTIONS.*;
 import INTERFACE.ItoJson;
 import org.json.JSONArray;
@@ -19,6 +20,7 @@ public class Recepcionista extends Usuario implements ItoJson {
     private boolean puedeReservar;
     private boolean puedeCheckIN;
     private HashMap<String,Reserva> reservas;
+    private HashMap<Integer,Reserva>reservaPendiente;
 
 
     public Recepcionista(String nombre, String documento, ROL rol, String username, String password ) {
@@ -27,6 +29,7 @@ public class Recepcionista extends Usuario implements ItoJson {
         this.puedeCheckIN=false;
         this.puedeReservar=false;
         this.reservas=new HashMap<>();
+        this.reservaPendiente=new HashMap<>();
     }
     public Recepcionista() {
         super("", "", ROL.RECEPCIONISTA, "", "");
@@ -92,32 +95,84 @@ public class Recepcionista extends Usuario implements ItoJson {
         this.puedeCheckIN=valor;
     }
 
+
+
+//AGREGAR VERIFICACIONES
+    public void cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas){
+
+        Reserva pendiente=new Reserva(estado,fechaFin,fechaInico,habitacion,pasajero,cantidadPersonas);
+        pendiente.setEstado(false);
+        reservaPendiente.put(pendiente.getIdReserva(),pendiente);
+
+    }
+
+    public String mostrarReservasPendientes() {
+        StringBuilder sb = new StringBuilder();
+
+        if (reservaPendiente.isEmpty()) {
+            sb.append("⚠️ No hay reservas pendientes actualmente.\n");
+        } else {
+            sb.append("📋 Reservas Pendientes:\n");
+            sb.append("----------------------------\n");
+
+            for (Reserva reserva : reservaPendiente.values()) {
+                sb.append("🆔 ID: ").append(reserva.getIdReserva()).append("\n");
+                sb.append("🧍 Pasajero: ").append(reserva.getPasajero().getNombre()).append("\n");
+                sb.append("🏨 Habitación: ").append(reserva.getHabitacion().getNumeroHabitacion()).append("\n");
+                sb.append("📅 Desde: ").append(reserva.getFechaInicio()).append("\n");
+                sb.append("📅 Hasta: ").append(reserva.getFechaFin()).append("\n");
+                sb.append("👥 Personas: ").append(reserva.getCantidadPersonas()).append("\n");
+                sb.append("Estado: ").append(reserva.isEstado() ? "Activa" : "Pendiente").append("\n");
+                sb.append("----------------------------\n");
+            }
+        }
+
+        return sb.toString();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     //metodo para hacer reservas, recibe todos los valores de una reserva, y antes de crearla
     //verificamos que tenga permiso, que la fecha de fin no sea anterior a la fecha de inicio y
     //que las fechas no se superpongan con otras reservas
     //si esto se cumple se crea la reserva y se la guarda en la coleccion pertinente
-    public boolean realizarReserva(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas) throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection {
+
+    public boolean realizarReserva(int idReserva) throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection {
         if (puedeReservar==false){
         throw new sinPermisoParaReservaExpection("No tienes permiso para realizar una reserva");
         }
 
-        if(fechaFin.before(fechaInico)){
+        Reserva reserva=reservaPendiente.get(idReserva);
+
+        if(reserva.getFechaFin().before(reserva.getFechaFin())){
             throw new FechaInvalidaExpection("La fecha del fin de la reserva no puede ser anterior a la feceha de inicio");
         }
 
         for(Reserva r:reservas.values()){
 
-            if(r.getHabitacion().equals(habitacion)){
+            if(r.getHabitacion().equals(reserva.getHabitacion())){
 
-                if(r.isEstado() && fechasSeSuperponen(fechaInico,fechaFin,r.getFechaInicio(),r.getFechaFin())){
+                if(r.isEstado() && fechasSeSuperponen(reserva.getFechaInicio(),reserva.getFechaFin(),r.getFechaInicio(),r.getFechaFin())){
                     throw new HabitacionYaRervadaExpection("La habitacion ya fue reservada");
 
                 }
             }
         }
 
-        Reserva reserva=new Reserva(estado,fechaFin,fechaInico,habitacion,pasajero,cantidadPersonas);
-        reservas.put(pasajero.getDocumento(),reserva);
+
+        reservas.put(reserva.getPasajero().getDocumento(),reserva);
+        reserva.setEstado(true);
+        reserva.getHabitacion().setEstadoHabitacion(estadoHabitacion.RESERVADA);
         return true;
     }
 
@@ -143,6 +198,7 @@ public class Recepcionista extends Usuario implements ItoJson {
         for (Reserva r: reservas.values()){
             if(r.getPasajero().getDocumento().equals(documento)){
                 r.setCheckIn(true);
+                r.getHabitacion().setEstadoHabitacion(estadoHabitacion.OCUPADA);
                 flag=true;
             }
         }

@@ -11,15 +11,35 @@ import java.util.HashSet;
 import static ENUMS.ROL.RECEPCIONISTA;
 
 public class Administrador extends Usuario implements ItoJson {
+    //NOS CREAMOS UNA UNICA INSTANCIA STATIC DE ADMIN PARA QUE PUEDA TENER ACCESESO CONSTANTE A TODO
+    private static Administrador administradorUnico=new Administrador("ADMIN","44850150",ROL.ADMINISTRADOR,"ADMIN_HOTEL","PIZZA");
     private HashSet<Usuario> listaUsuariosCreados;
     public Administrador(String nombre, String documento, ROL rol, String username, String password) {
         super(nombre, documento, rol, username, password);
         this.listaUsuariosCreados = new HashSet<>();
     }
+    /*
     public Administrador() { //COONSTRUCTOR VACIO
         super("", "", ROL.ADMINISTRADOR, "", "");
         this.listaUsuariosCreados = new HashSet<>();
     }
+*/
+    //ESTE METODO NOS DEVUELVE EL ADMIN UNICO QUE EXISTE
+    public static Administrador getAdmin(){
+        return administradorUnico;
+    }
+
+    public Recepcionista obtenerRecepcionista(){
+
+        for(Usuario u:listaUsuariosCreados){
+            if(u instanceof Recepcionista){
+                Recepcionista r=(Recepcionista) u;
+                return r;
+            }
+        }
+        return null;
+    }
+
 
     @Override
     public String toString() {

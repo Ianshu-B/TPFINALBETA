@@ -81,9 +81,10 @@ public class Pasajero extends Usuario implements ItoJson {
 
     }
 
-    public void solicitarReserva(Recepcionista recepcionista,Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas){
+    public void solicitarReserva(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas){
 
-        recepcionista.realizarReserva( habitacion, pasajero,  fechaInico,  fechaFin,  estado,  cantidadPersonas);
+        Recepcionista r=Administrador.getAdmin().obtenerRecepcionista();
+        r.cargarReservaPendiente( habitacion, pasajero,  fechaInico,  fechaFin,  estado,  cantidadPersonas);
     }
 
 }
