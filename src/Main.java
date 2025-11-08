@@ -19,6 +19,7 @@ public class Main {
         Administrador administrador1 = new Administrador("Ian","4545A", ROL.ADMINISTRADOR,"adminIan","454545");
         Recepcionista recepcionista1=new Recepcionista("Juan","44.563.345",ROL.RECEPCIONISTA,"JuanRecep123","contraseña123");
         Recepcionista recepcionista2=new Recepcionista("Pedro","24.332.245",ROL.RECEPCIONISTA,"PedroHotel","pizzaYcoca");
+        System.out.println("MENU BETA"); //DESPUES BORRAR
 
 
         try {
@@ -166,6 +167,7 @@ public class Main {
         //Y CHECKEAR EL USO DEL INSTANCE OF EN EL MAIN
 
         Scanner sc=new Scanner(System.in);
+        System.out.println("MENU FINAL"); //DESPUES BORRAR
         while(true){
             System.out.println("\n=== BIENVENIDO AL  HOTEl ===");
             System.out.println("1. Crear cuenta ");
@@ -334,11 +336,14 @@ public class Main {
                     } else if (usuario instanceof Pasajero) {
                         Pasajero pasajero=(Pasajero) usuario;
 
+
+
                         System.out.println("\n--- MENÚ PASAJERO ---");
                         System.out.println("1: Crear Reserva");
                         System.out.println("2: Salir");
 
                         int op= sc.nextInt();
+                        sc.nextLine();
 
                        try {
                            switch (op){
@@ -372,8 +377,10 @@ public class Main {
                                    break;
                                case 2:
                                    System.out.println("Saliendo del menu...");
+                                   continuar = false;
                                    break;
                            }
+
                        } catch (ParseException e) {
                            throw new RuntimeException(e);
                        }
@@ -405,12 +412,17 @@ public class Main {
 
                             case 3:
                                 System.out.println("Saliendo...");
+                                continuar = false;
                                 break;
                         }
 
                     }
 
                 }
+            }else if(opcion == 3)
+            {
+                System.out.println("SALIENDO DEL SISTEMA");
+                break;
             }
 
 

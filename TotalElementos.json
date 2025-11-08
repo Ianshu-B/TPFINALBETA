@@ -8,20 +8,20 @@
         "username": "PedroHotel"
     },
     {
+        "password": "45",
+        "domicilio": "chile",
+        "documento": "45",
+        "origen": "arge",
+        "nombre": "ian",
+        "rol": "PASAJERO",
+        "username": "ianshu"
+    },
+    {
         "password": "contraseña123",
         "documento": "44.563.345",
         "ID": 1,
         "nombre": "Juan",
         "rol": "RECEPCIONISTA",
         "username": "JuanRecep123"
-    },
-    {
-        "password": "2",
-        "domicilio": "chile",
-        "documento": "4545",
-        "origen": "mardel",
-        "nombre": "Ian",
-        "rol": "PASAJERO",
-        "username": "ianshu"
     }
 ]
