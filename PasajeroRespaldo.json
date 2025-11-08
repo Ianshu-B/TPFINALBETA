@@ -1,9 +1,9 @@
 [{
-    "password": "45",
-    "domicilio": "chile",
+    "password": "ml",
+    "domicilio": "m",
     "documento": "45",
-    "origen": "arge",
-    "nombre": "ian",
+    "origen": "m",
+    "nombre": "ianhu",
     "rol": "PASAJERO",
-    "username": "ianshu"
+    "username": "m"
 }]

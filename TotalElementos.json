@@ -1,20 +1,20 @@
 [
     {
+        "password": "ml",
+        "domicilio": "m",
+        "documento": "45",
+        "origen": "m",
+        "nombre": "ianhu",
+        "rol": "PASAJERO",
+        "username": "m"
+    },
+    {
         "password": "pizzaYcoca",
         "documento": "24.332.245",
         "ID": 1,
         "nombre": "Pedro",
         "rol": "RECEPCIONISTA",
         "username": "PedroHotel"
-    },
-    {
-        "password": "45",
-        "domicilio": "chile",
-        "documento": "45",
-        "origen": "arge",
-        "nombre": "ian",
-        "rol": "PASAJERO",
-        "username": "ianshu"
     },
     {
         "password": "contraseña123",

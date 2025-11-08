@@ -209,215 +209,219 @@ public class Main {
 
 
                 Usuario usuario=administrador1.buscarPorContraseña(password);
+                if(usuario == null)
+                {
+                    System.out.println("Datos incorrectos o usuario inexistente!");
+                }else {
+                    System.out.println("Iniciaste sesion como : " + usuario.getUsername());
 
 
-                boolean continuar=true;
+                    boolean continuar = true;
 
 
-
-                while (continuar){
-                    if(usuario instanceof Administrador){
-
-
-                        System.out.println("\n--- MENÚ ADMIN ---");
-                        System.out.println("1: Listar Usuario");
-                        System.out.println("2: Buscar un Usuario");
-                        System.out.println("3: Eliminar un Usuario");
-                        System.out.println("4: Crear Pasajero");
-                        System.out.println("5: Crear Recepcionista");
-                        System.out.println("6: Otorgar permisos Reserva");
-                        System.out.println("7: Otorgar permisos Checkin");
-                        System.out.println("8: Hacer un BackUp");
-
-                        int op=sc.nextInt();
-                        sc.nextLine();
-                       try {
-                           switch (op){
-                               case 1:
-                                   administrador1.listarUsuariosCreados();
-                                   break;
-
-                               case 2:
-                                   System.out.println("Ingrese el nombre de usuario a buscar: ");
-                                   String nombre=sc.nextLine();
-                                   Usuario aux=administrador1.buscarXUserName(nombre);
-                                   System.out.println(aux);
-                                   break;
-                               case 3:
-                                   System.out.println("Ingrese el nombre de usuario a eliminar: ");
-                                   nombre=sc.nextLine();
-                                   msj=administrador1.eliminarUsuario(nombre);
-                                   break;
-
-                               case 4:
-                                   String nombre1, documento, username, password1, origen, domicilio;
-                                   System.out.println("CREANDO PASAJERO");
-                                   System.out.println("Ingrese el nombre del PASAJERO :");
-                                   nombre1 = sc.nextLine();
-                                   System.out.println("Ingrese el documento del PASAJERO :");
-                                   documento = sc.next();
-                                   System.out.println("Ingrese el username del PASAJERO :");
-                                   username = sc.next();
-                                   System.out.println("Ingrese la contrasenia del PASAJERO : ");
-                                   password = sc.next();
-                                   sc.nextLine(); //Limpio el salto de linea
-                                   System.out.println("Ingrese el origen del PASAJERO :");
-                                   origen = sc.nextLine();
-                                   System.out.println("Ingrese el domicilio del PASAJERO :");
-                                   domicilio = sc.nextLine();
-                                   Pasajero pasajero = administrador1.crearPasajero(nombre1, documento, username, password, origen, domicilio);
-                                   if (pasajero != null) {
-                                       System.out.println("Pasajero creado correctamente!");
-                                       msj = administrador1.agregarUsuarioLista(pasajero);
-                                       System.out.println(msj);
-                                       msj = gestoraHotel.agregarElemento(pasajero);
-                                       System.out.println(msj);
-                                       System.out.println("Listando la informacion del PASAJERO creado :");
-                                       System.out.println(pasajero.toString());
-                                   } else {
-                                       System.out.println("Hubo un error al crear al pasajero!");
-                                   }
-
-                                   break;
-
-                               case 5:
+                    while (continuar) {
+                        if (usuario instanceof Administrador) {
 
 
-                                   System.out.println("CREANDO RECEPCIONISTA");
-                                   System.out.println("Ingrese el nombre del RECEPCIONISTA :");
-                                   nombre = sc.next();
-                                   System.out.println("Ingrese el documento del RECEPCIONISTA :");
-                                   documento = sc.next();
-                                   System.out.println("Ingrese el username del RECEPCIONISTA :");
-                                   username = sc.next();
-                                   System.out.println("Ingrese la contrasenia del RECEPCIONISTA : ");
-                                   password = sc.next();
-                                   Recepcionista recepcionista = administrador1.crearRecepcionista(nombre, documento, ROL.RECEPCIONISTA, username, password);
-                                   if (recepcionista != null) {
-                                       System.out.println("Recepcionista creado correctamente!");
-                                       msj = administrador1.agregarUsuarioLista(recepcionista);
-                                       System.out.println(msj);
-                                       msj = gestoraHotel.agregarElemento(recepcionista);
-                                       System.out.println(msj);
-                                       System.out.println("Listando la informacion del RECEPCIONISTA creado :");
-                                       System.out.println(recepcionista.toString());
-                                   } else {
-                                       System.out.println("Hubo un error al crear al Recepcionista!");
-                                   }
+                            System.out.println("\n--- MENÚ ADMIN ---");
+                            System.out.println("1: Listar Usuario");
+                            System.out.println("2: Buscar un Usuario");
+                            System.out.println("3: Eliminar un Usuario");
+                            System.out.println("4: Crear Pasajero");
+                            System.out.println("5: Crear Recepcionista");
+                            System.out.println("6: Otorgar permisos Reserva");
+                            System.out.println("7: Otorgar permisos Checkin");
+                            System.out.println("8: Hacer un BackUp");
 
-                                   break;
+                            int op = sc.nextInt();
+                            sc.nextLine();
+                            try {
+                                switch (op) {
+                                    case 1:
+                                        administrador1.listarUsuariosCreados();
+                                        break;
 
-                               case 6:
-                                   System.out.println("Ingrese el usuario del recepcionsta a otorgar permisos para CHECKIN: ");
-                                   msj=sc.nextLine();
-                                   Recepcionista r=administrador1.buscarRecepcionista(msj);
-                                   administrador1.otorgarPermisosCheckIn(r);
-                                   break;
+                                    case 2:
+                                        System.out.println("Ingrese el nombre de usuario a buscar: ");
+                                        String nombre = sc.nextLine();
+                                        Usuario aux = administrador1.buscarXUserName(nombre);
+                                        System.out.println(aux);
+                                        break;
+                                    case 3:
+                                        System.out.println("Ingrese el nombre de usuario a eliminar: ");
+                                        nombre = sc.nextLine();
+                                        msj = administrador1.eliminarUsuario(nombre);
+                                        break;
 
-                               case 7:
-                                   System.out.println("Ingrese el usuario del recepcionsta a otorgar permisos para CHECKOUT: ");
-                                   msj=sc.nextLine();
-                                   Recepcionista rr=administrador1.buscarRecepcionista(msj);
-                                   administrador1.otorgarPermisosCheckOut(rr);
-                                   break;
+                                    case 4:
+                                        String nombre1, documento, username, password1, origen, domicilio;
+                                        System.out.println("CREANDO PASAJERO");
+                                        System.out.println("Ingrese el nombre del PASAJERO :");
+                                        nombre1 = sc.nextLine();
+                                        System.out.println("Ingrese el documento del PASAJERO :");
+                                        documento = sc.next();
+                                        System.out.println("Ingrese el username del PASAJERO :");
+                                        username = sc.next();
+                                        System.out.println("Ingrese la contrasenia del PASAJERO : ");
+                                        password = sc.next();
+                                        sc.nextLine(); //Limpio el salto de linea
+                                        System.out.println("Ingrese el origen del PASAJERO :");
+                                        origen = sc.nextLine();
+                                        System.out.println("Ingrese el domicilio del PASAJERO :");
+                                        domicilio = sc.nextLine();
+                                        Pasajero pasajero = administrador1.crearPasajero(nombre1, documento, username, password, origen, domicilio);
+                                        if (pasajero != null) {
+                                            System.out.println("Pasajero creado correctamente!");
+                                            msj = administrador1.agregarUsuarioLista(pasajero);
+                                            System.out.println(msj);
+                                            msj = gestoraHotel.agregarElemento(pasajero);
+                                            System.out.println(msj);
+                                            System.out.println("Listando la informacion del PASAJERO creado :");
+                                            System.out.println(pasajero.toString());
+                                        } else {
+                                            System.out.println("Hubo un error al crear al pasajero!");
+                                        }
 
-                               case 8:
-                                   administrador1.backup();
-                                   break;
-                           }
-                       } catch (elementoNuloException e) {
-                           System.out.println(e.getMessage());
-                       } catch (elementoInsertadoException e) {
-                           throw new RuntimeException(e);
-                       } catch (elementoRepetidoException e) {
-                           throw new RuntimeException(e);
-                       }
+                                        break;
 
-                    } else if (usuario instanceof Pasajero) {
-                        Pasajero pasajero=(Pasajero) usuario;
+                                    case 5:
 
 
+                                        System.out.println("CREANDO RECEPCIONISTA");
+                                        System.out.println("Ingrese el nombre del RECEPCIONISTA :");
+                                        nombre = sc.next();
+                                        System.out.println("Ingrese el documento del RECEPCIONISTA :");
+                                        documento = sc.next();
+                                        System.out.println("Ingrese el username del RECEPCIONISTA :");
+                                        username = sc.next();
+                                        System.out.println("Ingrese la contrasenia del RECEPCIONISTA : ");
+                                        password = sc.next();
+                                        Recepcionista recepcionista = administrador1.crearRecepcionista(nombre, documento, ROL.RECEPCIONISTA, username, password);
+                                        if (recepcionista != null) {
+                                            System.out.println("Recepcionista creado correctamente!");
+                                            msj = administrador1.agregarUsuarioLista(recepcionista);
+                                            System.out.println(msj);
+                                            msj = gestoraHotel.agregarElemento(recepcionista);
+                                            System.out.println(msj);
+                                            System.out.println("Listando la informacion del RECEPCIONISTA creado :");
+                                            System.out.println(recepcionista.toString());
+                                        } else {
+                                            System.out.println("Hubo un error al crear al Recepcionista!");
+                                        }
 
-                        System.out.println("\n--- MENÚ PASAJERO ---");
-                        System.out.println("1: Crear Reserva");
-                        System.out.println("2: Salir");
+                                        break;
 
-                        int op= sc.nextInt();
-                        sc.nextLine();
+                                    case 6:
+                                        System.out.println("Ingrese el usuario del recepcionsta a otorgar permisos para CHECKIN: ");
+                                        msj = sc.nextLine();
+                                        Recepcionista r = administrador1.buscarRecepcionista(msj);
+                                        administrador1.otorgarPermisosCheckIn(r);
+                                        break;
 
-                       try {
-                           switch (op){
+                                    case 7:
+                                        System.out.println("Ingrese el usuario del recepcionsta a otorgar permisos para CHECKOUT: ");
+                                        msj = sc.nextLine();
+                                        Recepcionista rr = administrador1.buscarRecepcionista(msj);
+                                        administrador1.otorgarPermisosCheckOut(rr);
+                                        break;
 
-                               case 1:
+                                    case 8:
+                                        administrador1.backup();
+                                        break;
+                                }
+                            } catch (elementoNuloException e) {
+                                System.out.println(e.getMessage());
+                            } catch (elementoInsertadoException e) {
+                                throw new RuntimeException(e);
+                            } catch (elementoRepetidoException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                        } else if (usuario instanceof Pasajero) {
+                            Pasajero pasajero = (Pasajero) usuario;
+
+
+                            System.out.println("\n--- MENÚ PASAJERO ---");
+                            System.out.println("1: Crear Reserva");
+                            System.out.println("2: Salir");
+
+                            int op = sc.nextInt();
+                            sc.nextLine();
+
+                            try {
+                                switch (op) {
+
+                                    case 1:
                                    /*
                                    System.out.println("Ingrese el nombre del socilicitante de la reserva :");
                                    String nombre =  sc.nextLine();
 
                                     */
-                                   System.out.println("Ingrese el numero de habitacion que desea reservar");
-                                   int numeroHabitacion= sc.nextInt();
-                                   Habitaciones habitacion= gestoraHotel.buscarHabitacionXnumero(numeroHabitacion);
+                                        System.out.println("Ingrese el numero de habitacion que desea reservar");
+                                        int numeroHabitacion = sc.nextInt();
+                                        Habitaciones habitacion = gestoraHotel.buscarHabitacionXnumero(numeroHabitacion);
 
-                                   SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                                   Date fechaInicio = null;
-                                   Date fechaFin = null;
+                                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                                        Date fechaInicio = null;
+                                        Date fechaFin = null;
 
-                                   System.out.print("Ingrese fecha de inicio (dd/MM/yyyy): ");
-                                   String strInicio = sc.nextLine();
-                                   fechaInicio = formato.parse(strInicio);
+                                        System.out.print("Ingrese fecha de inicio (dd/MM/yyyy): ");
+                                        String strInicio = sc.nextLine();
+                                        fechaInicio = formato.parse(strInicio);
 
-                                   System.out.print("Ingrese fecha de fin (dd/MM/yyyy): ");
-                                   String strFin = sc.nextLine();
-                                   fechaFin = formato.parse(strFin);
+                                        System.out.print("Ingrese fecha de fin (dd/MM/yyyy): ");
+                                        String strFin = sc.nextLine();
+                                        fechaFin = formato.parse(strFin);
 
-                                   //AGREGAR EXPECTION
-                                   System.out.println("Ingrese la cantidad de personas en la reserva: ");
-                                   int cantPersonas= sc.nextInt();
-                                   pasajero.solicitarReserva(recepcionista1,habitacion,pasajero,fechaInicio,fechaFin,true,cantPersonas);
-                                   break;
-                               case 2:
-                                   System.out.println("Saliendo del menu...");
-                                   continuar = false;
-                                   break;
-                           }
+                                        //AGREGAR EXPECTION
+                                        System.out.println("Ingrese la cantidad de personas en la reserva: ");
+                                        int cantPersonas = sc.nextInt();
+                                        pasajero.solicitarReserva(recepcionista1, habitacion, pasajero, fechaInicio, fechaFin, true, cantPersonas);
+                                        break;
+                                    case 2:
+                                        System.out.println("Saliendo del menu...");
+                                        continuar = false;
+                                        break;
+                                }
 
-                       } catch (ParseException e) {
-                           throw new RuntimeException(e);
-                       }
+                            } catch (ParseException e) {
+                                throw new RuntimeException(e);
+                            }
 
-                    } else if (usuario instanceof Recepcionista) {
-                        Recepcionista recepcionista = (Recepcionista) usuario;
+                        } else if (usuario instanceof Recepcionista) {
+                            Recepcionista recepcionista = (Recepcionista) usuario;
 
-                        System.out.println("\n--- MENÚ RECEPCIONISTA ---");
-                        System.out.println("1: Realizar CheckIn");
-                        System.out.println("2: Realizar CheckOut");
-                        System.out.println("3: Salir");
+                            System.out.println("\n--- MENÚ RECEPCIONISTA ---");
+                            System.out.println("1: Realizar CheckIn");
+                            System.out.println("2: Realizar CheckOut");
+                            System.out.println("3: Salir");
 
-                        int op=sc.nextInt();
+                            int op = sc.nextInt();
 
-                        switch (op){
+                            switch (op) {
 
-                            case 1:
-                                System.out.println("Ingrese el documento del pasajero para realizar su checkin: ");
-                                String doc=sc.nextLine();
+                                case 1:
+                                    System.out.println("Ingrese el documento del pasajero para realizar su checkin: ");
+                                    String doc = sc.nextLine();
 
-                                recepcionista.realizarCheckIn(doc);
-                                break;
-                            case 2:
-                                System.out.println("Ingrese el documento del pasajero para realizar su checkout: ");
-                                String doc1=sc.nextLine();
+                                    recepcionista.realizarCheckIn(doc);
+                                    break;
+                                case 2:
+                                    System.out.println("Ingrese el documento del pasajero para realizar su checkout: ");
+                                    String doc1 = sc.nextLine();
 
-                                recepcionista.realizarCheckOut(doc1);
-                                break;
+                                    recepcionista.realizarCheckOut(doc1);
+                                    break;
 
-                            case 3:
-                                System.out.println("Saliendo...");
-                                continuar = false;
-                                break;
+                                case 3:
+                                    System.out.println("Saliendo...");
+                                    continuar = false;
+                                    break;
+                            }
+
                         }
 
                     }
-
                 }
             }else if(opcion == 3)
             {
