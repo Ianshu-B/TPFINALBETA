@@ -30,6 +30,7 @@ public class Main {
 
 try {
     administrador1.agregarUsuarioLista(administrador1);
+    administrador1.eliminarUsuario("ADMIN");
 
 } catch (elementoNuloException e) {
     throw new RuntimeException(e);
@@ -112,7 +113,8 @@ try {
                             try {
                                 switch (op) {
                                     case 1:
-                                        administrador1.listarUsuariosCreados();
+
+                                        System.out.println(administrador1.listarUsuariosCreados());
                                         break;
 
                                     case 2:
