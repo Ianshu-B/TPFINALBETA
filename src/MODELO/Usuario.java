@@ -104,15 +104,11 @@ public abstract class Usuario extends Persona implements ItoJson {
     public boolean equals(Object o) {
         if (!(o instanceof Usuario usuario)) return false;
         if (!super.equals(o)) return false;
-        return Objects.equals(password, usuario.password);
+        return Objects.equals(username, usuario.username) && Objects.equals(password, usuario.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), password);
+        return Objects.hash(super.hashCode(), username, password);
     }
-
-
-
-
 }

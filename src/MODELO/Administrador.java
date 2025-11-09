@@ -1,6 +1,8 @@
 package MODELO;
 
 import ENUMS.ROL;
+import EXCEPTIONS.RecepcionistaNoEncontradoException;
+import EXCEPTIONS.UsuarioNoEncontradoException;
 import EXCEPTIONS.elementoNuloException;
 import INTERFACE.ItoJson;
 import org.json.JSONArray;
@@ -13,10 +15,13 @@ import static ENUMS.ROL.RECEPCIONISTA;
 public class Administrador extends Usuario implements ItoJson {
     //NOS CREAMOS UNA UNICA INSTANCIA STATIC DE ADMIN PARA QUE PUEDA TENER ACCESESO CONSTANTE A TODO
     private static Administrador administradorUnico=new Administrador("ADMIN","44850150",ROL.ADMINISTRADOR,"ADMIN_HOTEL","PIZZA");
+
     private HashSet<Usuario> listaUsuariosCreados;
-    public Administrador(String nombre, String documento, ROL rol, String username, String password) {
+
+    private Administrador(String nombre, String documento, ROL rol, String username, String password) {
         super(nombre, documento, rol, username, password);
         this.listaUsuariosCreados = new HashSet<>();
+        this.listaUsuariosCreados.add(this);
     }
     /*
     public Administrador() { //COONSTRUCTOR VACIO
@@ -205,38 +210,57 @@ public class Administrador extends Usuario implements ItoJson {
     public void otorgarPermisosCheckOut(Recepcionista recepcionista){
 
     }
+
     //ACA FALTA COMPLETAR EXPECTION
-    public Usuario buscarPorContraseña(String contraseña){
+//    public Usuario buscarPorContraseña(String contraseña){
+//
+//            for(Usuario u:listaUsuariosCreados){
+//                if(u.getPassword() == contraseña){
+//                    return u;
+//                }
+//            }
+//        return null;
+//    }
 
-            for(Usuario u:listaUsuariosCreados){
-                if(u.getPassword().equals(contraseña)){
-                    return u;
-                }
-            }
-        return null;
-    }
-    //ACA FALTA COMPLETAR CON EXPECTION
-    public Usuario buscarXUserName(String userName){
-        StringBuilder sb=new StringBuilder();
-        for(Usuario u:listaUsuariosCreados){
+    public Usuario buscarXUserName(String userName) throws UsuarioNoEncontradoException {
+        if (userName == null || userName.isEmpty()) {
+            throw new UsuarioNoEncontradoException("El nombre de usuario ingresado es nulo o vacío.");
+        }
 
-            if(u.getUsername()==userName){
+        for (Usuario u : listaUsuariosCreados) {
+            if (u.getUsername().equalsIgnoreCase(userName)) {
                 return u;
             }
         }
-        return null;
+
+        throw new UsuarioNoEncontradoException("No se encontró un usuario con el nombre de usuario: " + userName);
     }
 
-    public Recepcionista buscarRecepcionista(String nombre){
-
-        for(Usuario u:listaUsuariosCreados){
-            if(u instanceof Recepcionista && u.getUsername()==nombre){
-                Recepcionista recepcionista=(Recepcionista) u;
-                return recepcionista;
-            }
-
+    public Usuario buscarUsuarioLogin(String username, String password) throws UsuarioNoEncontradoException {
+        if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
+            throw new UsuarioNoEncontradoException("Debe ingresar usuario y contraseña.");
         }
-        return null;
 
+        for (Usuario u : listaUsuariosCreados) {
+            if (u.getUsername().equalsIgnoreCase(username) && u.getPassword().equals(password)) {
+                return u;
+            }
+        }
+
+        throw new UsuarioNoEncontradoException("Usuario o contraseña incorrectos.");
+    }
+
+    public Recepcionista buscarRecepcionista(String nombre) throws RecepcionistaNoEncontradoException {
+        if (nombre == null || nombre.isEmpty()) {
+            throw new RecepcionistaNoEncontradoException("El nombre del recepcionista no puede ser nulo o vacío.");
+        }
+
+        for (Usuario u : listaUsuariosCreados) {
+            if (u instanceof Recepcionista && u.getUsername().equalsIgnoreCase(nombre)) {
+                return (Recepcionista) u;
+            }
+        }
+
+        throw new RecepcionistaNoEncontradoException("No se encontró un recepcionista con el nombre: " + nombre);
     }
 }

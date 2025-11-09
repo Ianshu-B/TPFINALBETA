@@ -29,9 +29,8 @@ public class Main {
 
 
 try {
-    administrador1.agregarUsuarioLista(administrador1);
-    administrador1.eliminarUsuario("ADMIN");
-
+    administrador1.agregarUsuarioLista(recepcionista1);
+    administrador1.agregarUsuarioLista(recepcionista2);
 } catch (elementoNuloException e) {
     throw new RuntimeException(e);
 }
@@ -49,6 +48,7 @@ try {
             System.out.println("2. Iniciar sesión");
             System.out.println("3. Salir");
             System.out.print("Opción: ");
+
             int opcion = sc.nextInt();
             sc.nextLine();
 
@@ -76,20 +76,16 @@ try {
             } else if (opcion==2) {
 
                 //ACA COMIENZA EL MENU SI EL USUARIO YA ESTABA CREADO
-
+                try {
                 System.out.println("Ingrese su nombre de usuario: ");
                 String user=sc.nextLine();
                 System.out.println("Ingrese su contraseña");
                 String password=sc.nextLine();
 
 
-                Usuario usuario=administrador1.buscarPorContraseña(password);
-                if(usuario == null)
-                {
-                    System.out.println("Datos incorrectos o usuario inexistente!");
-                }else {
-                    System.out.println("Iniciaste sesion como : " + usuario.getUsername());
 
+                    Usuario usuario = administrador1.buscarUsuarioLogin(user, password);
+                    System.out.println("Iniciaste sesión como: " + usuario.getUsername());
 
                     boolean continuar = true;
 
@@ -207,9 +203,7 @@ try {
                                 }
                             } catch (elementoNuloException e) {
                                 System.out.println(e.getMessage());
-                            } catch (elementoInsertadoException e) {
-                                throw new RuntimeException(e);
-                            } catch (elementoRepetidoException e) {
+                            } catch (elementoInsertadoException | elementoRepetidoException e) {
                                 throw new RuntimeException(e);
                             }
 
@@ -310,6 +304,8 @@ try {
                         }
 
                     }
+                }catch (UsuarioNoEncontradoException | RecepcionistaNoEncontradoException e) {
+                    System.out.println(e.getMessage());
                 }
             }else if(opcion == 3)
             {
