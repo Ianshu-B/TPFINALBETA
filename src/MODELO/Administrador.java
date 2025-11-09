@@ -29,6 +29,8 @@ public class Administrador extends Usuario implements ItoJson {
         return administradorUnico;
     }
 
+    //BUSCA UN RECEPCIONISTA PARA HACER UNA RESERVA CUADNO ES SOLICITADA
+    //AGEGAR LOGICA PARA SABER QUE RECEPCIONISTA DEVOLVER.
     public Recepcionista obtenerRecepcionista(){
 
         for(Usuario u:listaUsuariosCreados){

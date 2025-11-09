@@ -173,6 +173,7 @@ public class Recepcionista extends Usuario implements ItoJson {
         reservas.put(reserva.getPasajero().getDocumento(),reserva);
         reserva.setEstado(true);
         reserva.getHabitacion().setEstadoHabitacion(estadoHabitacion.RESERVADA);
+        reservaPendiente.remove(idReserva);
         return true;
     }
 
