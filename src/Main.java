@@ -1,4 +1,6 @@
 import ENUMS.ROL;
+import ENUMS.estadoHabitacion;
+import ENUMS.tamanioHabitacion;
 import EXCEPTIONS.*;
 import GESTORA.gestoraHotel;
 import INTERFACE.ItoJson;
@@ -22,7 +24,7 @@ public class Main {
         Recepcionista recepcionista2=new Recepcionista("Pedro","24.332.245",ROL.RECEPCIONISTA,"PedroHotel","pizzaYcoca");
         gestoraHotel<Persona>gestoraHotel=new gestoraHotel<>();
         gestoraHotel<Recepcionista>gestoraHotel1=new gestoraHotel<>();
-        habitacionPremium h1=new habitacionPremium();
+        habitacionPremium h1=new habitacionPremium(0, estadoHabitacion.LIBRE, tamanioHabitacion.GRANDE,false);
         Pasajero p1=new Pasajero();
         Date hoy = new Date();
         Date fin = new Date(hoy.getTime() + (3 * 24 * 60 * 60 * 1000));
