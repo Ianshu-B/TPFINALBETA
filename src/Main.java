@@ -278,6 +278,9 @@ try {
                                             System.out.println("Saliendo del menu...");
                                             continuar = false;
                                             break;
+                                        default:
+                                            System.out.println("Opcion incorrecta!");
+                                            break;
                                     }
 
                                 } catch (ParseException e) {
@@ -325,7 +328,11 @@ try {
                                         System.out.println("Saliendo...");
                                         continuar = false;
                                         break;
+                                    default:
+                                        System.out.println("Opcion incorrecta!");
+                                        break;
                                 }
+
 
                             }
 
