@@ -132,6 +132,7 @@ try {
                                             System.out.println("Ingrese el nombre de usuario a eliminar: ");
                                             nombre = sc.nextLine();
                                             msj = administrador1.eliminarUsuario(nombre);
+                                            System.out.println(msj);
                                             break;
 
                                         case 4:
@@ -144,13 +145,13 @@ try {
                                             System.out.println("Ingrese el username del PASAJERO :");
                                             username = sc.next();
                                             System.out.println("Ingrese la contrasenia del PASAJERO : ");
-                                            password = sc.next();
+                                            password1 = sc.next();
                                             sc.nextLine(); //Limpio el salto de linea
                                             System.out.println("Ingrese el origen del PASAJERO :");
                                             origen = sc.nextLine();
                                             System.out.println("Ingrese el domicilio del PASAJERO :");
                                             domicilio = sc.nextLine();
-                                            Pasajero pasajero = administrador1.crearPasajero(nombre1, documento, username, password, origen, domicilio);
+                                            Pasajero pasajero = administrador1.crearPasajero(nombre1, documento, username, password1, origen, domicilio);
                                             if (pasajero != null) {
                                                 System.out.println("Pasajero creado correctamente!");
                                                 msj = administrador1.agregarUsuarioLista(pasajero);
@@ -211,7 +212,6 @@ try {
                                             System.out.println("GENERANDO RESPALDO DE LOS USUARIOS...");
                                             JSONArray jsonTotal = administrador1.backup();
                                             JsonUtiles.grabarUnJson(jsonTotal,"totalBackup.json");
-
                                             break;
 
 
