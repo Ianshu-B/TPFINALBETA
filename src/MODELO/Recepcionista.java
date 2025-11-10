@@ -16,7 +16,7 @@ import java.util.HashSet;
 
 public class Recepcionista extends Usuario implements ItoJson {
     private int ID;
-    private int contador=1;
+    private static int contador=1;
     private boolean puedeReservar;
     private boolean puedeCheckIN;
     private HashMap<String,Reserva> reservas;
@@ -98,13 +98,52 @@ public class Recepcionista extends Usuario implements ItoJson {
 
 
 //AGREGAR VERIFICACIONES
-    public void cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas){
+public void cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
+                                   Date fechaInicio, Date fechaFin,
+                                   Boolean estado, int cantidadPersonas)
+        throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection {
 
-        Reserva pendiente=new Reserva(estado,fechaFin,fechaInico,habitacion,pasajero,cantidadPersonas);
-        pendiente.setEstado(false);
-        reservaPendiente.put(pendiente.getIdReserva(),pendiente);
-
+    //Verificamos los permisos
+    if (!puedeReservar) {
+        throw new sinPermisoParaReservaExpection("No tienes permiso para cargar una reserva pendiente.");
     }
+
+    //Validamos si no es datos nulos
+    if (habitacion == null || pasajero == null) {
+        throw new IllegalArgumentException("La habitación y el pasajero no pueden ser nulos.");
+    }
+
+    //Validamos las fechas
+    if (fechaFin.before(fechaInicio)) {
+        throw new FechaInvalidaExpection("La fecha de fin no puede ser anterior a la de inicio.");
+    }
+
+    //Verificamos si la habitación está disponible
+    if (habitacion.getEstadoHabitacion() == estadoHabitacion.OCUPADA ||
+            habitacion.getEstadoHabitacion() == estadoHabitacion.RESERVADA) {
+        throw new HabitacionYaRervadaExpection("La habitación seleccionada no está disponible para reserva.");
+    }
+
+    // Verificamos evitar sobre cargar con reservas existentes
+    for (Reserva r : reservas.values()) {
+        if (r.getHabitacion().equals(habitacion) &&
+                fechasSeSuperponen(fechaInicio, fechaFin, r.getFechaInicio(), r.getFechaFin())) {
+            throw new HabitacionYaRervadaExpection("La habitación ya está reservada en ese período.");
+        }
+    }
+
+    for (Reserva r : reservaPendiente.values()) {
+        if (r.getHabitacion().equals(habitacion) &&
+                fechasSeSuperponen(fechaInicio, fechaFin, r.getFechaInicio(), r.getFechaFin())) {
+            throw new HabitacionYaRervadaExpection("Ya existe una reserva pendiente para esta habitación en ese período.");
+        }
+    }
+
+    //Creamos una reserva pendiente
+    Reserva pendiente = new Reserva(estado, fechaFin, fechaInicio, habitacion, pasajero, cantidadPersonas);
+    pendiente.setEstado(false); // Pendiente = false (aún no confirmada)
+    reservaPendiente.put(pendiente.getIdReserva(), pendiente);
+}
 
     public String mostrarReservasPendientes() {
         StringBuilder sb = new StringBuilder();
@@ -133,35 +172,28 @@ public class Recepcionista extends Usuario implements ItoJson {
 
 
 
-
-
-
-
-
-
-
-
-
     //metodo para hacer reservas, recibe todos los valores de una reserva, y antes de crearla
     //verificamos que tenga permiso, que la fecha de fin no sea anterior a la fecha de inicio y
     //que las fechas no se superpongan con otras reservas
     //si esto se cumple se crea la reserva y se la guarda en la coleccion pertinente
 
     public boolean realizarReserva(int idReserva) throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection {
-        if (puedeReservar==false){
+        if (!puedeReservar){
         throw new sinPermisoParaReservaExpection("No tienes permiso para realizar una reserva");
         }
 
         Reserva reserva=reservaPendiente.get(idReserva);
 
-        if(reserva.getFechaFin().before(reserva.getFechaFin())){
-            throw new FechaInvalidaExpection("La fecha del fin de la reserva no puede ser anterior a la feceha de inicio");
+        if (reserva == null) {
+            throw new FechaInvalidaExpection("La reserva pendiente con ese ID no existe");
+        }
+
+        if (reserva.getFechaFin().before(reserva.getFechaInicio())) {
+            throw new FechaInvalidaExpection("La fecha de fin no puede ser anterior a la fecha de inicio");
         }
 
         for(Reserva r:reservas.values()){
-
             if(r.getHabitacion().equals(reserva.getHabitacion())){
-
                 if(r.isEstado() && fechasSeSuperponen(reserva.getFechaInicio(),reserva.getFechaFin(),r.getFechaInicio(),r.getFechaFin())){
                     throw new HabitacionYaRervadaExpection("La habitacion ya fue reservada");
 
@@ -180,45 +212,70 @@ public class Recepcionista extends Usuario implements ItoJson {
     //metodo para hacer un check in segun documento de pasajero, verificamos si tenemos los permisos
     //que la fecha en la q se hace el check in corresponda al incio de su reserva y que el documento coincida
     //con algun pasajero que haya hecho reserva
+
     public String realizarCheckIn(String documento) throws sinPermisoParaCheckInExpection, DocumentoNoCoincideExpection {
-        if(puedeCheckIN==false){
+        if(!puedeCheckIN){
             throw new sinPermisoParaCheckInExpection("No tienes permiso para realizar un check in");
         }
 
 
         LocalDate hoy = LocalDate.now();
+        boolean encontrado = false;
 
-        for(Reserva r:reservas.values()){
-            if(!r.getFechaInicio().equals(hoy))
-                throw new FechaDeCheckInInvalidaExpection("Fecha no correspondiente al check in");
-        }
+        for (Reserva r : reservas.values()) {
+            if (r.getPasajero().getDocumento().equals(documento)) {
+                encontrado = true;
 
+                // Convertimos Date a LocalDate para comparar correctamente
+                LocalDate fechaInicio = r.getFechaInicio().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
 
-        boolean flag=false;
+                if (!fechaInicio.equals(hoy)) {
+                    throw new FechaDeCheckInInvalidaExpection("No es la fecha correspondiente al inicio de la reserva");
+                }
 
-        for (Reserva r: reservas.values()){
-            if(r.getPasajero().getDocumento().equals(documento)){
                 r.setCheckIn(true);
                 r.getHabitacion().setEstadoHabitacion(estadoHabitacion.OCUPADA);
-                flag=true;
+
+                return "✅ Check-in realizado con éxito para el pasajero con documento: " + documento;
             }
         }
-        if(!flag){
-            throw new DocumentoNoCoincideExpection("El documento no coincide con una reserva existente");
+
+        throw new DocumentoNoCoincideExpection("El documento no coincide con ninguna reserva existente");
+
+    }
+
+
+    //METODO CHECKOUT
+        public String realizarCheckOut(String documento)
+            throws sinPermisoParaCheckInExpection, DocumentoNoCoincideExpection {
+
+        if (!puedeCheckIN) {
+            throw new sinPermisoParaCheckInExpection("No tienes permiso para realizar un check-out");
         }
 
+        for (Reserva r : reservas.values()) {
+            if (r.getPasajero().getDocumento().equals(documento)) {
+                if (!r.isCheckIn()) {
+                    return "No se puede hacer check-out, el pasajero aún no realizó el check-in.";
+                }
 
-     return "Check In realizado con exito para el pasajero con documento"+documento;
-    }
-    //TERMINAR
-    public String realizarCheckOut(String documento){
-        return "";
+                r.setCheckOut(true);
+                r.getHabitacion().setEstadoHabitacion(estadoHabitacion.LIBRE);
+                r.setEstado(false); // la reserva ya finalizó
+
+                return "Check-out realizado con éxito para el pasajero con documento: " + documento;
+            }
+        }
+
+        throw new DocumentoNoCoincideExpection("El documento no coincide con ninguna reserva existente");
     }
 
     //metodo para verificar superposicion de fechas
     private boolean fechasSeSuperponen(Date inicio1, Date fin1, Date inicio2, Date fin2) {
         return inicio1.before(fin2) && fin1.after(inicio2);
     }
+
+    
     @Override
     public JSONArray backup() throws JSONException // METODO ESPECIFICO PARA LA CLASE GENERICA
     {
