@@ -213,16 +213,6 @@ public class Administrador extends Usuario implements ItoJson {
 
     }
 
-    //ACA FALTA COMPLETAR EXPECTION
-//    public Usuario buscarPorContraseña(String contraseña){
-//
-//            for(Usuario u:listaUsuariosCreados){
-//                if(u.getPassword() == contraseña){
-//                    return u;
-//                }
-//            }
-//        return null;
-//    }
 
     public Usuario buscarXUserName(String userName) throws UsuarioNoEncontradoException {
         if (userName == null || userName.isEmpty()) {

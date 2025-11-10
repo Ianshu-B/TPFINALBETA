@@ -140,6 +140,7 @@ public void cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
     //si esto se cumple se crea la reserva y se la guarda en la coleccion pertinente
 
     public boolean realizarReserva(int idReserva) throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection {
+
         if (!puedeReservar){
         throw new sinPermisoParaReservaExpection("No tienes permiso para realizar una reserva");
         }

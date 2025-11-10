@@ -28,6 +28,7 @@ public class Main {
         Recepcionista r1=new Recepcionista("valentin","4345",ROL.RECEPCIONISTA,"valentindona","123v");
 
 
+
 try {
     administrador1.agregarUsuarioLista(recepcionista1);
     administrador1.agregarUsuarioLista(recepcionista2);
@@ -100,9 +101,10 @@ try {
                             System.out.println("3: Eliminar un Usuario");
                             System.out.println("4: Crear Pasajero");
                             System.out.println("5: Crear Recepcionista");
-                            System.out.println("6: Otorgar permisos Reserva");
-                            System.out.println("7: Otorgar permisos Checkin");
+                            System.out.println("6: Otorgar permisos Checkin");
+                            System.out.println("7: Otorgar permisos CheckOut");
                             System.out.println("8: Hacer un BackUp");
+                            System.out.println("9: Otorgar permisos Reserva");
 
                             int op = sc.nextInt();
                             sc.nextLine();
@@ -200,6 +202,14 @@ try {
                                     case 8:
                                         administrador1.backup();
                                         break;
+
+
+                                    case 9:
+                                        System.out.println("Ingrese el usuario del recepcionista a otorgar permisos para realizar Recerva: ");
+                                        msj = sc.nextLine();
+                                        Recepcionista rrr = administrador1.buscarRecepcionista(msj);
+                                        administrador1.otorgarPermisosReserva(rrr);
+                                        break;
                                 }
                             } catch (elementoNuloException e) {
                                 System.out.println(e.getMessage());
@@ -247,7 +257,7 @@ try {
                                         //AGREGAR EXPECTION
                                         System.out.println("Ingrese la cantidad de personas en la reserva: ");
                                         int cantPersonas = sc.nextInt();
-                                        pasajero.solicitarReserva( habitacion, pasajero, fechaInicio, fechaFin, true, cantPersonas);
+                                        pasajero.solicitarReserva(habitacion, pasajero, fechaInicio, fechaFin, true, cantPersonas);
                                         break;
                                     case 2:
                                         System.out.println("Saliendo del menu...");
