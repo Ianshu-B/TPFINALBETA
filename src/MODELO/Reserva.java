@@ -26,6 +26,24 @@ public class Reserva implements ItoJson {
 
 
     public Reserva(boolean estado, Date fechaFin, Date fechaInicio, Habitaciones habitacion, Pasajero pasajero,int cantidadPersonas) {
+        // Validaciones básicas
+
+        if (fechaInicio == null || fechaFin == null)
+            throw new IllegalArgumentException("Las fechas de inicio y fin no pueden ser nulas");
+
+        if (fechaFin.before(fechaInicio))
+            throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la fecha de inicio");
+
+        if (habitacion == null)
+            throw new IllegalArgumentException("Debe asignarse una habitación a la reserva");
+
+        if (pasajero == null)
+            throw new IllegalArgumentException("Debe asignarse un pasajero a la reserva");
+
+        if (cantidadPersonas <= 0)
+            throw new IllegalArgumentException("La cantidad de personas debe ser mayor que 0");
+
+
         this.estado = true;
         this.fechaFin = fechaFin;
         this.fechaInicio = fechaInicio;
@@ -117,18 +135,6 @@ public class Reserva implements ItoJson {
         this.cantidadPersonas = cantidadPersonas;
     }
 
-    //metodo para cancelar una reserva, si la reserva no fue ya cancelada
-    public String cancelarReserva() throws reservaYaCanceladaExpection {
-
-        if(estado == false){
-            throw new reservaYaCanceladaExpection("La reserva ya estaba cancelada");
-        }
-        estado=false;
-        habitacion.setEstadoHabitacion(estadoHabitacion.LIBRE);
-        return "Reserva cancelada con exito";
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Reserva reserva)) return false;
@@ -140,76 +146,90 @@ public class Reserva implements ItoJson {
         return Objects.hash(fechaInicio, fechaFin);
     }
 
+
     @Override
     public JSONArray backup() {
 
         JSONArray arregloReserva=new JSONArray();
         JSONObject object=new JSONObject();
         try {
-            object.put("Estado",this.estado);
-            object.put("Fecha de fin",this.fechaFin);
-            object.put("Fecha de Inicio",this.fechaInicio);
-            object.put("Habitacion",this.habitacion);
-            object.put("Pasajero",this.pasajero);
-            object.put("Cantidad Personas",this.cantidadPersonas);
-            object.put("ID",this.idReserva);
-            object.put("Costo: ",this.costoReserva);
+            object.put("idReserva", idReserva);
+            object.put("estado", estado);
+            object.put("fechaInicio", fechaInicio.toString());
+            object.put("fechaFin", fechaFin.toString());
+            object.put("habitacion", habitacion.toString());
+            object.put("pasajero", pasajero.toString());
+            object.put("cantidadPersonas", cantidadPersonas);
+            object.put("costoReserva", costoReserva);
+            object.put("checkIn", checkIn);
+            object.put("checkOut", checkOut);
             arregloReserva.put(object);
-
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error al crear backup de reserva", e);
         }
         return arregloReserva;
     }
 
 
+
+    //metodo para cancelar una reserva, si la reserva no fue ya cancelada
+    public String cancelarReserva() throws reservaYaCanceladaExpection {
+
+        if(!estado){
+            throw new reservaYaCanceladaExpection("La reserva ya estaba cancelada");
+        }
+        this.estado=false;
+        this.habitacion.setEstadoHabitacion(estadoHabitacion.LIBRE);
+        return "Reserva cancelada con exito";
+    }
+
+
+
     //metodo que calcula el costo de una reserva segun:
     //la cantidad de dias, tipo de habitacion y extras utilizados
+
     public double calcularCostoReserva(){
 
         long diasTotales= (fechaFin.getTime() - fechaInicio.getTime()) / (1000 * 60 * 60 * 24);
 
-        double extraHidromasaje=100;
-        double extraJacuzzi=100;
-        double extraCajaSeguridad=50;
-        double extraMiniBar=70;
-        double precio_base=diasTotales * habitacion.getCostoHabitacion();
+        if (diasTotales <= 0) diasTotales = 1; // Evita 0 días o negativos
 
-        if(this.habitacion instanceof habitacionDeluxe){
 
-            habitacionDeluxe habitacion1=(habitacionDeluxe) habitacion;
-            if(habitacion1.isJacuzzi()){
-                precio_base=precio_base+extraJacuzzi;
-                if(habitacion1.isHidromasaje()){
-                    precio_base=precio_base+extraHidromasaje;
-                }
-            } else if (this.habitacion instanceof habitacionMedium) {
-                habitacionMedium habitacion2=(habitacionMedium) habitacion;
-                if(habitacion2.isCajaSeguridad()){
-                    precio_base=precio_base+extraCajaSeguridad;
-                }
-            } else if (this.habitacion instanceof habitacionPremium) {
-                habitacionPremium habitacion3=(habitacionPremium) habitacion;
-                if(habitacion3.isMiniBar()){
-                    precio_base=precio_base+extraMiniBar;
-                }
-            }
+        double precioBase = diasTotales * habitacion.getCostoHabitacion();
+
+        //Extra según tipo de habitación
+
+        if (habitacion instanceof habitacionDeluxe habitacion1) {
+            if (habitacion1.isJacuzzi()) precioBase += 100;
+
+            if (habitacion1.isHidromasaje()) precioBase += 100;
+
+        } else if (habitacion instanceof habitacionMedium habitacion2) {
+
+            if (habitacion2.isCajaSeguridad()) precioBase += 50;
+
+        } else if (habitacion instanceof habitacionPremium habitacion3) {
+
+            if (habitacion3.isMiniBar()) precioBase += 70;
+
         }
 
-        return precio_base;
+        return precioBase;
     }
 
     @Override
     public String toString() {
         return "Reserva{" +
-                "cantidadPersonas=" + cantidadPersonas +
-                ", idReserva=" + idReserva +
-                ", habitacion=" + habitacion +
+                "id=" + idReserva +
                 ", pasajero=" + pasajero +
+                ", habitacion=" + habitacion +
                 ", fechaInicio=" + fechaInicio +
                 ", fechaFin=" + fechaFin +
-                ", estado=" + estado +
-                ", costoReserva=" + costoReserva +
+                ", cantidadPersonas=" + cantidadPersonas +
+                ", costo=" + costoReserva +
+                ", estado=" + (estado ? "Activa" : "Cancelada") +
+                ", checkIn=" + checkIn +
+                ", checkOut=" + checkOut +
                 '}';
     }
 }
