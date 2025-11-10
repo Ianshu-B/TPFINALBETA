@@ -36,9 +36,13 @@ public class Recepcionista extends Usuario implements ItoJson {
         this.ID = 0;
     }
 
+
+
     public HashMap<String, Reserva> getReservas() {
         return reservas;
     }
+
+
 
     public void setReservas(HashMap<String, Reserva> reservas) {
         this.reservas = reservas;
@@ -92,6 +96,7 @@ public class Recepcionista extends Usuario implements ItoJson {
         this.puedeReservar=valor;
     }
     public void habilitarCheckIn(boolean valor){
+
         this.puedeCheckIN=valor;
     }
 

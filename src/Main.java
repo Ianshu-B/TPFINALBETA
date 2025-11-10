@@ -27,7 +27,7 @@ public class Main {
         Date fin = new Date(hoy.getTime() + (3 * 24 * 60 * 60 * 1000));
         Recepcionista r1=new Recepcionista("valentin","4345",ROL.RECEPCIONISTA,"valentindona","123v");
 
-
+        System.out.println(recepcionista1.isPuedeReservar());
 
 try {
     administrador1.agregarUsuarioLista(recepcionista1);
@@ -208,7 +208,7 @@ try {
                                         System.out.println("Ingrese el usuario del recepcionista a otorgar permisos para realizar Recerva: ");
                                         msj = sc.nextLine();
                                         Recepcionista rrr = administrador1.buscarRecepcionista(msj);
-                                        administrador1.otorgarPermisosReserva(rrr);
+                                        System.out.println(administrador1.otorgarPermisosReserva(rrr));
                                         break;
                                 }
                             } catch (elementoNuloException e) {

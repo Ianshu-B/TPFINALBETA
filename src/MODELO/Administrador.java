@@ -197,9 +197,10 @@ public class Administrador extends Usuario implements ItoJson {
     }
     //FALTA METODO ASIGNAR PERMISOS QUE NO ME ACUERDO QUE FUNCION CUMPLE EXACTAMENTE
 
-    public void otorgarPermisosReserva(Recepcionista recepcionista){
+    public String otorgarPermisosReserva(Recepcionista recepcionista){
 
         recepcionista.habilitarReserva(true);
+        return "Permisos otorgados";
     }
 
     public String otorgarPermisosCheckIn(Recepcionista recepcionista){
