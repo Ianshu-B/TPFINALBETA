@@ -229,6 +229,7 @@ try {
                                     */
                                         System.out.println("Ingrese el numero de habitacion que desea reservar");
                                         int numeroHabitacion = sc.nextInt();
+                                        sc.nextLine();
                                         Habitaciones habitacion = gestoraHotel.buscarHabitacionXnumero(numeroHabitacion);
 
                                         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");

@@ -100,45 +100,7 @@ public class Recepcionista extends Usuario implements ItoJson {
 //AGREGAR VERIFICACIONES
 public void cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
                                    Date fechaInicio, Date fechaFin,
-                                   Boolean estado, int cantidadPersonas)
-        throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection {
-
-    //Verificamos los permisos
-    if (!puedeReservar) {
-        throw new sinPermisoParaReservaExpection("No tienes permiso para cargar una reserva pendiente.");
-    }
-
-    //Validamos si no es datos nulos
-    if (habitacion == null || pasajero == null) {
-        throw new IllegalArgumentException("La habitación y el pasajero no pueden ser nulos.");
-    }
-
-    //Validamos las fechas
-    if (fechaFin.before(fechaInicio)) {
-        throw new FechaInvalidaExpection("La fecha de fin no puede ser anterior a la de inicio.");
-    }
-
-    //Verificamos si la habitación está disponible
-    if (habitacion.getEstadoHabitacion() == estadoHabitacion.OCUPADA ||
-            habitacion.getEstadoHabitacion() == estadoHabitacion.RESERVADA) {
-        throw new HabitacionYaRervadaExpection("La habitación seleccionada no está disponible para reserva.");
-    }
-
-    // Verificamos evitar sobre cargar con reservas existentes
-    for (Reserva r : reservas.values()) {
-        if (r.getHabitacion().equals(habitacion) &&
-                fechasSeSuperponen(fechaInicio, fechaFin, r.getFechaInicio(), r.getFechaFin())) {
-            throw new HabitacionYaRervadaExpection("La habitación ya está reservada en ese período.");
-        }
-    }
-
-    for (Reserva r : reservaPendiente.values()) {
-        if (r.getHabitacion().equals(habitacion) &&
-                fechasSeSuperponen(fechaInicio, fechaFin, r.getFechaInicio(), r.getFechaFin())) {
-            throw new HabitacionYaRervadaExpection("Ya existe una reserva pendiente para esta habitación en ese período.");
-        }
-    }
-
+                                   Boolean estado, int cantidadPersonas) {
     //Creamos una reserva pendiente
     Reserva pendiente = new Reserva(estado, fechaFin, fechaInicio, habitacion, pasajero, cantidadPersonas);
     pendiente.setEstado(false); // Pendiente = false (aún no confirmada)
