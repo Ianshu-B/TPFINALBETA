@@ -109,6 +109,7 @@ try {
                                 System.out.println("7: Otorgar permisos CheckOut");
                                 System.out.println("8: Hacer un BackUp");
                                 System.out.println("9: Otorgar permisos Reserva");
+                                System.out.println("10: Salir");
 
                                 int op = sc.nextInt();
                                 sc.nextLine();
@@ -218,6 +219,12 @@ try {
                                             Recepcionista rrr = administrador1.buscarRecepcionista(msj);
                                             System.out.println(administrador1.otorgarPermisosReserva(rrr));
                                             break;
+                                        case 10:
+                                            System.out.println("Saliendo del menu...");
+                                            continuar = false;
+                                            break;
+                                        default:
+                                            System.out.println("Opcion incorrecta!");
                                     }
                                 } catch (elementoNuloException e) {
                                     System.out.println(e.getMessage());
