@@ -202,7 +202,7 @@ try {
                                             System.out.println("Ingrese el usuario del recepcionsta a otorgar permisos para CHECKOUT: ");
                                             msj = sc.nextLine();
                                             Recepcionista rr = administrador1.buscarRecepcionista(msj);
-                                            administrador1.otorgarPermisosCheckOut(rr);
+                                            System.out.println(administrador1.otorgarPermisosCheckOut(rr));
                                             break;
 
                                         case 8:
@@ -214,7 +214,7 @@ try {
 
 
                                         case 9:
-                                            System.out.println("Ingrese el usuario del recepcionista a otorgar permisos para realizar Recerva: ");
+                                            System.out.println("Ingrese el usuario del recepcionista a otorgar permisos para realizar Reserva: ");
                                             msj = sc.nextLine();
                                             Recepcionista rrr = administrador1.buscarRecepcionista(msj);
                                             System.out.println(administrador1.otorgarPermisosReserva(rrr));
@@ -226,7 +226,7 @@ try {
                                         default:
                                             System.out.println("Opcion incorrecta!");
                                     }
-                                } catch (elementoNuloException e) {
+                                } catch (elementoNuloException | FechaInvalidaExpection e) {
                                     System.out.println(e.getMessage());
                                 } catch (elementoInsertadoException | elementoRepetidoException e) {
                                     throw new RuntimeException(e);

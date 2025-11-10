@@ -210,7 +210,9 @@ public class Administrador extends Usuario implements ItoJson {
     }
 
     //TERMINAR ACA Y EN RECEPCIONISTA
-    public void otorgarPermisosCheckOut(Recepcionista recepcionista){
+    public String otorgarPermisosCheckOut(Recepcionista recepcionista){
+        recepcionista.habilitarCheckOut(true);
+        return "Permisos para check out otorgados";
 
     }
 

@@ -19,6 +19,7 @@ public class Recepcionista extends Usuario implements ItoJson {
     private static int contador=1;
     private boolean puedeReservar;
     private boolean puedeCheckIN;
+    private boolean puedeCheckOUT;
     private HashMap<String,Reserva> reservas;
     private HashMap<Integer,Reserva>reservaPendiente;
 
@@ -27,6 +28,7 @@ public class Recepcionista extends Usuario implements ItoJson {
         super(nombre, documento, rol, username, password);
         this.ID = contador++;
         this.puedeCheckIN=false;
+        this.puedeCheckOUT=false;
         this.puedeReservar=false;
         this.reservas=new HashMap<>();
         this.reservaPendiente=new HashMap<>();
@@ -58,6 +60,9 @@ public class Recepcionista extends Usuario implements ItoJson {
 
     public boolean isPuedeCheckIN() {
         return puedeCheckIN;
+    }
+    public boolean isPuedeCheckOUT() {
+        return puedeCheckOUT;
     }
 
     public boolean isPuedeReservar() {
@@ -98,6 +103,10 @@ public class Recepcionista extends Usuario implements ItoJson {
     public void habilitarCheckIn(boolean valor){
 
         this.puedeCheckIN=valor;
+    }
+    public void habilitarCheckOut(boolean valor){
+
+        this.puedeCheckOUT=valor;
     }
 
 
