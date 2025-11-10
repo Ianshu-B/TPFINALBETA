@@ -1,9 +1,18 @@
-[{
-    "password": "ml",
-    "domicilio": "m",
-    "documento": "45",
-    "origen": "m",
-    "nombre": "ianhu",
-    "rol": "PASAJERO",
-    "username": "m"
-}]
+[
+    {
+        "password": "PIZZA",
+        "documento": "44850150",
+        "nombre": "ADMIN",
+        "rol": "ADMINISTRADOR",
+        "username": "ADMIN_HOTEL"
+    },
+    {
+        "password": "45",
+        "domicilio": "chile",
+        "documento": "45",
+        "origen": "mardel",
+        "nombre": "ianPasajero",
+        "rol": "PASAJERO",
+        "username": "ianPasajeromdp"
+    }
+]

@@ -183,6 +183,7 @@ try {
                                                 System.out.println(msj);
                                                 System.out.println("Listando la informacion del RECEPCIONISTA creado :");
                                                 System.out.println(recepcionista.toString());
+
                                             } else {
                                                 System.out.println("Hubo un error al crear al Recepcionista!");
                                             }
@@ -204,7 +205,10 @@ try {
                                             break;
 
                                         case 8:
-                                            administrador1.backup();
+                                            System.out.println("GENERANDO RESPALDO DE LOS USUARIOS...");
+                                            JSONArray jsonTotal = administrador1.backup();
+                                            JsonUtiles.grabarUnJson(jsonTotal,"totalBackup.json");
+
                                             break;
 
 

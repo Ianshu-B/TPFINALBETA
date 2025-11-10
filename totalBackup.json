@@ -8,12 +8,28 @@
         "username": "JuanRecep123"
     },
     {
+        "password": "PIZZA",
+        "documento": "44850150",
+        "nombre": "ADMIN",
+        "rol": "ADMINISTRADOR",
+        "username": "ADMIN_HOTEL"
+    },
+    {
         "password": "45",
         "documento": "45",
         "ID": 4,
         "nombre": "ianshuRecepcionista",
         "rol": "RECEPCIONISTA",
         "username": "ianshuRecepcionistamdp"
+    },
+    {
+        "password": "45",
+        "domicilio": "chile",
+        "documento": "45",
+        "origen": "mardel",
+        "nombre": "ianPasajero",
+        "rol": "PASAJERO",
+        "username": "ianPasajeromdp"
     },
     {
         "password": "pizzaYcoca",
