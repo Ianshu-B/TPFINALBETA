@@ -187,7 +187,7 @@ try {
                                         System.out.println("Ingrese el usuario del recepcionsta a otorgar permisos para CHECKIN: ");
                                         msj = sc.nextLine();
                                         Recepcionista r = administrador1.buscarRecepcionista(msj);
-                                        administrador1.otorgarPermisosCheckIn(r);
+                                        System.out.println(administrador1.otorgarPermisosCheckIn(r));
                                         break;
 
                                     case 7:
