@@ -62,14 +62,14 @@ public class gestoraHabitaciones implements ItoJson {
         Habitaciones aux = buscarHabitacion(h);
         if(aux == null)
         {
-            throw new elementoNuloException("El elemento a eliminar es nulo!!.!");
+            throw new elementoNuloException("La habitacion a eliminar es nula!!.!");
         }
         if(listaHabitaciones.remove(aux))
         {
-            sb.append("Elemento borrado correctamente de la lista del HOTEL!").append("\n");
+            sb.append("Habitacion borrada correctamente de la lista del HOTEL!").append("\n");
         }else
         {
-            throw new elementoBorradoException("ERROR. no se pudo borrar el elemento de la lista del HOTEL!");
+            throw new elementoBorradoException("ERROR. no se pudo borrar la habitacion de la lista!");
         }
         return sb.toString();
     }
@@ -78,7 +78,7 @@ public class gestoraHabitaciones implements ItoJson {
     public JSONArray backup() throws JSONException, listaUsuariosVacioException //TOJSON de la generica
     {
         if(listaHabitaciones.isEmpty()){
-            throw new listaUsuariosVacioException("Lista de usuarios vacía, no se creará backup.");
+            throw new listaUsuariosVacioException("Lista de habitaciones vacía, no se creará backup.");
         }
 
         JSONArray jsonArray = new JSONArray();

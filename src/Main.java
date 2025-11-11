@@ -5,7 +5,9 @@ import EXCEPTIONS.*;
 import GESTORA.gestoraHotel;
 import INTERFACE.ItoJson;
 import MODELO.*;
+import GESTORA.*;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.sql.SQLOutput;
 import java.text.ParseException;
@@ -24,6 +26,7 @@ public class Main {
         Recepcionista recepcionista2=new Recepcionista("Pedro","24.332.245",ROL.RECEPCIONISTA,"PedroHotel","pizzaYcoca");
         gestoraHotel<Persona>gestoraHotel=new gestoraHotel<>();
         gestoraHotel<Recepcionista>gestoraHotel1=new gestoraHotel<>();
+        gestoraHabitaciones gestoraHabitaciones = new gestoraHabitaciones();
         habitacionPremium h1=new habitacionPremium(0, estadoHabitacion.LIBRE, tamanioHabitacion.GRANDE,false, false, false);
         Pasajero p1=new Pasajero();
         Date hoy = new Date();
@@ -107,11 +110,15 @@ try {
                                 System.out.println("3: Eliminar un Usuario");
                                 System.out.println("4: Crear Pasajero");
                                 System.out.println("5: Crear Recepcionista");
-                                System.out.println("6: Otorgar permisos Checkin");
-                                System.out.println("7: Otorgar permisos CheckOut");
-                                System.out.println("8: Hacer un BackUp");
-                                System.out.println("9: Otorgar permisos Reserva");
-                                System.out.println("10: Salir");
+                                System.out.println("6: Crear habitacion");
+                                System.out.println("7: Listar habitaciones");
+                                System.out.println("8: Buscar habitacion");
+                                System.out.println("9: Eliminar habitacion");
+                                System.out.println("10: Otorgar permisos Checkin");
+                                System.out.println("11: Otorgar permisos CheckOut");
+                                System.out.println("12: Hacer un BackUp");
+                                System.out.println("13: Otorgar permisos Reserva");
+                                System.out.println("14: Salir");
 
                                 int op = sc.nextInt();
                                 sc.nextLine();
@@ -195,20 +202,107 @@ try {
                                             break;
 
                                         case 6:
+
+                                            System.out.println("Que tipo de habitacion vas a crear?");
+                                            System.out.println("1: Habitacion Estandar");
+                                            System.out.println("2: Habitacion Medium");
+                                            System.out.println("3: Habitacion Premium");
+                                            System.out.println("4: Habitacion Deluxe");
+                                            int numHabitacion;
+                                            String tamanioHab;
+
+
+                                            opcion = sc.nextInt();
+                                            if(opcion == 1){
+                                                System.out.println("ESTANDAR");
+                                                System.out.println("Numero de habitacion: ");
+                                                numHabitacion = sc.nextInt();
+                                                sc.nextLine();
+                                                System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANA o GRANDE");
+                                                tamanioHab = sc.nextLine();
+                                                habitacionEstandar habitacionEstandar = new habitacionEstandar(numHabitacion, estadoHabitacion.LIBRE, tamanioHabitacion.valueOf(tamanioHab.toUpperCase()));
+                                                msj = gestoraHabitaciones.agregarHabitacion(habitacionEstandar);
+                                                System.out.println(msj);
+
+                                            } else if (opcion == 2) {
+                                                System.out.println("MEDIUM");
+                                                System.out.println("Numero de habitacion: ");
+                                                numHabitacion = sc.nextInt();
+                                                sc.nextLine();
+                                                System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANA o GRANDE");
+                                                tamanioHab = sc.nextLine();
+                                                System.out.println("Desea incluir caja de seguridad? (S/N)");
+                                                String incCajaFuerte = sc.nextLine();
+                                                boolean cajaFuerte = incCajaFuerte.equalsIgnoreCase("S");
+                                                System.out.println("Desea incluir desayuno buffet?");
+                                                String incDesayuno = sc.nextLine();
+                                                boolean desayuno = incDesayuno.equalsIgnoreCase("S");
+                                                System.out.println("Desea incluir room service?");
+                                                String incRoomService = sc.nextLine();
+                                                boolean roomService = incRoomService.equalsIgnoreCase("S");
+
+                                                habitacionMedium habitacionMedium = new habitacionMedium(numHabitacion, estadoHabitacion.LIBRE, tamanioHabitacion.valueOf(tamanioHab.toUpperCase()), cajaFuerte, desayuno,roomService);
+                                                msj = gestoraHabitaciones.agregarHabitacion(habitacionMedium);
+                                                System.out.println(msj);
+
+                                            } else if (opcion == 3) {
+                                                System.out.println("PREMIUM");
+                                                System.out.println("Numero de habitacion: ");
+                                                numHabitacion = sc.nextInt();
+                                                sc.nextLine();
+                                                System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANA o GRANDE");
+                                                tamanioHab = sc.nextLine();
+                                                System.out.println("Desea incluir minibar? (S/N)");
+                                                String incMiniBar = sc.nextLine();
+                                                boolean miniBar = incMiniBar.equalsIgnoreCase("S");
+                                                System.out.println("Desea incluir SPA? (S/N)");
+                                                String incSpa = sc.nextLine();
+                                                boolean spa = incSpa.equalsIgnoreCase("S");
+                                                System.out.println("Desea incluir vista al mar? (S/N)");
+                                                String incVistaMar = sc.nextLine();
+                                                boolean vistaMar = incVistaMar.equalsIgnoreCase("S");
+
+                                                habitacionPremium habitacionPremium = new habitacionPremium(numHabitacion, estadoHabitacion.LIBRE, tamanioHabitacion.valueOf(tamanioHab.toUpperCase()),miniBar,spa,vistaMar);
+                                                msj = gestoraHabitaciones.agregarHabitacion(habitacionPremium);
+                                                System.out.println(msj);
+
+                                            } else if (opcion == 4) {
+                                                System.out.println("DELUXE");
+                                                System.out.println("Numero de habitacion: ");
+                                                numHabitacion = sc.nextInt();
+                                                sc.nextLine();
+                                                System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANA o GRANDE");
+                                                tamanioHab = sc.nextLine();
+                                                System.out.println("Desea incluir jacuzzi? (S/N)");
+                                                String incJacuzzi = sc.nextLine();
+                                                boolean jacuzzi = incJacuzzi.equalsIgnoreCase("S");
+                                                System.out.println("Desea incluir hidromasaje? (S/N)");
+                                                String incHidromasaje = sc.nextLine();
+                                                boolean hidromasaje = incHidromasaje.equalsIgnoreCase("S");
+
+                                                habitacionDeluxe habitacionDeluxe = new habitacionDeluxe(numHabitacion, estadoHabitacion.LIBRE, tamanioHabitacion.valueOf(tamanioHab.toUpperCase()), jacuzzi,hidromasaje);
+                                                msj = gestoraHabitaciones.agregarHabitacion(habitacionDeluxe);
+                                                System.out.println(msj);
+                                            }else{
+                                                System.out.println("Opcion incorrecta.");
+                                            }
+
+
+                                        case 10:
                                             System.out.println("Ingrese el usuario del recepcionsta a otorgar permisos para CHECKIN: ");
                                             msj = sc.nextLine();
                                             Recepcionista r = administrador1.buscarRecepcionista(msj);
                                             System.out.println(administrador1.otorgarPermisosCheckIn(r));
                                             break;
 
-                                        case 7:
+                                        case 11:
                                             System.out.println("Ingrese el usuario del recepcionsta a otorgar permisos para CHECKOUT: ");
                                             msj = sc.nextLine();
                                             Recepcionista rr = administrador1.buscarRecepcionista(msj);
                                             System.out.println(administrador1.otorgarPermisosCheckOut(rr));
                                             break;
 
-                                        case 8:
+                                        case 12:
                                             System.out.println("GENERANDO RESPALDO DE LOS USUARIOS...");
                                             JSONArray jsonTotal = administrador1.backup();
                                             JsonUtiles.grabarUnJson(jsonTotal,"totalBackup.json");
@@ -216,22 +310,26 @@ try {
                                             break;
 
 
-                                        case 9:
+                                        case 13:
                                             System.out.println("Ingrese el usuario del recepcionista a otorgar permisos para realizar Reserva: ");
                                             msj = sc.nextLine();
                                             Recepcionista rrr = administrador1.buscarRecepcionista(msj);
                                             System.out.println(administrador1.otorgarPermisosReserva(rrr));
                                             break;
-                                        case 10:
+                                        case 14:
                                             System.out.println("Saliendo del menu...");
                                             continuar = false;
                                             jsonTotal = administrador1.backup();
                                             JsonUtiles.grabarUnJson(jsonTotal, "totalBackup.json");
+
+                                            jsonTotal = gestoraHabitaciones.backup();
+                                            JsonUtiles.grabarUnJson(jsonTotal, "habitacionesBackup.json");
                                             break;
                                         default:
                                             System.out.println("Opcion incorrecta!");
                                     }
-                                } catch (elementoNuloException | FechaInvalidaExpection | elementoInsertadoException | elementoRepetidoException | listaUsuariosVacioException e) {
+                                } catch (elementoNuloException | FechaInvalidaExpection | elementoInsertadoException |
+                                         elementoRepetidoException | listaUsuariosVacioException | JSONException e) {
                                     System.out.println(e.getMessage());
                                 }
 
