@@ -1,0 +1,96 @@
+package GESTORA;
+
+import EXCEPTIONS.*;
+import INTERFACE.ItoJson;
+import MODELO.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.HashSet;
+
+public class gestoraHabitaciones implements ItoJson {
+    private HashSet<Habitaciones> listaHabitaciones;
+
+    public gestoraHabitaciones() {
+        this.listaHabitaciones = new HashSet<>();
+    }
+
+    //AGREGAR
+    public String agregarHabitacion(Habitaciones h) throws elementoNuloException, elementoInsertadoException, elementoRepetidoException{
+        StringBuilder sb = new StringBuilder();
+        if(h == null)
+        {
+            throw new elementoNuloException("No se permite agregar elementos nulos a las habitaciones!");
+        }
+        if(listaHabitaciones.contains(h))
+        {
+            throw new elementoRepetidoException("La habitacion ya se encuentra en la lista!");
+        }
+        if(listaHabitaciones.add(h))
+        {
+            sb.append("Habitacion agregada correctamente a la lista de HABITACIONES!").append("\n");
+        }else
+        {
+            throw new elementoInsertadoException("No se pudo insertar la habitacion a la lista!");
+        }
+        return sb.toString();
+    }
+
+    //LISTAR
+    public String listarHabitaciones(){
+        StringBuilder sb = new StringBuilder();
+
+        for(Habitaciones h : listaHabitaciones){
+            sb.append(h.toString()).append("\n");
+        }
+        return sb.toString();
+    }
+
+    //BUSCAR
+    public Habitaciones buscarHabitacion(Habitaciones habitacion){
+        for(Habitaciones h : listaHabitaciones){
+            if(h.equals(habitacion)){
+                return habitacion;
+            }
+        }
+        return null;
+    }
+
+    //ELIMINAR
+    public String eliminarHabitacion(Habitaciones h) throws elementoNuloException, elementoBorradoException{
+        StringBuilder sb = new StringBuilder();
+        Habitaciones aux = buscarHabitacion(h);
+        if(aux == null)
+        {
+            throw new elementoNuloException("El elemento a eliminar es nulo!!.!");
+        }
+        if(listaHabitaciones.remove(aux))
+        {
+            sb.append("Elemento borrado correctamente de la lista del HOTEL!").append("\n");
+        }else
+        {
+            throw new elementoBorradoException("ERROR. no se pudo borrar el elemento de la lista del HOTEL!");
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public JSONArray backup() throws JSONException, listaUsuariosVacioException //TOJSON de la generica
+    {
+        if(listaHabitaciones.isEmpty()){
+            throw new listaUsuariosVacioException("Lista de usuarios vacía, no se creará backup.");
+        }
+
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for(Habitaciones h : listaHabitaciones)
+            {
+                jsonArray.put(h.backup());
+            }
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
+}

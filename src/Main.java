@@ -286,6 +286,8 @@ try {
                                             break;
                                     }
 
+                                }catch (NumeroNegativoException e) {
+                                    System.out.println(e.getMessage());
                                 } catch (ParseException e) {
                                     throw new RuntimeException(e);
                                 }

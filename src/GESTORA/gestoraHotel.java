@@ -98,7 +98,10 @@ public class gestoraHotel <T extends ItoJson> implements ItoJson {
 
     }
     //AGREGAR EXPECTIONS
-    public Habitaciones buscarHabitacionXnumero(int numeroHabitacion){
+    public Habitaciones buscarHabitacionXnumero(int numeroHabitacion) throws NumeroNegativoException{
+        if(numeroHabitacion < 0){
+            throw new NumeroNegativoException("Numero de habitacion no valido");
+        }
 
         for(T e:listaGeneral){
             if (e instanceof Habitaciones){
