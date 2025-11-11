@@ -15,23 +15,6 @@
         "username": "ADMIN_HOTEL"
     },
     {
-        "password": "lauti123",
-        "domicilio": "Pueyrredon 281",
-        "documento": "44831150",
-        "origen": "Argentina",
-        "nombre": "Lautaro",
-        "rol": "PASAJERO",
-        "username": "alvarezlautaro"
-    },
-    {
-        "password": "insano123",
-        "documento": "13267894",
-        "ID": 4,
-        "nombre": "Valentin",
-        "rol": "RECEPCIONISTA",
-        "username": "valenInsane"
-    },
-    {
         "password": "pizzaYcoca",
         "documento": "24.332.245",
         "ID": 2,

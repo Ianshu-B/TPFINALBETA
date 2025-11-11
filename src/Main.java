@@ -223,7 +223,7 @@ try {
                                                 System.out.println("Numero de habitacion: ");
                                                 numHabitacion = sc.nextInt();
                                                 sc.nextLine();
-                                                System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANA o GRANDE");
+                                                System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANO o GRANDE");
                                                 tamanioHab = sc.nextLine();
                                                 habitacionEstandar habitacionEstandar = new habitacionEstandar(numHabitacion, estadoHabitacion.LIBRE, tamanioHabitacion.valueOf(tamanioHab.toUpperCase()));
                                                 msj = gestoraHabitaciones.agregarHabitacion(habitacionEstandar);
@@ -234,7 +234,7 @@ try {
                                                 System.out.println("Numero de habitacion: ");
                                                 numHabitacion = sc.nextInt();
                                                 sc.nextLine();
-                                                System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANA o GRANDE");
+                                                System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANO o GRANDE");
                                                 tamanioHab = sc.nextLine();
                                                 System.out.println("Desea incluir caja de seguridad? (S/N)");
                                                 String incCajaFuerte = sc.nextLine();
@@ -255,7 +255,7 @@ try {
                                                 System.out.println("Numero de habitacion: ");
                                                 numHabitacion = sc.nextInt();
                                                 sc.nextLine();
-                                                System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANA o GRANDE");
+                                                System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANO o GRANDE");
                                                 tamanioHab = sc.nextLine();
                                                 System.out.println("Desea incluir minibar? (S/N)");
                                                 String incMiniBar = sc.nextLine();
@@ -276,7 +276,7 @@ try {
                                                 System.out.println("Numero de habitacion: ");
                                                 numHabitacion = sc.nextInt();
                                                 sc.nextLine();
-                                                System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANA o GRANDE");
+                                                System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANO o GRANDE");
                                                 tamanioHab = sc.nextLine();
                                                 System.out.println("Desea incluir jacuzzi? (S/N)");
                                                 String incJacuzzi = sc.nextLine();
@@ -341,12 +341,15 @@ try {
                                             break;
                                         case 14:
                                             System.out.println("Saliendo del menu...");
-                                            continuar = false;
+
                                             jsonTotal = administrador1.backup();
                                             JsonUtiles.grabarUnJson(jsonTotal, "totalBackup.json");
 
-                                            jsonTotal = gestoraHabitaciones.backup();
-                                            JsonUtiles.grabarUnJson(jsonTotal, "habitacionesBackup.json");
+                                            JSONArray jsonHabitaciones = gestoraHabitaciones.backup();
+                                            JsonUtiles.grabarUnJson(jsonHabitaciones, "habitacionesBackup.json");
+
+                                            continuar = false;
+
                                             break;
                                         default:
                                             System.out.println("Opcion incorrecta!");
@@ -355,6 +358,8 @@ try {
                                          elementoRepetidoException | listaUsuariosVacioException | JSONException |
                                          elementoBorradoException e) {
                                     System.out.println(e.getMessage());
+                                } catch (IllegalArgumentException e){
+                                    System.out.println("Tamanio de habitacion no valido.");
                                 }
 
                             } else if (usuario instanceof Pasajero) {
