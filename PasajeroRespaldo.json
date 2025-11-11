@@ -1,18 +1,9 @@
-[
-    {
-        "password": "PIZZA",
-        "documento": "44850150",
-        "nombre": "ADMIN",
-        "rol": "ADMINISTRADOR",
-        "username": "ADMIN_HOTEL"
-    },
-    {
-        "password": "45",
-        "domicilio": "chile",
-        "documento": "45",
-        "origen": "mardel",
-        "nombre": "ianPasajero",
-        "rol": "PASAJERO",
-        "username": "ianPasajeromdp"
-    }
-]
+[{
+    "password": "lauti123",
+    "domicilio": "Pueyrredon 281",
+    "documento": "44831150",
+    "origen": "Argentina",
+    "nombre": "Lautaro",
+    "rol": "PASAJERO",
+    "username": "alvarezlautaro"
+}]

@@ -4,6 +4,7 @@ import ENUMS.ROL;
 import EXCEPTIONS.RecepcionistaNoEncontradoException;
 import EXCEPTIONS.UsuarioNoEncontradoException;
 import EXCEPTIONS.elementoNuloException;
+import EXCEPTIONS.listaUsuariosVacioException;
 import INTERFACE.ItoJson;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -156,8 +157,11 @@ public class Administrador extends Usuario implements ItoJson {
     //METODO BACKUP SOLUCIONADO, CONSULTAR CON EQUIPO O PROFE JIJIJ
 
     @Override
-    public JSONArray backup()
+    public JSONArray backup() throws listaUsuariosVacioException
     {
+        if(listaUsuariosCreados.isEmpty()){
+            throw new listaUsuariosVacioException("Lista de usuarios vacía, no se creará backup.");
+        }
         JSONArray jsonArrayRecepcionistas = new JSONArray();
         JSONArray jsonArrayPasajeros = new JSONArray();
         JSONArray totalElementosJsonArray = new JSONArray();
@@ -167,7 +171,7 @@ public class Administrador extends Usuario implements ItoJson {
                 if(u instanceof Recepcionista)
                 {
                     jsonArrayRecepcionistas.put(u.toJson());
-                }else
+                }else if(u instanceof Pasajero)
                 {
                     jsonArrayPasajeros.put(u.toJson());
                 }

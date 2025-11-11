@@ -1,9 +1,6 @@
 package GESTORA;
 
-import EXCEPTIONS.elementoBorradoException;
-import EXCEPTIONS.elementoInsertadoException;
-import EXCEPTIONS.elementoNuloException;
-import EXCEPTIONS.elementoRepetidoException;
+import EXCEPTIONS.*;
 import INTERFACE.ItoJson;
 import MODELO.Habitaciones;
 import org.json.JSONArray;
@@ -85,7 +82,7 @@ public class gestoraHotel <T extends ItoJson> implements ItoJson {
 
 
     @Override
-    public JSONArray backup() throws JSONException //TOJSON de la generica
+    public JSONArray backup() throws JSONException, listaUsuariosVacioException //TOJSON de la generica
     {
         JSONArray jsonArray = new JSONArray();
         try {

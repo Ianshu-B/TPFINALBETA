@@ -212,6 +212,7 @@ try {
                                             System.out.println("GENERANDO RESPALDO DE LOS USUARIOS...");
                                             JSONArray jsonTotal = administrador1.backup();
                                             JsonUtiles.grabarUnJson(jsonTotal,"totalBackup.json");
+                                            System.out.println("Backup realizado correctamente");
                                             break;
 
 
@@ -224,14 +225,14 @@ try {
                                         case 10:
                                             System.out.println("Saliendo del menu...");
                                             continuar = false;
+                                            jsonTotal = administrador1.backup();
+                                            JsonUtiles.grabarUnJson(jsonTotal, "totalBackup.json");
                                             break;
                                         default:
                                             System.out.println("Opcion incorrecta!");
                                     }
-                                } catch (elementoNuloException | FechaInvalidaExpection e) {
+                                } catch (elementoNuloException | FechaInvalidaExpection | elementoInsertadoException | elementoRepetidoException | listaUsuariosVacioException e) {
                                     System.out.println(e.getMessage());
-                                } catch (elementoInsertadoException | elementoRepetidoException e) {
-                                    throw new RuntimeException(e);
                                 }
 
                             } else if (usuario instanceof Pasajero) {
@@ -344,6 +345,7 @@ try {
                     }
                 } else if (opcion == 3) {
                     System.out.println("SALIENDO DEL SISTEMA");
+
                     break;
                 }
             }catch (InputMismatchException e)

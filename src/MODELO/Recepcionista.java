@@ -254,7 +254,7 @@ public void cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
 
     
     @Override
-    public JSONArray backup() throws JSONException // METODO ESPECIFICO PARA LA CLASE GENERICA
+    public JSONArray backup() throws JSONException, listaUsuariosVacioException // METODO ESPECIFICO PARA LA CLASE GENERICA
     {
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = super.backup();

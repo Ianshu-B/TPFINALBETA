@@ -1,6 +1,7 @@
 package MODELO;
 
 import ENUMS.ROL;
+import EXCEPTIONS.listaUsuariosVacioException;
 import INTERFACE.ItoJson;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,7 +65,7 @@ public class Pasajero extends Usuario implements ItoJson {
     }
     //FALTAN METODOS
     @Override
-    public JSONArray backup() throws JSONException //ESPECIFICO PARA LA CLASE GENERICA
+    public JSONArray backup() throws JSONException, listaUsuariosVacioException //ESPECIFICO PARA LA CLASE GENERICA
     {
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = super.backup();

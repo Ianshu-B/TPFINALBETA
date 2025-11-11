@@ -15,21 +15,21 @@
         "username": "ADMIN_HOTEL"
     },
     {
-        "password": "45",
-        "documento": "45",
-        "ID": 4,
-        "nombre": "ianshuRecepcionista",
-        "rol": "RECEPCIONISTA",
-        "username": "ianshuRecepcionistamdp"
+        "password": "lauti123",
+        "domicilio": "Pueyrredon 281",
+        "documento": "44831150",
+        "origen": "Argentina",
+        "nombre": "Lautaro",
+        "rol": "PASAJERO",
+        "username": "alvarezlautaro"
     },
     {
-        "password": "45",
-        "domicilio": "chile",
-        "documento": "45",
-        "origen": "mardel",
-        "nombre": "ianPasajero",
-        "rol": "PASAJERO",
-        "username": "ianPasajeromdp"
+        "password": "insano123",
+        "documento": "13267894",
+        "ID": 4,
+        "nombre": "Valentin",
+        "rol": "RECEPCIONISTA",
+        "username": "valenInsane"
     },
     {
         "password": "pizzaYcoca",

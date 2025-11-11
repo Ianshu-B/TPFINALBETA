@@ -1,5 +1,6 @@
 package MODELO;
 
+import EXCEPTIONS.listaUsuariosVacioException;
 import INTERFACE.ItoJson;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,7 +71,7 @@ public abstract class Persona implements ItoJson {
 
     }
     @Override
-    public JSONArray backup() throws JSONException //ESPECIFICO PARA LA CLASE GENERICA
+    public JSONArray backup() throws JSONException, listaUsuariosVacioException //ESPECIFICO PARA LA CLASE GENERICA
     {
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
