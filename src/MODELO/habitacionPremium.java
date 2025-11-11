@@ -9,10 +9,14 @@ import org.json.JSONObject;
 
 public class habitacionPremium extends Habitaciones implements ItoJson {
     private boolean miniBar;
+    private boolean spa;
+    private boolean vistaMar;
 
-    public habitacionPremium(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion, boolean miniBar) {
+    public habitacionPremium(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion, boolean miniBar, boolean spa, boolean vistaMar) {
         super(numeroHabitacion, estadoHabitacion, tamanioHabitacion);
         this.miniBar = miniBar;
+        this.spa = spa;
+        this.vistaMar = vistaMar;
     }
     public habitacionPremium() {
         super(0, ENUMS.estadoHabitacion.LIBRE, ENUMS.tamanioHabitacion.GRANDE); //Por defecto
@@ -26,6 +30,22 @@ public class habitacionPremium extends Habitaciones implements ItoJson {
 
     public void setMiniBar(boolean miniBar) { //Supongo que el is es por el tipo de atributo
         this.miniBar = miniBar;
+    }
+
+    public boolean isSpa() {
+        return spa;
+    }
+
+    public void setSpa(boolean spa) {
+        this.spa = spa;
+    }
+
+    public boolean isVistaMar() {
+        return vistaMar;
+    }
+
+    public void setVistaMar(boolean vistaMar) {
+        this.vistaMar = vistaMar;
     }
 
     @Override

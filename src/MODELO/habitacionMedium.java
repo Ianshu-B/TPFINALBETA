@@ -9,10 +9,14 @@ import org.json.JSONObject;
 
 public class habitacionMedium extends Habitaciones implements ItoJson {
     private boolean cajaSeguridad;
+    private boolean desayunoBuffet;
+    private boolean roomService;
 
-    public habitacionMedium(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion, boolean cajaSeguridad) {
+    public habitacionMedium(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion, boolean cajaSeguridad, boolean desayunoBuffet, boolean roomService) {
         super(numeroHabitacion, estadoHabitacion, tamanioHabitacion);
         this.cajaSeguridad = cajaSeguridad;
+        this.desayunoBuffet = desayunoBuffet;
+        this.roomService = roomService;
         this.costoHabitacion=getCostoHabitacion()*2;
     }
     public habitacionMedium() {
@@ -26,6 +30,22 @@ public class habitacionMedium extends Habitaciones implements ItoJson {
 
     public void setCajaSeguridad(boolean cajaSeguridad) {  //Supongo que el is es por el tipo de atributo
         this.cajaSeguridad = cajaSeguridad;
+    }
+
+    public boolean isDesayunoBuffet() {
+        return desayunoBuffet;
+    }
+
+    public void setDesayunoBuffet(boolean desayunoBuffet) {
+        this.desayunoBuffet = desayunoBuffet;
+    }
+
+    public boolean isRoomService() {
+        return roomService;
+    }
+
+    public void setRoomService(boolean roomService) {
+        this.roomService = roomService;
     }
 
     @Override
