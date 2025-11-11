@@ -28,6 +28,11 @@ public class Main {
         gestoraHotel<Recepcionista>gestoraHotel1=new gestoraHotel<>();
         gestoraHabitaciones gestoraHabitaciones = new gestoraHabitaciones();
         habitacionPremium h1=new habitacionPremium(0, estadoHabitacion.LIBRE, tamanioHabitacion.GRANDE,false, false, false);
+        try {
+            gestoraHabitaciones.agregarHabitacion(h1);
+        } catch (elementoNuloException | elementoInsertadoException | elementoRepetidoException e) {
+            System.out.println(e.getMessage());
+        }
         Pasajero p1=new Pasajero();
         Date hoy = new Date();
         Date fin = new Date(hoy.getTime() + (3 * 24 * 60 * 60 * 1000));
@@ -286,7 +291,25 @@ try {
                                             }else{
                                                 System.out.println("Opcion incorrecta.");
                                             }
+                                            break;
 
+                                        case 7:
+                                            System.out.println(gestoraHabitaciones.listarHabitaciones());
+                                            break;
+
+                                        case 8:
+                                            System.out.println("Ingresa el numero de habitacion:");
+                                            int nroHabitacion = sc.nextInt();
+                                            Habitaciones h = gestoraHabitaciones.buscarHabitacion(nroHabitacion);
+                                            System.out.println(h.toString());
+                                            break;
+
+                                        case 9:
+                                            System.out.println("Ingresa el numero de la habitacion a eliminar: ");
+                                            nroHabitacion = sc.nextInt();
+                                            msj = gestoraHabitaciones.eliminarHabitacion(nroHabitacion);
+                                            System.out.println(msj);
+                                            break;
 
                                         case 10:
                                             System.out.println("Ingrese el usuario del recepcionsta a otorgar permisos para CHECKIN: ");
@@ -329,7 +352,8 @@ try {
                                             System.out.println("Opcion incorrecta!");
                                     }
                                 } catch (elementoNuloException | FechaInvalidaExpection | elementoInsertadoException |
-                                         elementoRepetidoException | listaUsuariosVacioException | JSONException e) {
+                                         elementoRepetidoException | listaUsuariosVacioException | JSONException |
+                                         elementoBorradoException e) {
                                     System.out.println(e.getMessage());
                                 }
 

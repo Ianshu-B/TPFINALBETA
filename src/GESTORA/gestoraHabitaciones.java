@@ -50,16 +50,26 @@ public class gestoraHabitaciones implements ItoJson {
     public Habitaciones buscarHabitacion(Habitaciones habitacion){
         for(Habitaciones h : listaHabitaciones){
             if(h.equals(habitacion)){
-                return habitacion;
+                return h;
+            }
+        }
+        return null;
+    }
+
+    //BUSCAR POR NRO HABITACION
+    public Habitaciones buscarHabitacion(int nroHabitacion){
+        for(Habitaciones h : listaHabitaciones){
+            if(h.getNumeroHabitacion() == nroHabitacion){
+                return h;
             }
         }
         return null;
     }
 
     //ELIMINAR
-    public String eliminarHabitacion(Habitaciones h) throws elementoNuloException, elementoBorradoException{
+    public String eliminarHabitacion(int nroHabitacion) throws elementoNuloException, elementoBorradoException{
         StringBuilder sb = new StringBuilder();
-        Habitaciones aux = buscarHabitacion(h);
+        Habitaciones aux = buscarHabitacion(nroHabitacion);
         if(aux == null)
         {
             throw new elementoNuloException("La habitacion a eliminar es nula!!.!");
