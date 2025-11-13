@@ -3,18 +3,16 @@ package MODELO;
 import ENUMS.ROL;
 import ENUMS.estadoHabitacion;
 import EXCEPTIONS.*;
-import INTERFACE.ItoJson;
+import INTERFACE.IJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 
-public class Recepcionista extends Usuario implements ItoJson {
+public class Recepcionista extends Usuario implements IJson {
     private int ID;
     private static int contador=1;
     private boolean puedeReservar;
@@ -89,6 +87,23 @@ public class Recepcionista extends Usuario implements ItoJson {
 
         return jsonObject;
 
+    }
+    public static Recepcionista fromJson(JSONObject jsonObject) throws JSONException
+    {
+        Recepcionista aux = new Recepcionista();
+        try {
+            aux.setNombre(jsonObject.getString("nombre"));
+            aux.setDocumento(jsonObject.getString("documento"));
+            aux.setRol(ROL.valueOf(jsonObject.getString("rol")));
+            aux.setUsername(jsonObject.getString("username"));
+            aux.setPassword(jsonObject.getString("password"));
+            aux.setID(jsonObject.getInt("ID"));
+
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return aux;
     }
     //FALTAN METODOS ESPECIFICOS
 

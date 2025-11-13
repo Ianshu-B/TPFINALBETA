@@ -1,13 +1,11 @@
 package MODELO;
 
-import ENUMS.estadoHabitacion;
-import ENUMS.tamanioHabitacion;
-import INTERFACE.ItoJson;
+import INTERFACE.IJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class habitacionMedium extends Habitaciones implements ItoJson {
+public class habitacionMedium extends Habitaciones implements IJson {
     private boolean cajaSeguridad;
     private boolean desayunoBuffet;
     private boolean roomService;

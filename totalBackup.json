@@ -15,6 +15,23 @@
         "username": "ADMIN_HOTEL"
     },
     {
+        "password": "4545",
+        "documento": "45",
+        "ID": 4,
+        "nombre": "papita",
+        "rol": "RECEPCIONISTA",
+        "username": "recepcionistaCreadoDespues"
+    },
+    {
+        "password": "4545",
+        "domicilio": "chile",
+        "documento": "45",
+        "origen": "arge",
+        "nombre": "ian",
+        "rol": "PASAJERO",
+        "username": "pasajeroNuevoIan"
+    },
+    {
         "password": "pizzaYcoca",
         "documento": "24.332.245",
         "ID": 2,

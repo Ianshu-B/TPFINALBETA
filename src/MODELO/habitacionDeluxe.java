@@ -1,13 +1,11 @@
 package MODELO;
 
-import ENUMS.estadoHabitacion;
-import ENUMS.tamanioHabitacion;
-import INTERFACE.ItoJson;
+import INTERFACE.IJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class habitacionDeluxe extends Habitaciones implements ItoJson {
+public class habitacionDeluxe extends Habitaciones implements IJson {
 
     private boolean jacuzzi; //True tiene, false no tiene. NO SE ME OCURRIO OTRA COSA AAAAAAAAA
     private boolean hidromasaje; //True tiene, false no tiene. NO SE ME OCURRIO OTRA COSA AAAAAAAAA

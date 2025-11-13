@@ -2,14 +2,14 @@ package MODELO;
 
 import ENUMS.ROL;
 import EXCEPTIONS.listaUsuariosVacioException;
-import INTERFACE.ItoJson;
+import INTERFACE.IJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
 
-public class Pasajero extends Usuario implements ItoJson {
+public class Pasajero extends Usuario implements IJson {
     private String origen; //PAIS DE LA PERSONA
     private String domicilio;
 
@@ -63,6 +63,24 @@ public class Pasajero extends Usuario implements ItoJson {
         return jsonObject;
 
     }
+    public static Pasajero fromJson(JSONObject jsonObject) throws JSONException
+    {
+        Pasajero aux = new Pasajero();
+        try {
+            aux.setNombre(jsonObject.getString("nombre"));
+            aux.setDocumento(jsonObject.getString("documento"));
+            aux.setRol(ROL.valueOf(jsonObject.getString("rol")));
+            aux.setUsername(jsonObject.getString("username"));
+            aux.setPassword(jsonObject.getString("password"));
+            aux.setDomicilio(jsonObject.getString("domicilio"));
+            aux.setOrigen(jsonObject.getString("origen"));
+
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return aux;
+    }
     //FALTAN METODOS
     @Override
     public JSONArray backup() throws JSONException, listaUsuariosVacioException //ESPECIFICO PARA LA CLASE GENERICA
@@ -78,7 +96,6 @@ public class Pasajero extends Usuario implements ItoJson {
             e.printStackTrace();
         }
         return jsonArray;
-
 
     }
 

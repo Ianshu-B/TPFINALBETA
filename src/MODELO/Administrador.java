@@ -5,15 +5,14 @@ import EXCEPTIONS.RecepcionistaNoEncontradoException;
 import EXCEPTIONS.UsuarioNoEncontradoException;
 import EXCEPTIONS.elementoNuloException;
 import EXCEPTIONS.listaUsuariosVacioException;
-import INTERFACE.ItoJson;
+import INTERFACE.IJson;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashSet;
 
-import static ENUMS.ROL.RECEPCIONISTA;
-
-public class Administrador extends Usuario implements ItoJson {
+public class Administrador extends Usuario implements IJson {
     //NOS CREAMOS UNA UNICA INSTANCIA STATIC DE ADMIN PARA QUE PUEDA TENER ACCESESO CONSTANTE A TODO
     private static Administrador administradorUnico=new Administrador("ADMIN","44850150",ROL.ADMINISTRADOR,"ADMIN_HOTEL","PIZZA");
 
@@ -24,12 +23,13 @@ public class Administrador extends Usuario implements ItoJson {
         this.listaUsuariosCreados = new HashSet<>();
         this.listaUsuariosCreados.add(this);
     }
-    /*
+
     public Administrador() { //COONSTRUCTOR VACIO
         super("", "", ROL.ADMINISTRADOR, "", "");
         this.listaUsuariosCreados = new HashSet<>();
     }
-*/
+
+
     //ESTE METODO NOS DEVUELVE EL ADMIN UNICO QUE EXISTE
     public static Administrador getAdmin(){
         return administradorUnico;
@@ -155,7 +155,35 @@ public class Administrador extends Usuario implements ItoJson {
      */
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //METODO BACKUP SOLUCIONADO, CONSULTAR CON EQUIPO O PROFE JIJIJ
+public JSONObject toJson()  throws JSONException // toJson propio de admin
+{
+    JSONObject jsonObject = new JSONObject();
+    try {
+        jsonObject = super.toJson();
 
+    }catch (JSONException e)
+    {
+        e.printStackTrace();
+    }
+    return  jsonObject;
+}
+
+public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fromJson propio de admin
+{
+    //Utilizo this porque solo tenemos una unica instancia de administrador en el gestor.
+    try {
+        this.setNombre(jsonObject.getString("nombre"));
+        this.setDocumento(jsonObject.getString("documento"));
+        this.setRol(ROL.valueOf(jsonObject.getString("rol")));
+        this.setUsername(jsonObject.getString("username"));
+        this.setPassword(jsonObject.getString("password"));
+    }catch (JSONException e)
+    {
+        e.printStackTrace();
+    }
+    return this; //Retorno this por el comentario de arriba.
+
+}
     @Override
     public JSONArray backup() throws listaUsuariosVacioException
     {
@@ -199,6 +227,61 @@ public class Administrador extends Usuario implements ItoJson {
             }
         return totalElementosJsonArray;
     }
+
+    public void devolverDatosJson(JSONArray jsonArray) throws JSONException
+    {
+        Usuario aux; //Referencia de Usuario donde despues en el switch le voy a guardar un objeto concreto
+        try {
+            for(int i = 0; i < jsonArray.length();i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i); //Almaceno un objeto del JsonArray en un auxiliar
+                ROL rol = ROL.valueOf(jsonObject.getString("rol")); //Casteo de ENUM a string el tipo de dato que tenga almacenado en rol desde el JSON
+                switch (rol)
+                {
+                    case PASAJERO:
+                        Pasajero p = Pasajero.fromJson(jsonObject);
+                        listaUsuariosCreados.add(p); //Reconstruyo la collection de la clase desde el Json
+                        break;
+                    case RECEPCIONISTA:
+                        Recepcionista r = Recepcionista.fromJson(jsonObject);
+                        listaUsuariosCreados.add(r); //Reconstruyo la collection de la clase desde el Json
+                        break;
+                    case ADMINISTRADOR:
+                        Administrador a = Administrador.getAdmin(); // Guardo el retorno de getAdmin
+                        a = a.fromJson(jsonObject);
+                        aux = a;
+                        listaUsuariosCreados.add(aux); //Reconstruyo la collection de la clase desde el Json
+                        break;
+
+                    default:
+                        throw new IllegalArgumentException("Elemento desconocido!"); //Esto lo saque del segundo parcial teorico de progra
+
+                }
+
+                //Los fromJson los hice estaticos para que devuelva un objeto ya completo. Salvo admin obviamente porque queremos una unica instancia de ese objeto.
+
+            }
+
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+    /*
+    public Administrador fromJson(JSONObject jsonObject) throws JSONException
+    {
+        Administrador aux = new Administrador();
+        try {
+               aux.setNombre();
+
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+     */
     //FALTA METODO ASIGNAR PERMISOS QUE NO ME ACUERDO QUE FUNCION CUMPLE EXACTAMENTE
 
     public String otorgarPermisosReserva(Recepcionista recepcionista){

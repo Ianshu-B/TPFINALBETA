@@ -2,7 +2,7 @@ package MODELO;
 
 import ENUMS.estadoHabitacion;
 import EXCEPTIONS.reservaYaCanceladaExpection;
-import INTERFACE.ItoJson;
+import INTERFACE.IJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import java.util.Date;
 import java.util.Objects;
 
-public class Reserva implements ItoJson {
+public class Reserva implements IJson {
 
     private static int contadorID=1;
     private int idReserva;

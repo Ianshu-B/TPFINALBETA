@@ -1,1 +1,9 @@
-[]
+[{
+    "password": "4545",
+    "domicilio": "chile",
+    "documento": "45",
+    "origen": "arge",
+    "nombre": "ian",
+    "rol": "PASAJERO",
+    "username": "pasajeroNuevoIan"
+}]

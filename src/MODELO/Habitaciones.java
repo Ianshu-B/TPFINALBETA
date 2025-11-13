@@ -3,7 +3,7 @@ import ENUMS.estadoHabitacion;
 import ENUMS.tamanioHabitacion;
 import EXCEPTIONS.elementoNuloException;
 import EXCEPTIONS.pasajeroRepetidoException;
-import INTERFACE.ItoJson;
+import INTERFACE.IJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import java.util.HashSet;
 import java.util.Objects;
 
-public abstract class Habitaciones implements ItoJson {
+public abstract class Habitaciones implements IJson {
     protected int numeroHabitacion;
     protected estadoHabitacion estadoHabitacion;
     protected tamanioHabitacion tamanioHabitacion;

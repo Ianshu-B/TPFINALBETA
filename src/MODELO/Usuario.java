@@ -2,14 +2,14 @@ package MODELO;
 
 import ENUMS.ROL;
 import EXCEPTIONS.listaUsuariosVacioException;
-import INTERFACE.ItoJson;
+import INTERFACE.IJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
 
-public abstract class Usuario extends Persona implements ItoJson {
+public abstract class Usuario extends Persona implements IJson {
     protected ROL rol;
     protected String username;
     protected String password;

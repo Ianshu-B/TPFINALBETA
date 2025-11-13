@@ -8,6 +8,14 @@
         "username": "JuanRecep123"
     },
     {
+        "password": "4545",
+        "documento": "45",
+        "ID": 4,
+        "nombre": "papita",
+        "rol": "RECEPCIONISTA",
+        "username": "recepcionistaCreadoDespues"
+    },
+    {
         "password": "pizzaYcoca",
         "documento": "24.332.245",
         "ID": 2,

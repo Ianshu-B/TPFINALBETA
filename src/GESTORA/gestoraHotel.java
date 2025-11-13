@@ -1,14 +1,14 @@
 package GESTORA;
 
 import EXCEPTIONS.*;
-import INTERFACE.ItoJson;
+import INTERFACE.IJson;
 import MODELO.Habitaciones;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class gestoraHotel <T extends ItoJson> implements ItoJson {
+public class gestoraHotel <T extends IJson> implements IJson {
     private ArrayList<T> listaGeneral;
 
     public gestoraHotel() {

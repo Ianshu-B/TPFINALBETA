@@ -3,13 +3,11 @@ import ENUMS.estadoHabitacion;
 import ENUMS.tamanioHabitacion;
 import EXCEPTIONS.*;
 import GESTORA.gestoraHotel;
-import INTERFACE.ItoJson;
 import MODELO.*;
 import GESTORA.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -107,7 +105,17 @@ try {
 
                         while (continuar) {
                             if (usuario instanceof Administrador) {
+                                try {
+                                    String JsonAux = JsonUtiles.leer("totalBackup");
+                                    //leerUnJson devuelve un tokener, mientras que leer devuelve un String.
+                                    //no se si esta bien, pero funciona sorprendentemente
+                                    JSONArray Array = new JSONArray(JsonAux);
+                                    administrador1.devolverDatosJson(Array);
 
+                                }catch (JSONException e)
+                                {
+                                    System.out.println(e.getMessage());
+                                }
 
                                 System.out.println("\n--- MENÚ ADMIN ---");
                                 System.out.println("1: Listar Usuario");
@@ -130,6 +138,7 @@ try {
                                 try {
                                     switch (op) {
                                         case 1:
+
 
                                             System.out.println(administrador1.listarUsuariosCreados());
                                             break;

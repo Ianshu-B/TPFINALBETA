@@ -1,14 +1,14 @@
 package MODELO;
 
 import EXCEPTIONS.listaUsuariosVacioException;
-import INTERFACE.ItoJson;
+import INTERFACE.IJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
 
-public abstract class Persona implements ItoJson {
+public abstract class Persona implements IJson {
     protected String nombre;
     protected String documento;
 
@@ -85,6 +85,8 @@ public abstract class Persona implements ItoJson {
         }
         return jsonArray;
     }
+
+
 
 
 }

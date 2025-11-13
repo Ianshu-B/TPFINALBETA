@@ -1,14 +1,14 @@
 package GESTORA;
 
 import EXCEPTIONS.*;
-import INTERFACE.ItoJson;
+import INTERFACE.IJson;
 import MODELO.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.HashSet;
 
-public class gestoraHabitaciones implements ItoJson {
+public class gestoraHabitaciones implements IJson {
     private HashSet<Habitaciones> listaHabitaciones;
 
     public gestoraHabitaciones() {
