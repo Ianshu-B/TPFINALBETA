@@ -10,11 +10,11 @@ public class habitacionPremium extends Habitaciones implements IJson {
     private boolean spa;
     private boolean vistaMar;
 
-    public habitacionPremium(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion, boolean miniBar, boolean spa, boolean vistaMar) {
+    public habitacionPremium(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion) {
         super(numeroHabitacion, estadoHabitacion, tamanioHabitacion);
-        this.miniBar = miniBar;
-        this.spa = spa;
-        this.vistaMar = vistaMar;
+        this.miniBar = false;
+        this.spa = false;
+        this.vistaMar = false;
     }
     public habitacionPremium() {
         super(0, ENUMS.estadoHabitacion.LIBRE, ENUMS.tamanioHabitacion.GRANDE); //Por defecto

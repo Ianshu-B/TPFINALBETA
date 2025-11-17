@@ -10,11 +10,11 @@ public class habitacionMedium extends Habitaciones implements IJson {
     private boolean desayunoBuffet;
     private boolean roomService;
 
-    public habitacionMedium(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion, boolean cajaSeguridad, boolean desayunoBuffet, boolean roomService) {
+    public habitacionMedium(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion) {
         super(numeroHabitacion, estadoHabitacion, tamanioHabitacion);
-        this.cajaSeguridad = cajaSeguridad;
-        this.desayunoBuffet = desayunoBuffet;
-        this.roomService = roomService;
+        this.cajaSeguridad = false;
+        this.desayunoBuffet = false;
+        this.roomService = false;
         this.costoHabitacion=getCostoHabitacion()*2;
     }
     public habitacionMedium() {

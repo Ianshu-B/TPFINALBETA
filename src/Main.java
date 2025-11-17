@@ -25,7 +25,7 @@ public class Main {
         gestoraHotel<Persona>gestoraHotel=new gestoraHotel<>();
         gestoraHotel<Recepcionista>gestoraHotel1=new gestoraHotel<>();
         gestoraHabitaciones gestoraHabitaciones = new gestoraHabitaciones();
-        habitacionPremium h1=new habitacionPremium(0, estadoHabitacion.LIBRE, tamanioHabitacion.GRANDE,false, false, false);
+        habitacionPremium h1=new habitacionPremium(0, estadoHabitacion.LIBRE, tamanioHabitacion.GRANDE);
         try {
             gestoraHabitaciones.agregarHabitacion(h1);
         } catch (elementoNuloException | elementoInsertadoException | elementoRepetidoException e) {
@@ -245,17 +245,8 @@ try {
                                                 sc.nextLine();
                                                 System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANO o GRANDE");
                                                 tamanioHab = sc.nextLine();
-                                                System.out.println("Desea incluir caja de seguridad? (S/N)");
-                                                String incCajaFuerte = sc.nextLine();
-                                                boolean cajaFuerte = incCajaFuerte.equalsIgnoreCase("S");
-                                                System.out.println("Desea incluir desayuno buffet?");
-                                                String incDesayuno = sc.nextLine();
-                                                boolean desayuno = incDesayuno.equalsIgnoreCase("S");
-                                                System.out.println("Desea incluir room service?");
-                                                String incRoomService = sc.nextLine();
-                                                boolean roomService = incRoomService.equalsIgnoreCase("S");
 
-                                                habitacionMedium habitacionMedium = new habitacionMedium(numHabitacion, estadoHabitacion.LIBRE, tamanioHabitacion.valueOf(tamanioHab.toUpperCase()), cajaFuerte, desayuno,roomService);
+                                                habitacionMedium habitacionMedium = new habitacionMedium(numHabitacion, estadoHabitacion.LIBRE, tamanioHabitacion.valueOf(tamanioHab.toUpperCase()));
                                                 msj = gestoraHabitaciones.agregarHabitacion(habitacionMedium);
                                                 System.out.println(msj);
 
@@ -266,17 +257,8 @@ try {
                                                 sc.nextLine();
                                                 System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANO o GRANDE");
                                                 tamanioHab = sc.nextLine();
-                                                System.out.println("Desea incluir minibar? (S/N)");
-                                                String incMiniBar = sc.nextLine();
-                                                boolean miniBar = incMiniBar.equalsIgnoreCase("S");
-                                                System.out.println("Desea incluir SPA? (S/N)");
-                                                String incSpa = sc.nextLine();
-                                                boolean spa = incSpa.equalsIgnoreCase("S");
-                                                System.out.println("Desea incluir vista al mar? (S/N)");
-                                                String incVistaMar = sc.nextLine();
-                                                boolean vistaMar = incVistaMar.equalsIgnoreCase("S");
 
-                                                habitacionPremium habitacionPremium = new habitacionPremium(numHabitacion, estadoHabitacion.LIBRE, tamanioHabitacion.valueOf(tamanioHab.toUpperCase()),miniBar,spa,vistaMar);
+                                                habitacionPremium habitacionPremium = new habitacionPremium(numHabitacion, estadoHabitacion.LIBRE, tamanioHabitacion.valueOf(tamanioHab.toUpperCase()));
                                                 msj = gestoraHabitaciones.agregarHabitacion(habitacionPremium);
                                                 System.out.println(msj);
 
@@ -287,14 +269,8 @@ try {
                                                 sc.nextLine();
                                                 System.out.println("Tamanio de la habitacion: PEQUENIA, MEDIANO o GRANDE");
                                                 tamanioHab = sc.nextLine();
-                                                System.out.println("Desea incluir jacuzzi? (S/N)");
-                                                String incJacuzzi = sc.nextLine();
-                                                boolean jacuzzi = incJacuzzi.equalsIgnoreCase("S");
-                                                System.out.println("Desea incluir hidromasaje? (S/N)");
-                                                String incHidromasaje = sc.nextLine();
-                                                boolean hidromasaje = incHidromasaje.equalsIgnoreCase("S");
 
-                                                habitacionDeluxe habitacionDeluxe = new habitacionDeluxe(numHabitacion, estadoHabitacion.LIBRE, tamanioHabitacion.valueOf(tamanioHab.toUpperCase()), jacuzzi,hidromasaje);
+                                                habitacionDeluxe habitacionDeluxe = new habitacionDeluxe(numHabitacion, estadoHabitacion.LIBRE, tamanioHabitacion.valueOf(tamanioHab.toUpperCase()));
                                                 msj = gestoraHabitaciones.agregarHabitacion(habitacionDeluxe);
                                                 System.out.println(msj);
                                             }else{
