@@ -201,16 +201,19 @@ public class Reserva implements IJson {
 
         if (habitacion instanceof habitacionDeluxe habitacion1) {
             if (habitacion1.isJacuzzi()) precioBase += 100;
-
             if (habitacion1.isHidromasaje()) precioBase += 100;
 
         } else if (habitacion instanceof habitacionMedium habitacion2) {
 
             if (habitacion2.isCajaSeguridad()) precioBase += 50;
+            if(habitacion2.isDesayunoBuffet()) precioBase += 30;
+            if(habitacion2.isRoomService()) precioBase += 60;
 
         } else if (habitacion instanceof habitacionPremium habitacion3) {
 
             if (habitacion3.isMiniBar()) precioBase += 70;
+            if(habitacion3.isSpa()) precioBase += 100;
+            if(habitacion3.isVistaMar()) precioBase += 20;
 
         }
 

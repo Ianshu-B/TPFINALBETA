@@ -387,6 +387,9 @@ try {
                                             //AGREGAR EXPECTION
                                             System.out.println("Ingrese la cantidad de personas en la reserva: ");
                                             int cantPersonas = sc.nextInt();
+
+
+
                                             pasajero.solicitarReserva(habitacion, pasajero, fechaInicio, fechaFin, true, cantPersonas);
                                             break;
                                         case 2:
