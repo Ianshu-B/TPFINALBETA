@@ -1,12 +1,14 @@
 package MODELO;
 
 import ENUMS.estadoHabitacion;
+import EXCEPTIONS.listaUsuariosVacioException;
 import EXCEPTIONS.reservaYaCanceladaExpection;
 import INTERFACE.IJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
@@ -23,6 +25,7 @@ public class Reserva implements IJson {
     private double costoReserva;
     private boolean checkIn;
     private boolean checkOut;
+    private ArrayList<String>extras;
 
 
     public Reserva(boolean estado, Date fechaFin, Date fechaInicio, Habitaciones habitacion, Pasajero pasajero,int cantidadPersonas) {
@@ -148,25 +151,35 @@ public class Reserva implements IJson {
 
 
     @Override
-    public JSONArray backup() {
+    public JSONArray backup() throws listaUsuariosVacioException {
 
         JSONArray arregloReserva=new JSONArray();
         JSONObject object=new JSONObject();
+        JSONArray aux=new JSONArray();
         try {
             object.put("idReserva", idReserva);
             object.put("estado", estado);
             object.put("fechaInicio", fechaInicio.toString());
             object.put("fechaFin", fechaFin.toString());
-            object.put("habitacion", habitacion.toString());
-            object.put("pasajero", pasajero.toString());
+            object.put("habitacion", habitacion.backup());
+            object.put("pasajero", pasajero.backup());
             object.put("cantidadPersonas", cantidadPersonas);
             object.put("costoReserva", costoReserva);
             object.put("checkIn", checkIn);
             object.put("checkOut", checkOut);
+
+            for(String e:extras){
+
+                aux.put(e);
+            }
+            object.put("extras",aux);
+
             arregloReserva.put(object);
         } catch (JSONException e) {
             throw new RuntimeException("Error al crear backup de reserva", e);
         }
+
+        JsonUtiles.grabarUnJson(arregloReserva, "reservas.json");
         return arregloReserva;
     }
 
@@ -219,6 +232,11 @@ public class Reserva implements IJson {
 
         return precioBase;
     }
+
+
+
+
+
 
     @Override
     public String toString() {
