@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
-public class Reserva implements IJson {
+public final class Reserva implements IJson {
 
     private static int contadorID=1;
     private int idReserva;

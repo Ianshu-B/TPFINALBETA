@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Recepcionista extends Usuario implements IJson {
+public final class Recepcionista extends Usuario implements IJson {
     private int ID;
     private static int contador=1;
     private boolean puedeReservar;

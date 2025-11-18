@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import java.util.HashSet;
 
-public class Administrador extends Usuario implements IJson {
+public final class  Administrador extends Usuario implements IJson {
     //NOS CREAMOS UNA UNICA INSTANCIA STATIC DE ADMIN PARA QUE PUEDA TENER ACCESESO CONSTANTE A TODO
     private static Administrador administradorUnico=new Administrador("ADMIN","44850150",ROL.ADMINISTRADOR,"ADMIN_HOTEL","PIZZA");
 

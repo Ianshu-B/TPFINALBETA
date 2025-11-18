@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Pasajero extends Usuario implements IJson {
+public final class Pasajero extends Usuario implements IJson {
     private String origen; //PAIS DE LA PERSONA
     private String domicilio;
 

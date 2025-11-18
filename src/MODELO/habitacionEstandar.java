@@ -5,7 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class habitacionEstandar extends Habitaciones implements IJson {
+public final class habitacionEstandar extends Habitaciones implements IJson {
     //Sin atributos especificos
     public habitacionEstandar(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion) {
         super(numeroHabitacion, estadoHabitacion, tamanioHabitacion);
