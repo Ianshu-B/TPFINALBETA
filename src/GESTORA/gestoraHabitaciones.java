@@ -79,7 +79,7 @@ public class gestoraHabitaciones implements IJson {
         Habitaciones aux = buscarHabitacion(nroHabitacion);
         if(aux == null)
         {
-            throw new elementoNuloException("La habitacion a eliminar es nula!!.!");
+            throw new elementoNuloException("La habitacion a eliminar es nula o no existe!!");
         }
         if(listaHabitaciones.remove(aux))
         {

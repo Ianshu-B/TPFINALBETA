@@ -135,6 +135,7 @@ try {
                                 System.out.println("12: Hacer un BackUp");
                                 System.out.println("13: Otorgar permisos Reserva");
                                 System.out.println("14: Salir");
+                                System.out.println("Opcion: ");
 
                                 int op = sc.nextInt();
                                 sc.nextLine();
@@ -225,6 +226,7 @@ try {
                                             System.out.println("2: Habitacion Medium");
                                             System.out.println("3: Habitacion Premium");
                                             System.out.println("4: Habitacion Deluxe");
+                                            System.out.println("Opcion: ");
                                             int numHabitacion;
                                             String tamanioHab;
 
@@ -357,6 +359,7 @@ try {
                                 System.out.println("\n--- MENÚ PASAJERO ---");
                                 System.out.println("1: Crear Reserva");
                                 System.out.println("2: Salir");
+                                System.out.println("Opcion: ");
 
                                 int op = sc.nextInt();
                                 sc.nextLine();
@@ -395,6 +398,8 @@ try {
 
                                             ArrayList<String> listaExtras = new ArrayList<>();
 
+                                            sc.nextLine(); //SALTO DE LINEA
+
                                             System.out.println("Desea agregar extras a su habitacion?");
                                             String deseaExtras = sc.nextLine();
                                             boolean boolExtras = deseaExtras.equalsIgnoreCase("S");
@@ -411,8 +416,6 @@ try {
                                                     boolExtras = extraRespuesta.equalsIgnoreCase("S");
                                                     if(boolExtras){ listaExtras.add("DESAYUNO");}
 
-                                                    sc.nextLine(); //SALTO DE LINEA
-
                                                     System.out.println("Desea incluir room service? (S/N)");
                                                     extraRespuesta = sc.nextLine();
                                                     boolExtras = extraRespuesta.equalsIgnoreCase("S");
@@ -428,8 +431,6 @@ try {
                                                     boolExtras = extraRespuesta.equalsIgnoreCase("S");
                                                     if(boolExtras){ listaExtras.add("SPA");}
 
-                                                    sc.nextLine(); //SALTO DE LINEA
-
                                                     System.out.println("Desea incluir vistamar? (S/N)");
                                                     extraRespuesta = sc.nextLine();
                                                     boolExtras = extraRespuesta.equalsIgnoreCase("S");
@@ -440,8 +441,6 @@ try {
                                                     boolExtras = extraRespuesta.equalsIgnoreCase("S");
                                                     if(boolExtras){ listaExtras.add("JACUZZI");}
 
-                                                    sc.nextLine(); //SALTO DE LINEA
-
                                                     System.out.println("Desea incluir hidromasaje? (S/N)");
                                                     extraRespuesta = sc.nextLine();
                                                     boolExtras = extraRespuesta.equalsIgnoreCase("S");
@@ -449,10 +448,12 @@ try {
                                                 }
                                             }
 
-
-
                                             msj = pasajero.solicitarReserva(habitacion, pasajero, fechaInicio, fechaFin, true, cantPersonas, listaExtras);
                                             System.out.println(msj);
+
+                                            msj = recepcionista1.mostrarReservasPendientes();
+                                            System.out.println(msj);
+
                                             break;
                                         case 2:
                                             System.out.println("Saliendo del menu...");
@@ -463,7 +464,7 @@ try {
                                             break;
                                     }
 
-                                }catch (NumeroNegativoException | elementoRepetidoException | ParseException e) {
+                                }catch (NumeroNegativoException | elementoRepetidoException | ParseException | listaExtrasVaciaException e) {
                                     System.out.println(e.getMessage());
                                 }
 
@@ -476,32 +477,58 @@ try {
                                 System.out.println("3: Verificar Reservas Pendientes");
                                 System.out.println("4: Realizar una Reserva Pendiente");
                                 System.out.println("5: Salir");
+                                System.out.println("Opcion: ");
 
                                 int op = sc.nextInt();
+
+                                sc.nextLine();
 
                                 switch (op) {
 
                                     case 1:
-                                        System.out.println("Ingrese el documento del pasajero para realizar su checkin: ");
-                                        String doc = sc.nextLine();
+                                        try {
+                                            System.out.println("Ingrese el documento del pasajero para realizar su checkin: ");
+                                            String doc = sc.nextLine();
 
-                                        recepcionista.realizarCheckIn(doc);
+                                            msj = recepcionista.realizarCheckIn(doc);
+                                            System.out.println(msj);
+                                        }catch (sinPermisoParaCheckInExpection | DocumentoNoCoincideExpection | FechaDeCheckInInvalidaExpection e){
+                                            System.out.println(e.getMessage());
+                                        }
+
                                         break;
                                     case 2:
-                                        System.out.println("Ingrese el documento del pasajero para realizar su checkout: ");
-                                        String doc1 = sc.nextLine();
+                                        try {
+                                            System.out.println("Ingrese el documento del pasajero para realizar su checkout: ");
+                                            String doc1 = sc.nextLine();
 
-                                        recepcionista.realizarCheckOut(doc1);
+                                            msj = recepcionista.realizarCheckOut(doc1);
+                                            System.out.println(msj);
+                                        } catch (sinPermisoParaCheckInExpection | DocumentoNoCoincideExpection e){
+                                            System.out.println(e.getMessage());
+                                        }
                                         break;
 
                                     case 3:
-                                        System.out.println(recepcionista.mostrarReservasPendientes());
+                                        try{
+                                            System.out.println(recepcionista.mostrarReservasPendientes());
+                                        }catch (listaExtrasVaciaException e){
+                                            System.out.println(e.getMessage());
+                                        }
                                         break;
 
                                     case 4:
-                                        System.out.println("Ingresar el ID de la reserva a realizar: ");
-                                        int id = sc.nextInt();
-                                        recepcionista.realizarReserva(id);
+                                        try {
+                                            System.out.println("Ingresar el ID de la reserva a realizar: ");
+                                            int id = sc.nextInt();
+                                            if(recepcionista.realizarReserva(id)){
+                                                System.out.println("Reserva confirmada.");
+                                            }else {
+                                                System.out.println("No se confirmo la reserva.");
+                                            }
+                                        } catch (sinPermisoParaReservaExpection | FechaInvalidaExpection e){
+                                            System.out.println(e.getMessage());
+                                        }
                                         break;
 
                                     case 5:

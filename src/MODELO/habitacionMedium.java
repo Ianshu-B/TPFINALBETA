@@ -13,6 +13,7 @@ public class habitacionMedium extends Habitaciones implements IJson {
     }
     public habitacionMedium() {
         super(0, ENUMS.estadoHabitacion.LIBRE, ENUMS.tamanioHabitacion.GRANDE); //Por defecto
+        this.costoHabitacion=getCostoHabitacion()*2;
     }
 
 
@@ -28,10 +29,9 @@ public class habitacionMedium extends Habitaciones implements IJson {
 public JSONArray backup() throws JSONException
 {
     JSONObject jsonObject = new JSONObject();
-    JSONArray jsonArray = super.backup();
+    JSONArray jsonArray = new JSONArray();
     try {
-        jsonObject.put("cajaSeguridad",this.cajaSeguridad);
-        jsonArray.put(jsonArray);
+        jsonArray = super.backup();
     }catch (JSONException e)
     {
         e.printStackTrace();
@@ -44,13 +44,6 @@ public JSONArray backup() throws JSONException
 
         JSONObject object=super.toJson();
 
-        try {
-            object.put("cajaSeguridad",this.cajaSeguridad);
-            object.put("desayunoBuffet",this.desayunoBuffet);
-            object.put("roomService",this.roomService);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
         return object;
     }
 

@@ -1,6 +1,7 @@
 package MODELO;
 
 import ENUMS.estadoHabitacion;
+import EXCEPTIONS.listaExtrasVaciaException;
 import EXCEPTIONS.listaUsuariosVacioException;
 import EXCEPTIONS.reservaYaCanceladaExpection;
 import INTERFACE.IJson;
@@ -300,16 +301,25 @@ public class Reserva implements IJson {
             if (extras.contains("ROOM_SERVICE")) precioBase += 60;
             if (extras.contains("MINIBAR")) precioBase += 70;
             if (extras.contains("SPA")) precioBase += 100;
-            if (extras.contains("VISTA_MAR")) precioBase += 20;
+            if (extras.contains("VISTAMAR")) precioBase += 20;
         }
 
         return precioBase;
     }
 
+    public String listarExtras() throws listaExtrasVaciaException {
+        if(extras.isEmpty()){
+            throw new listaExtrasVaciaException("La lista de extras esta vacia.");
+        }
 
+        StringBuilder sb = new StringBuilder();
 
+        for(String extra : extras){
+            sb.append(extra).append("\n");
+        }
 
-
+        return sb.toString();
+    }
 
     @Override
     public String toString() {

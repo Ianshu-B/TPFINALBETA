@@ -45,6 +45,7 @@ public class Recepcionista extends Usuario implements IJson {
 
 
 
+
     public void setReservas(HashMap<String, Reserva> reservas) {
         this.reservas = reservas;
     }
@@ -143,7 +144,7 @@ public String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
     return "Reserva cargada correctamente";
 }
 
-    public String mostrarReservasPendientes() {
+    public String mostrarReservasPendientes() throws listaExtrasVaciaException {
         StringBuilder sb = new StringBuilder();
 
         if (reservaPendiente.isEmpty()) {
@@ -160,6 +161,8 @@ public String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
                 sb.append("📅 Hasta: ").append(reserva.getFechaFin()).append("\n");
                 sb.append("👥 Personas: ").append(reserva.getCantidadPersonas()).append("\n");
                 sb.append("Estado: ").append(reserva.isEstado() ? "Activa" : "Pendiente").append("\n");
+                sb.append("Extras: ").append(reserva.listarExtras()).append("\n");
+                sb.append("Costo de reserva: ").append(reserva.getCostoReserva()).append("\n");
                 sb.append("----------------------------\n");
             }
         }
@@ -220,6 +223,8 @@ public String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
 
         LocalDate hoy = LocalDate.now();
         boolean encontrado = false;
+
+
 
         for (Reserva r : reservas.values()) {
             if (r.getPasajero().getDocumento().equals(documento)) {

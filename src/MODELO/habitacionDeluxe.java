@@ -13,6 +13,7 @@ public class habitacionDeluxe extends Habitaciones implements IJson {
     }
     public habitacionDeluxe() {
         super(0, ENUMS.estadoHabitacion.LIBRE, ENUMS.tamanioHabitacion.GRANDE);
+        this.costoHabitacion=getCostoHabitacion() * 6;
     }
 
     @Override
@@ -26,11 +27,9 @@ public class habitacionDeluxe extends Habitaciones implements IJson {
     public JSONArray backup() throws JSONException
     {
         JSONObject jsonObject = new JSONObject();
-        JSONArray jsonArray = super.backup();
+        JSONArray jsonArray = new JSONArray();
         try {
-            jsonObject.put("jacuzzi",this.jacuzzi);
-            jsonObject.put("hidromasaje",this.hidromasaje);
-            jsonArray.put(jsonObject);
+            jsonArray = super.backup();
         }catch (JSONException e)
         {
             e.printStackTrace();
@@ -41,12 +40,6 @@ public class habitacionDeluxe extends Habitaciones implements IJson {
     public JSONObject toJson(){
         JSONObject object=super.toJson();
 
-        try {
-            object.put("hidromasaje",this.hidromasaje);
-            object.put("jacuzzi",this.jacuzzi);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-return object;
+        return object;
     }
 }

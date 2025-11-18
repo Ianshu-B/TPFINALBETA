@@ -13,6 +13,7 @@ public class habitacionEstandar extends Habitaciones implements IJson {
     }
     public habitacionEstandar() {
         super(0, ENUMS.estadoHabitacion.LIBRE, ENUMS.tamanioHabitacion.GRANDE); //Por defecto
+        this.costoHabitacion=getCostoHabitacion();
     }
 
     @Override
