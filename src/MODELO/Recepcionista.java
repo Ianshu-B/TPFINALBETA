@@ -108,9 +108,70 @@ public final class Recepcionista extends Usuario implements IJson {
         }
         return aux;
     }
+    //Metodos para cargar collections desde Json
+    public void devolverReservasPendientes(JSONArray jsonArray) throws JSONException {
+        try { //Faltaria verificar que no esten vacios pero no se si funciona unicamente con null
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Reserva r = Reserva.fromJson(jsonArray.getJSONObject(i)); //Paso el jsonObject y lo casteo a uno de reserva
+                reservaPendiente.put(r.getIdReserva(), r); //Lo vuelvo a meter en su lista correspondiente
+            }
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void devolverReservasConfirmadas(JSONArray jsonArray) throws JSONException {
+        try { //Faltaria verificar que no esten vacios pero no se si funciona unicamente con null
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Reserva r = Reserva.fromJson(jsonArray.getJSONObject(i)); //Paso el jsonObject y lo casteo a uno de reserva
+                reservas.put(r.getPasajero().getDocumento(), r); //Lo vuelvo a meter en su lista correspondiente mediante el documento
+            }
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+    //------------------------------------------------------------------------------------------------------
+    //Metodos para actualizar el contenido de JSON luego de una operacion
+    public void guardarReservasPendientes() throws JSONException
+    {
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for(Reserva r : reservaPendiente.values())
+            {
+                jsonArray.put(r.toJson());
+            }
+            JsonUtiles.grabarUnJson(jsonArray,"ReservasPendientes.json");
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        //Basicamente recorro las listas correspondientes y voy actualizando los Json que ya existen para guardar o actualizar la informacion que contiene el JSON.
+        //Lo hice para que en caso de que se coonfirme una reserva pendiente, se borre el estado del JSON a vacio y no vuelva a almacenar en la collection
+        //la reserva que ya antes se confirmo.
+
+    }
+    public void guardarReservasConfirmadas() throws JSONException
+    {
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for(Reserva r : reservas.values())
+            {
+                jsonArray.put(r.toJson());
+            }
+            JsonUtiles.grabarUnJson(jsonArray,"ReservasConfirmadas.json");
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+    //--------------------------------------------------------------------------------------
 
 
-    //FALTAN METODOS ESPECIFICOS
 
 
     // 2 metodos que van a habilitar al recepcionista a hacer reservas o checkIn
@@ -181,7 +242,7 @@ public String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
     //que las fechas no se superpongan con otras reservas
     //si esto se cumple se crea la reserva y se la guarda en la coleccion pertinente
 
-    public boolean realizarReserva(int idReserva) throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection {
+    public boolean realizarReserva(int idReserva) throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection, JSONException {
 
         if (!puedeReservar){
         throw new sinPermisoParaReservaExpection("No tienes permiso para realizar una reserva");
@@ -207,10 +268,14 @@ public String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
         }
 
 
+        //Esto cambia el estado de pendiente a confirmado
         reservas.put(reserva.getPasajero().getDocumento(),reserva);
         reserva.setEstado(true);
         reserva.getHabitacion().setEstadoHabitacion(estadoHabitacion.RESERVADA);
         reservaPendiente.remove(idReserva);
+        //Actualiza la informacion de los JSON cada vez que se realice una operacion de reserva
+        guardarReservasPendientes();
+        guardarReservasConfirmadas();
         return true;
     }
 

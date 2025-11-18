@@ -191,7 +191,7 @@ public abstract class Habitaciones implements IJson {
 
         aux.setNumeroHabitacion(object.getInt("numeroHabitacion"));
         aux.setCostoHabitacion(object.getDouble("costoHabitacion"));
-        aux.setTamanioHabitacion(ENUMS.tamanioHabitacion.valueOf(object.getString("taminoHabitacion")));
+        aux.setTamanioHabitacion(ENUMS.tamanioHabitacion.valueOf(object.getString("tamanioHabitacion")));
         aux.setEstadoHabitacion(ENUMS.estadoHabitacion.valueOf(object.getString("estadoHabitacion")));
 
         JSONArray arreglo=object.getJSONArray("listaOcupantesHabitacion");

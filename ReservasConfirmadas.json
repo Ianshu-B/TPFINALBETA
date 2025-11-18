@@ -23,7 +23,7 @@
     "idReserva": 1,
     "habitacion": {
         "tamanioHabitacion": "GRANDE",
-        "tipo": "habitacionPremium",
+        "tipo": "habitacionDeluxe",
         "costoHabitacion": 400,
         "listaOcupantesHabitacion": [],
         "numeroHabitacion": 0,

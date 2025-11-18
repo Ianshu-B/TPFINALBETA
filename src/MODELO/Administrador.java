@@ -257,7 +257,7 @@ public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fro
             e.printStackTrace();
         }
     }
-
+//Persistencia de datos de Usuarios
     public void devolverDatosJson(JSONArray jsonArray) throws JSONException
     {
         Usuario aux; //Referencia de Usuario donde despues en el switch le voy a guardar un objeto concreto
@@ -298,6 +298,8 @@ public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fro
         }
 
     }
+
+
     /*
     public Administrador fromJson(JSONObject jsonObject) throws JSONException
     {

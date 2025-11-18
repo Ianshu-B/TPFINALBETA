@@ -52,11 +52,23 @@ try {
         //A PARTIR DE ACA COMIENZA EL MENU INTERACTIVO, FALTA REVISAR ALGUNAS COSAS
         //Y CHECKEAR EL USO DEL INSTANCE OF EN EL MAIN
         try {
-            String JsonAux = JsonUtiles.leer("totalBackup");
+            //Esta seccion es para que los datos del Json sean devueltos a las collection de Usuario creado para que no se borre la info al iniciar el programa.
+            String JsonAux = JsonUtiles.leer("totalBackup"); //No hace falta especificar el formato porque la libreria castea el texto.
             //leerUnJson devuelve un tokener, mientras que leer devuelve un String.
             //no se si esta bien, pero funciona sorprendentemente
-            JSONArray Array = new JSONArray(JsonAux);
+            JSONArray Array = new JSONArray(JsonAux); //JsonAux es un String que contiene texto en Json. Haciendo JSONArray(JsonAux) simplemente estoy conviertiendo a objeto JSON el String
             administrador1.devolverDatosJson(Array);
+
+            //Esta seccion es para que los datos de Reserva sean devuelvos a sus collections correspondientes
+            String jsonReservasConfirmadas = JsonUtiles.leer("ReservasConfirmadas"); //No hace falta especificar el formato porque la libreria castea el texto.
+            JSONArray jsonConfirmadas = new JSONArray(jsonReservasConfirmadas); //Convierto el String en formato json a un objeto json
+            recepcionista1.devolverReservasConfirmadas(jsonConfirmadas);
+
+            String jsonReservasPendientes = JsonUtiles.leer("ReservasPendientes"); //No hace falta especificar el formato porque la libreria castea el texto.
+            JSONArray jsonPendientes = new JSONArray(jsonReservasPendientes); //Convierto el String en formato json a un objeto json
+            recepcionista1.devolverReservasPendientes(jsonPendientes);
+
+
 
         }catch (JSONException e)
         {
@@ -528,7 +540,7 @@ try {
                                             }else {
                                                 System.out.println("No se confirmo la reserva.");
                                             }
-                                        } catch (sinPermisoParaReservaExpection | FechaInvalidaExpection e){
+                                        } catch (sinPermisoParaReservaExpection | FechaInvalidaExpection | JSONException e){
                                             System.out.println(e.getMessage());
                                         }
                                         break;
