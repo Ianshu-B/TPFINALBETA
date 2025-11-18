@@ -15,6 +15,15 @@
         "username": "ADMIN_HOTEL"
     },
     {
+        "password": "45",
+        "domicilio": "chilechile",
+        "documento": "4545",
+        "origen": "argentina",
+        "nombre": "ian",
+        "rol": "PASAJERO",
+        "username": "ianshuNuevoNuevoNuevo"
+    },
+    {
         "password": "4545",
         "documento": "45",
         "ID": 4,
@@ -30,6 +39,15 @@
         "nombre": "ian",
         "rol": "PASAJERO",
         "username": "pasajeroNuevoIan"
+    },
+    {
+        "password": "45",
+        "domicilio": "chil",
+        "documento": "45",
+        "origen": "arge",
+        "nombre": "ian",
+        "rol": "PASAJERO",
+        "username": "usuarioCreadoDesdeAdmin"
     },
     {
         "password": "pizzaYcoca",

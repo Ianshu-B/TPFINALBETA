@@ -23,6 +23,7 @@ public class Main {
         Recepcionista recepcionista1=new Recepcionista("Juan","44.563.345",ROL.RECEPCIONISTA,"JuanRecep123","contraseña123");
         Recepcionista recepcionista2=new Recepcionista("Pedro","24.332.245",ROL.RECEPCIONISTA,"PedroHotel","pizzaYcoca");
         gestoraHotel<Persona>gestoraHotel=new gestoraHotel<>();
+        JSONArray jsonTotal = new JSONArray();
         gestoraHotel<Recepcionista>gestoraHotel1=new gestoraHotel<>();
         gestoraHotel<Habitaciones>gestoraHabitacion=new gestoraHotel<>();
         gestoraHabitaciones gestoraHabitaciones = new gestoraHabitaciones();
@@ -50,6 +51,17 @@ try {
 
         //A PARTIR DE ACA COMIENZA EL MENU INTERACTIVO, FALTA REVISAR ALGUNAS COSAS
         //Y CHECKEAR EL USO DEL INSTANCE OF EN EL MAIN
+        try {
+            String JsonAux = JsonUtiles.leer("totalBackup");
+            //leerUnJson devuelve un tokener, mientras que leer devuelve un String.
+            //no se si esta bien, pero funciona sorprendentemente
+            JSONArray Array = new JSONArray(JsonAux);
+            administrador1.devolverDatosJson(Array);
+
+        }catch (JSONException e)
+        {
+            System.out.println(e.getMessage());
+        }
 
         Scanner sc=new Scanner(System.in);
         System.out.println("MENU FINAL"); //DESPUES BORRAR
@@ -106,17 +118,7 @@ try {
 
                         while (continuar) {
                             if (usuario instanceof Administrador) {
-                                try {
-                                    String JsonAux = JsonUtiles.leer("totalBackup");
-                                    //leerUnJson devuelve un tokener, mientras que leer devuelve un String.
-                                    //no se si esta bien, pero funciona sorprendentemente
-                                    JSONArray Array = new JSONArray(JsonAux);
-                                    administrador1.devolverDatosJson(Array);
 
-                                }catch (JSONException e)
-                                {
-                                    System.out.println(e.getMessage());
-                                }
 
                                 System.out.println("\n--- MENÚ ADMIN ---");
                                 System.out.println("1: Listar Usuario");
@@ -313,7 +315,7 @@ try {
 
                                         case 12:
                                             System.out.println("GENERANDO RESPALDO DE LOS USUARIOS...");
-                                            JSONArray jsonTotal = administrador1.backup();
+                                            jsonTotal = administrador1.backup();
                                             JsonUtiles.grabarUnJson(jsonTotal,"totalBackup.json");
                                             System.out.println("Backup realizado correctamente");
                                             break;
@@ -462,7 +464,14 @@ try {
                         System.out.println(e.getMessage());
                     }
                 } else if (opcion == 3) {
-                    System.out.println("SALIENDO DEL SISTEMA");
+                    try {
+                        System.out.println("SALIENDO DEL SISTEMA");
+                        jsonTotal = administrador1.backup();
+                        JsonUtiles.grabarUnJson(jsonTotal, "totalBackup.json");
+                    }catch (listaUsuariosVacioException e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
 
                     break;
                 }

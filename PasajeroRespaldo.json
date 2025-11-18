@@ -1,9 +1,29 @@
-[{
-    "password": "4545",
-    "domicilio": "chile",
-    "documento": "45",
-    "origen": "arge",
-    "nombre": "ian",
-    "rol": "PASAJERO",
-    "username": "pasajeroNuevoIan"
-}]
+[
+    {
+        "password": "45",
+        "domicilio": "chilechile",
+        "documento": "4545",
+        "origen": "argentina",
+        "nombre": "ian",
+        "rol": "PASAJERO",
+        "username": "ianshuNuevoNuevoNuevo"
+    },
+    {
+        "password": "4545",
+        "domicilio": "chile",
+        "documento": "45",
+        "origen": "arge",
+        "nombre": "ian",
+        "rol": "PASAJERO",
+        "username": "pasajeroNuevoIan"
+    },
+    {
+        "password": "45",
+        "domicilio": "chil",
+        "documento": "45",
+        "origen": "arge",
+        "nombre": "ian",
+        "rol": "PASAJERO",
+        "username": "usuarioCreadoDesdeAdmin"
+    }
+]
