@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Pasajero extends Usuario implements IJson {
@@ -101,10 +102,10 @@ public class Pasajero extends Usuario implements IJson {
 
     }
 
-    public String solicitarReserva(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas) throws elementoRepetidoException {
+    public String solicitarReserva(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas, ArrayList<String> extras) throws elementoRepetidoException {
 
         Recepcionista r=Administrador.getAdmin().obtenerRecepcionista();
-        String msj = r.cargarReservaPendiente(habitacion, pasajero,  fechaInico,  fechaFin,  estado,  cantidadPersonas);
+        String msj = r.cargarReservaPendiente(habitacion, pasajero,  fechaInico,  fechaFin,  estado,  cantidadPersonas, extras);
 
         return msj;
     }

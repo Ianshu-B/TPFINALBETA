@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -129,9 +130,9 @@ public class Recepcionista extends Usuario implements IJson {
 //AGREGAR VERIFICACIONES
 public String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
                                    Date fechaInicio, Date fechaFin,
-                                   Boolean estado, int cantidadPersonas) throws elementoRepetidoException {
+                                   Boolean estado, int cantidadPersonas, ArrayList<String> extras) throws elementoRepetidoException {
     //Creamos una reserva pendiente
-    Reserva pendiente = new Reserva(estado, fechaFin, fechaInicio, habitacion, pasajero, cantidadPersonas);
+    Reserva pendiente = new Reserva(estado, fechaFin, fechaInicio, habitacion, pasajero, cantidadPersonas, extras);
     pendiente.setEstado(false); // Pendiente = false (aún no confirmada)
     if (reservaPendiente.containsKey(pendiente.getIdReserva())) {
         throw new elementoRepetidoException("Ya existe una reserva con el ID " + pendiente.getIdReserva());

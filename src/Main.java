@@ -10,6 +10,7 @@ import org.json.JSONException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -18,7 +19,7 @@ import java.util.Scanner;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        String msj;
+        String msj, extraRespuesta;
         Administrador administrador1 = Administrador.getAdmin();
         Recepcionista recepcionista1=new Recepcionista("Juan","44.563.345",ROL.RECEPCIONISTA,"JuanRecep123","contraseña123");
         Recepcionista recepcionista2=new Recepcionista("Pedro","24.332.245",ROL.RECEPCIONISTA,"PedroHotel","pizzaYcoca");
@@ -392,7 +393,65 @@ try {
                                             System.out.println("Ingrese la cantidad de personas en la reserva: ");
                                             int cantPersonas = sc.nextInt();
 
-                                            msj = pasajero.solicitarReserva(habitacion, pasajero, fechaInicio, fechaFin, true, cantPersonas);
+                                            ArrayList<String> listaExtras = new ArrayList<>();
+
+                                            System.out.println("Desea agregar extras a su habitacion?");
+                                            String deseaExtras = sc.nextLine();
+                                            boolean boolExtras = deseaExtras.equalsIgnoreCase("S");
+
+                                            if(boolExtras){
+                                                if(habitacion instanceof habitacionMedium){
+                                                    System.out.println("Desea incluir caja de seguridad? (S/N)");
+                                                    extraRespuesta = sc.nextLine();
+                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
+                                                    if(boolExtras){ listaExtras.add("CAJA_SEGURIDAD"); }
+
+                                                    System.out.println("Desea incluir desayuno? (S/N)");
+                                                    extraRespuesta = sc.nextLine();
+                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
+                                                    if(boolExtras){ listaExtras.add("DESAYUNO");}
+
+                                                    sc.nextLine(); //SALTO DE LINEA
+
+                                                    System.out.println("Desea incluir room service? (S/N)");
+                                                    extraRespuesta = sc.nextLine();
+                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
+                                                    if(boolExtras){listaExtras.add("ROOM_SERVICE");}
+                                                } else if (habitacion instanceof habitacionPremium) {
+                                                    System.out.println("Desea incluir minibar? (S/N)");
+                                                    extraRespuesta = sc.nextLine();
+                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
+                                                    if(boolExtras){ listaExtras.add("MINIBAR");}
+
+                                                    System.out.println("Desea incluir spa? (S/N)");
+                                                    extraRespuesta = sc.nextLine();
+                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
+                                                    if(boolExtras){ listaExtras.add("SPA");}
+
+                                                    sc.nextLine(); //SALTO DE LINEA
+
+                                                    System.out.println("Desea incluir vistamar? (S/N)");
+                                                    extraRespuesta = sc.nextLine();
+                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
+                                                    if(boolExtras){ listaExtras.add("VISTAMAR");}
+                                                } else if (habitacion instanceof habitacionDeluxe) {
+                                                    System.out.println("Desea incluir jacuzzi? (S/N)");
+                                                    extraRespuesta = sc.nextLine();
+                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
+                                                    if(boolExtras){ listaExtras.add("JACUZZI");}
+
+                                                    sc.nextLine(); //SALTO DE LINEA
+
+                                                    System.out.println("Desea incluir hidromasaje? (S/N)");
+                                                    extraRespuesta = sc.nextLine();
+                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
+                                                    if(boolExtras){ listaExtras.add("HIDROMASAJE");}
+                                                }
+                                            }
+
+
+
+                                            msj = pasajero.solicitarReserva(habitacion, pasajero, fechaInicio, fechaFin, true, cantPersonas, listaExtras);
                                             System.out.println(msj);
                                             break;
                                         case 2:

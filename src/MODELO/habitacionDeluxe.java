@@ -7,44 +7,18 @@ import org.json.JSONObject;
 
 public class habitacionDeluxe extends Habitaciones implements IJson {
 
-    private boolean jacuzzi; //True tiene, false no tiene. NO SE ME OCURRIO OTRA COSA AAAAAAAAA
-    private boolean hidromasaje; //True tiene, false no tiene. NO SE ME OCURRIO OTRA COSA AAAAAAAAA
-
     public habitacionDeluxe(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion) {
         super(numeroHabitacion, estadoHabitacion, tamanioHabitacion);
-        this.jacuzzi = false;
-        this.hidromasaje = false;
         this.costoHabitacion=getCostoHabitacion() * 6;
     }
     public habitacionDeluxe() {
         super(0, ENUMS.estadoHabitacion.LIBRE, ENUMS.tamanioHabitacion.GRANDE);
-        this.jacuzzi = false; //Por defecto
-        this.hidromasaje = false; //Por defecto
-    }
-
-    public boolean isJacuzzi() { //Supongo que el is es por el tipo de atributo
-        return jacuzzi;
-    }
-
-    public void setJacuzzi(boolean jacuzzi) {
-        this.jacuzzi = jacuzzi;
-    }
-
-    public boolean isHidromasaje() { //Supongo que el is es por el tipo de atributo
-        return hidromasaje;
-    }
-
-    public void setHidromasaje(boolean hidromasaje) {
-        this.hidromasaje = hidromasaje;
     }
 
     @Override
     public String toString() {
         return "habitacionDeluxe{" + "\n" +
-                super.toString() + "\n" +
-                "jacuzzi=" + jacuzzi + "\n" +
-                ", hidromasaje=" + hidromasaje + "\n" +
-                '}';
+                super.toString();
     }
 
     //Faltan los metodos especificos

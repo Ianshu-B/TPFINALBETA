@@ -28,7 +28,7 @@ public class Reserva implements IJson {
     private ArrayList<String>extras;
 
 
-    public Reserva(boolean estado, Date fechaFin, Date fechaInicio, Habitaciones habitacion, Pasajero pasajero,int cantidadPersonas) {
+    public Reserva(boolean estado, Date fechaFin, Date fechaInicio, Habitaciones habitacion, Pasajero pasajero,int cantidadPersonas, ArrayList<String> extras) {
         // Validaciones básicas
 
         if (fechaInicio == null || fechaFin == null)
@@ -54,6 +54,7 @@ public class Reserva implements IJson {
         this.idReserva = contadorID++;
         this.pasajero = pasajero;
         this.cantidadPersonas=cantidadPersonas;
+        this.extras = extras;
         this.costoReserva=calcularCostoReserva();
 
 
@@ -61,7 +62,7 @@ public class Reserva implements IJson {
     }
 
     public Reserva() {
-
+        this.extras = new ArrayList<>();
     }
 
     public void setExtras(ArrayList<String> extras) {
@@ -291,22 +292,15 @@ public class Reserva implements IJson {
 
         //Extra según tipo de habitación
 
-        if (habitacion instanceof habitacionDeluxe habitacion1) {
-            if (habitacion1.isJacuzzi()) precioBase += 100;
-            if (habitacion1.isHidromasaje()) precioBase += 100;
-
-        } else if (habitacion instanceof habitacionMedium habitacion2) {
-
-            if (habitacion2.isCajaSeguridad()) precioBase += 50;
-            if(habitacion2.isDesayunoBuffet()) precioBase += 30;
-            if(habitacion2.isRoomService()) precioBase += 60;
-
-        } else if (habitacion instanceof habitacionPremium habitacion3) {
-
-            if (habitacion3.isMiniBar()) precioBase += 70;
-            if(habitacion3.isSpa()) precioBase += 100;
-            if(habitacion3.isVistaMar()) precioBase += 20;
-
+        if (!extras.isEmpty()) {
+            if (extras.contains("JACUZZI")) precioBase += 100;
+            if (extras.contains("HIDROMASAJE")) precioBase += 100;
+            if (extras.contains("CAJA_SEGURIDAD")) precioBase += 50;
+            if (extras.contains("DESAYUNO")) precioBase += 30;
+            if (extras.contains("ROOM_SERVICE")) precioBase += 60;
+            if (extras.contains("MINIBAR")) precioBase += 70;
+            if (extras.contains("SPA")) precioBase += 100;
+            if (extras.contains("VISTA_MAR")) precioBase += 20;
         }
 
         return precioBase;
