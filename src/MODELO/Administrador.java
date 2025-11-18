@@ -1,15 +1,13 @@
 package MODELO;
 
 import ENUMS.ROL;
-import EXCEPTIONS.RecepcionistaNoEncontradoException;
-import EXCEPTIONS.UsuarioNoEncontradoException;
-import EXCEPTIONS.elementoNuloException;
-import EXCEPTIONS.listaUsuariosVacioException;
+import EXCEPTIONS.*;
 import INTERFACE.IJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public final class  Administrador extends Usuario implements IJson {
@@ -226,6 +224,38 @@ public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fro
                 e.printStackTrace();
             }
         return totalElementosJsonArray;
+    }
+    public void backupReservas(HashMap<String, Reserva> reservas,HashMap<Integer,Reserva>reservaPendiente) throws listaReservasVaciaException
+    {
+        if(reservaPendiente.isEmpty() && reservas.isEmpty())
+        {
+            throw  new listaReservasVaciaException("No hay reservas ni reservas pendientes para realizar backup!");
+        }
+        JSONArray jsonArrayReservasPendientes = new JSONArray();
+        JSONArray jsonArrayReservas = new JSONArray();
+
+        try {
+            //Reservas pendientes
+            for(Reserva r : reservaPendiente.values())
+            {
+                jsonArrayReservasPendientes.put(r.toJson());
+
+            }
+            //Reservas coonfirmadas
+            for(Reserva r : reservas.values())
+            {
+                jsonArrayReservas.put(r.toJson());
+
+            }
+            //Grabo las pendientes
+            JsonUtiles.grabarUnJson(jsonArrayReservasPendientes,"ReservasPendientes.json");
+            //Grabo las confirmadas
+            JsonUtiles.grabarUnJson(jsonArrayReservas,"ReservasConfirmadas.json");
+
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void devolverDatosJson(JSONArray jsonArray) throws JSONException

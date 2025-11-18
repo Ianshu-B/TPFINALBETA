@@ -43,8 +43,9 @@ public final class Recepcionista extends Usuario implements IJson {
         return reservas;
     }
 
-
-
+    public HashMap<Integer, Reserva> getReservaPendiente() {
+        return reservaPendiente;
+    }
 
     public void setReservas(HashMap<String, Reserva> reservas) {
         this.reservas = reservas;
@@ -76,7 +77,7 @@ public final class Recepcionista extends Usuario implements IJson {
                 "ID='" + ID + "\n"  +
                 '}';
     }
-    public JSONObject toJson() throws JSONException
+    public JSONObject toJson() throws JSONException //toJson de recepcionista, no de reservas
     {
         JSONObject jsonObject = super.toJson(); //Paso todo lo de su clase Padre que es Persona y sigo completando con los atributos especificos
         try {
@@ -90,7 +91,7 @@ public final class Recepcionista extends Usuario implements IJson {
         return jsonObject;
 
     }
-    public static Recepcionista fromJson(JSONObject jsonObject) throws JSONException
+    public static Recepcionista fromJson(JSONObject jsonObject) throws JSONException //fromJson de recepcionista, no de reservas
     {
         Recepcionista aux = new Recepcionista();
         try {
@@ -107,6 +108,8 @@ public final class Recepcionista extends Usuario implements IJson {
         }
         return aux;
     }
+
+
     //FALTAN METODOS ESPECIFICOS
 
 

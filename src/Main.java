@@ -316,9 +316,11 @@ try {
                                             break;
 
                                         case 12:
-                                            System.out.println("GENERANDO RESPALDO DE LOS USUARIOS...");
-                                            jsonTotal = administrador1.backup();
-                                            JsonUtiles.grabarUnJson(jsonTotal,"totalBackup.json");
+                                            System.out.println("GENERANDO RESPALDO DE INFORMACION...");
+
+                                            jsonTotal = administrador1.backup(); //USUARIOS
+                                            administrador1.backupReservas(recepcionista1.getReservas(),recepcionista1.getReservaPendiente()); //RESERVAS
+                                            JsonUtiles.grabarUnJson(jsonTotal,"totalBackup.json"); //TOTAL USUARIOS
                                             System.out.println("Backup realizado correctamente");
                                             break;
 
@@ -346,7 +348,7 @@ try {
                                     }
                                 } catch (elementoNuloException | FechaInvalidaExpection | elementoInsertadoException |
                                          elementoRepetidoException | listaUsuariosVacioException | JSONException |
-                                         elementoBorradoException | NumeroNegativoException e) {
+                                         elementoBorradoException | NumeroNegativoException | listaReservasVaciaException e) {
                                     System.out.println(e.getMessage());
                                 } catch (IllegalArgumentException e){
                                     System.out.println("Tamanio de habitacion no valido.");

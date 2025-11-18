@@ -1,0 +1,32 @@
+[{
+    "pasajero": {
+        "password": "4545",
+        "domicilio": "chile",
+        "documento": "45",
+        "origen": "arge",
+        "nombre": "ian",
+        "rol": "PASAJERO",
+        "username": "pasajeroNuevoIan"
+    },
+    "estado": true,
+    "checkIn": false,
+    "fechaInicio": 1763434800000,
+    "cantidadPersonas": 1,
+    "extras": [
+        "MINIBAR",
+        "SPA",
+        "VISTAMAR"
+    ],
+    "checkOut": false,
+    "fechaFin": 1763434800000,
+    "costoReserva": 590,
+    "idReserva": 1,
+    "habitacion": {
+        "tamanioHabitacion": "GRANDE",
+        "tipo": "habitacionPremium",
+        "costoHabitacion": 400,
+        "listaOcupantesHabitacion": [],
+        "numeroHabitacion": 0,
+        "estadoHabitacion": "RESERVADA"
+    }
+}]
