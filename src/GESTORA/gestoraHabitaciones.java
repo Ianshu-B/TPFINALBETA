@@ -57,7 +57,11 @@ public class gestoraHabitaciones implements IJson {
     }
 
     //BUSCAR POR NRO HABITACION
-    public Habitaciones buscarHabitacion(int nroHabitacion){
+    public Habitaciones buscarHabitacion(int nroHabitacion) throws NumeroNegativoException{
+        if(nroHabitacion < 0){
+            throw new NumeroNegativoException("Numero de habitacion no valido");
+        }
+
         for(Habitaciones h : listaHabitaciones){
             if(h.getNumeroHabitacion() == nroHabitacion){
                 return h;
@@ -67,8 +71,11 @@ public class gestoraHabitaciones implements IJson {
     }
 
     //ELIMINAR
-    public String eliminarHabitacion(int nroHabitacion) throws elementoNuloException, elementoBorradoException{
+    public String eliminarHabitacion(int nroHabitacion) throws elementoNuloException, elementoBorradoException, NumeroNegativoException{
         StringBuilder sb = new StringBuilder();
+        if(nroHabitacion < 0){
+            throw new NumeroNegativoException("Numero de habitacion negativo.");
+        }
         Habitaciones aux = buscarHabitacion(nroHabitacion);
         if(aux == null)
         {

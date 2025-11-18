@@ -24,8 +24,7 @@ public class Main {
         Recepcionista recepcionista2=new Recepcionista("Pedro","24.332.245",ROL.RECEPCIONISTA,"PedroHotel","pizzaYcoca");
         gestoraHotel<Persona>gestoraHotel=new gestoraHotel<>();
         JSONArray jsonTotal = new JSONArray();
-        gestoraHotel<Recepcionista>gestoraHotel1=new gestoraHotel<>();
-        gestoraHotel<Habitaciones>gestoraHabitacion=new gestoraHotel<>();
+        gestoraHotel<Recepcionista> gestoraHotel1=new gestoraHotel<>();
         gestoraHabitaciones gestoraHabitaciones = new gestoraHabitaciones();
         habitacionPremium h1=new habitacionPremium(0, estadoHabitacion.LIBRE, tamanioHabitacion.GRANDE);
         try {
@@ -344,7 +343,7 @@ try {
                                     }
                                 } catch (elementoNuloException | FechaInvalidaExpection | elementoInsertadoException |
                                          elementoRepetidoException | listaUsuariosVacioException | JSONException |
-                                         elementoBorradoException e) {
+                                         elementoBorradoException | NumeroNegativoException e) {
                                     System.out.println(e.getMessage());
                                 } catch (IllegalArgumentException e){
                                     System.out.println("Tamanio de habitacion no valido.");
@@ -375,7 +374,7 @@ try {
                                             System.out.println("Ingrese el numero de habitacion que desea reservar");
                                             int numeroHabitacion = sc.nextInt();
                                             sc.nextLine();
-                                            Habitaciones habitacion = gestoraHabitacion.buscarHabitacionXnumero(numeroHabitacion);
+                                            Habitaciones habitacion = gestoraHabitaciones.buscarHabitacion(numeroHabitacion);
 
                                             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                                             Date fechaInicio = null;
@@ -393,7 +392,8 @@ try {
                                             System.out.println("Ingrese la cantidad de personas en la reserva: ");
                                             int cantPersonas = sc.nextInt();
 
-                                            pasajero.solicitarReserva(habitacion, pasajero, fechaInicio, fechaFin, true, cantPersonas);
+                                            msj = pasajero.solicitarReserva(habitacion, pasajero, fechaInicio, fechaFin, true, cantPersonas);
+                                            System.out.println(msj);
                                             break;
                                         case 2:
                                             System.out.println("Saliendo del menu...");
@@ -404,10 +404,8 @@ try {
                                             break;
                                     }
 
-                                }catch (NumeroNegativoException e) {
+                                }catch (NumeroNegativoException | elementoRepetidoException | ParseException e) {
                                     System.out.println(e.getMessage());
-                                } catch (ParseException e) {
-                                    throw new RuntimeException(e);
                                 }
 
                             } else if (usuario instanceof Recepcionista) {

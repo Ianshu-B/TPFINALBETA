@@ -127,13 +127,19 @@ public class Recepcionista extends Usuario implements IJson {
 
 
 //AGREGAR VERIFICACIONES
-public void cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
+public String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
                                    Date fechaInicio, Date fechaFin,
-                                   Boolean estado, int cantidadPersonas) {
+                                   Boolean estado, int cantidadPersonas) throws elementoRepetidoException {
     //Creamos una reserva pendiente
     Reserva pendiente = new Reserva(estado, fechaFin, fechaInicio, habitacion, pasajero, cantidadPersonas);
     pendiente.setEstado(false); // Pendiente = false (aún no confirmada)
+    if (reservaPendiente.containsKey(pendiente.getIdReserva())) {
+        throw new elementoRepetidoException("Ya existe una reserva con el ID " + pendiente.getIdReserva());
+    }
+
     reservaPendiente.put(pendiente.getIdReserva(), pendiente);
+
+    return "Reserva cargada correctamente";
 }
 
     public String mostrarReservasPendientes() {

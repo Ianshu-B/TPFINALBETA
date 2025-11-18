@@ -1,6 +1,8 @@
 package MODELO;
 
 import ENUMS.ROL;
+import EXCEPTIONS.elementoNuloException;
+import EXCEPTIONS.elementoRepetidoException;
 import EXCEPTIONS.listaUsuariosVacioException;
 import INTERFACE.IJson;
 import org.json.JSONArray;
@@ -99,10 +101,12 @@ public class Pasajero extends Usuario implements IJson {
 
     }
 
-    public void solicitarReserva(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas){
+    public String solicitarReserva(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas) throws elementoRepetidoException {
 
         Recepcionista r=Administrador.getAdmin().obtenerRecepcionista();
-        r.cargarReservaPendiente( habitacion, pasajero,  fechaInico,  fechaFin,  estado,  cantidadPersonas);
+        String msj = r.cargarReservaPendiente(habitacion, pasajero,  fechaInico,  fechaFin,  estado,  cantidadPersonas);
+
+        return msj;
     }
 
 }

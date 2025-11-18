@@ -102,7 +102,6 @@ public class gestoraHotel <T extends IJson> implements IJson {
         if(numeroHabitacion < 0){
             throw new NumeroNegativoException("Numero de habitacion no valido");
         }
-
         for(T e:listaGeneral){
             if (e instanceof Habitaciones){
                 Habitaciones h=(Habitaciones)e;
