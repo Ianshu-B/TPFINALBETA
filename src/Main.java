@@ -24,6 +24,7 @@ public class Main {
         Recepcionista recepcionista2=new Recepcionista("Pedro","24.332.245",ROL.RECEPCIONISTA,"PedroHotel","pizzaYcoca");
         gestoraHotel<Persona>gestoraHotel=new gestoraHotel<>();
         gestoraHotel<Recepcionista>gestoraHotel1=new gestoraHotel<>();
+        gestoraHotel<Habitaciones>gestoraHabitacion=new gestoraHotel<>();
         gestoraHabitaciones gestoraHabitaciones = new gestoraHabitaciones();
         habitacionPremium h1=new habitacionPremium(0, estadoHabitacion.LIBRE, tamanioHabitacion.GRANDE);
         try {
@@ -367,10 +368,12 @@ try {
                                    String nombre =  sc.nextLine();
 
                                     */
+                                            System.out.println("Habitaciones disponibles: ");
+                                            System.out.println(gestoraHabitaciones.listarHabitaciones());
                                             System.out.println("Ingrese el numero de habitacion que desea reservar");
                                             int numeroHabitacion = sc.nextInt();
                                             sc.nextLine();
-                                            Habitaciones habitacion = gestoraHotel.buscarHabitacionXnumero(numeroHabitacion);
+                                            Habitaciones habitacion = gestoraHabitacion.buscarHabitacionXnumero(numeroHabitacion);
 
                                             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                                             Date fechaInicio = null;
