@@ -18,7 +18,7 @@ public abstract class Habitaciones implements IJson {
     protected HashSet<Pasajero> listaOcupantesHabitacion;
     protected double costoHabitacion;
 
-    public Habitaciones(int numeroHabitacion, ENUMS.estadoHabitacion estadoHabitacion, ENUMS.tamanioHabitacion tamanioHabitacion ) {
+    public Habitaciones(int numeroHabitacion, estadoHabitacion estadoHabitacion, tamanioHabitacion tamanioHabitacion ) {
         this.numeroHabitacion = numeroHabitacion;
         this.estadoHabitacion = estadoHabitacion;
         this.tamanioHabitacion = tamanioHabitacion;
@@ -42,20 +42,24 @@ public abstract class Habitaciones implements IJson {
         this.numeroHabitacion = numeroHabitacion;
     }
 
-    public ENUMS.estadoHabitacion getEstadoHabitacion() {
+    public estadoHabitacion getEstadoHabitacion() {
         return estadoHabitacion;
     }
 
-    public void setEstadoHabitacion(ENUMS.estadoHabitacion estadoHabitacion) {
+    public void setEstadoHabitacion(estadoHabitacion estadoHabitacion) {
         this.estadoHabitacion = estadoHabitacion;
     }
 
-    public ENUMS.tamanioHabitacion getTamanioHabitacion() {
+    public tamanioHabitacion getTamanioHabitacion() {
         return tamanioHabitacion;
     }
 
-    public void setTamanioHabitacion(ENUMS.tamanioHabitacion tamanioHabitacion) {
+    public void setTamanioHabitacion(tamanioHabitacion tamanioHabitacion) {
         this.tamanioHabitacion = tamanioHabitacion;
+    }
+
+    public void setListaOcupantesHabitacion(HashSet<Pasajero> listaOcupantesHabitacion) {
+        this.listaOcupantesHabitacion = listaOcupantesHabitacion;
     }
 
     public String agregarOcupante(Pasajero p) throws elementoNuloException, pasajeroRepetidoException //El retorno se puede cambiar por un bool en caso de necesitar
@@ -138,6 +142,68 @@ public abstract class Habitaciones implements IJson {
     public int hashCode() {
         return Objects.hashCode(numeroHabitacion);
     }
+
+
+    public JSONObject toJson(){
+        JSONArray aux=new JSONArray();
+        JSONObject object=new JSONObject();
+          try {
+              object.put("numeroHabitacion",this.numeroHabitacion);
+              object.put("estadoHabitacion",this.estadoHabitacion.toString());
+              object.put("tamanioHabitacion",this.tamanioHabitacion.toString());
+              object.put("costoHabitacion",this.costoHabitacion);
+              object.put("tipo", this.getClass().getSimpleName());
+
+
+              for (Pasajero p:listaOcupantesHabitacion){
+                  aux.put(p.toJson());
+              }
+
+              object.put("listaOcupantesHabitacion",aux);
+          } catch (JSONException e) {
+              throw new RuntimeException(e);
+          }
+        return object;
+    }
+
+
+    public static Habitaciones fromJson(JSONObject object) throws JSONException {
+
+        String tipo = object.getString("tipo");
+        Habitaciones aux;
+
+        switch (tipo) {
+
+            case "habitacionEstandar":
+                aux = new habitacionEstandar();
+                break;
+            case "habitacionMedium":
+                aux = new habitacionMedium();
+            case "habitacionPremium":
+                aux = new habitacionPremium();
+
+            case "habitacionDeluxe":
+                aux = new habitacionDeluxe();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + tipo);
+        }
+
+        aux.setNumeroHabitacion(object.getInt("numeroHabitacion"));
+        aux.setCostoHabitacion(object.getDouble("costoHabitacion"));
+        aux.setTamanioHabitacion(ENUMS.tamanioHabitacion.valueOf(object.getString("taminoHabitacion")));
+        aux.setEstadoHabitacion(ENUMS.estadoHabitacion.valueOf(object.getString("estadoHabitacion")));
+
+        JSONArray arreglo=object.getJSONArray("listaOcupantesHabitacion");
+        HashSet<Pasajero>ocupantes=new HashSet<>();
+        for(int i=0;i<arreglo.length();i++){
+            ocupantes.add(Pasajero.fromJson(arreglo.getJSONObject(i)));
+        }
+        aux.setListaOcupantesHabitacion(ocupantes);
+        return aux;
+    }
+
+
     @Override
     public JSONArray backup() throws JSONException
     {

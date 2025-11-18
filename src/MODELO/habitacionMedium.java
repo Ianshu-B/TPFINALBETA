@@ -69,4 +69,20 @@ public JSONArray backup() throws JSONException
     }
     return jsonArray;
 }
+
+
+    public JSONObject toJson(){
+
+        JSONObject object=super.toJson();
+
+        try {
+            object.put("cajaSeguridad",this.cajaSeguridad);
+            object.put("desayunoBuffet",this.desayunoBuffet);
+            object.put("roomService",this.roomService);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return object;
+    }
+
 }

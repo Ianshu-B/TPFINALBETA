@@ -60,6 +60,17 @@ public class Reserva implements IJson {
         habitacion.setEstadoHabitacion(estadoHabitacion.RESERVADA);
     }
 
+    public Reserva() {
+
+    }
+
+    public void setExtras(ArrayList<String> extras) {
+        this.extras = extras;
+    }
+
+    public void setIdReserva(int idReserva) {
+        this.idReserva = idReserva;
+    }
 
     public boolean isCheckIn() {
         return checkIn;
@@ -150,6 +161,74 @@ public class Reserva implements IJson {
     }
 
 
+    public JSONObject toJson() throws JSONException {
+
+
+        JSONArray aux=new JSONArray();
+        JSONObject object=new JSONObject();
+
+
+        try {
+
+            object.put("idReserva",this.idReserva);
+            object.put("habitacion",this.habitacion.toJson());
+            object.put("pasajero",this.pasajero.toJson());
+            object.put("fechaInicio",this.fechaInicio.getTime());
+            object.put("fechaFin",this.fechaFin.getTime());
+            object.put("estado",this.estado);
+            object.put("cantidadPersonas",this.cantidadPersonas);
+            object.put("costoReserva",this.costoReserva);
+            object.put("checkIn",this.checkIn);
+            object.put("checkOut",this.checkOut);
+
+
+            for(String e:extras){
+
+                aux.put(e);
+            }
+            object.put("extras",aux);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return object;
+    }
+
+    public static Reserva fromJson(JSONObject object){
+
+        Reserva reserva=new Reserva();
+        try {
+            reserva.setIdReserva(object.getInt("idReserva"));
+            reserva.setCantidadPersonas(object.getInt("cantidadPersonas"));
+            reserva.setCostoReserva(object.getDouble("costoReserva"));
+            reserva.setCheckIn(object.getBoolean("checkIn"));
+            reserva.setCheckOut(object.getBoolean("checkOut"));
+            reserva.setEstado(object.getBoolean("estado"));
+            reserva.setHabitacion(Habitaciones.fromJson(object.getJSONObject("habitacion")));
+            reserva.setPasajero(Pasajero.fromJson(object.getJSONObject("pasajero")));
+            reserva.setFechaInicio( new Date(object.getLong("fechaInicio")) );
+            reserva.setFechaFin( new Date(object.getLong("fechaFin")) );
+
+            JSONArray extrasJson=object.getJSONArray("extras");
+            ArrayList<String>extrasLista=new ArrayList<>();
+
+            for (int i=0;i<extrasJson.length();i++){
+                extrasLista.add(extrasJson.getString(i));
+            }
+            reserva.setExtras(extrasLista);
+
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return reserva;
+    }
+
+
+
     @Override
     public JSONArray backup() throws listaUsuariosVacioException {
 
@@ -157,16 +236,16 @@ public class Reserva implements IJson {
         JSONObject object=new JSONObject();
         JSONArray aux=new JSONArray();
         try {
-            object.put("idReserva", idReserva);
-            object.put("estado", estado);
-            object.put("fechaInicio", fechaInicio.toString());
-            object.put("fechaFin", fechaFin.toString());
-            object.put("habitacion", habitacion.backup());
-            object.put("pasajero", pasajero.backup());
-            object.put("cantidadPersonas", cantidadPersonas);
-            object.put("costoReserva", costoReserva);
-            object.put("checkIn", checkIn);
-            object.put("checkOut", checkOut);
+            object.put("idReserva", this.idReserva);
+            object.put("estado", this.estado);
+            object.put("fechaInicio", this.fechaInicio.toString());
+            object.put("fechaFin", this.fechaFin.toString());
+            object.put("habitacion", this.habitacion.toJson());
+            object.put("pasajero", this.pasajero.toJson());
+            object.put("cantidadPersonas", this.cantidadPersonas);
+            object.put("costoReserva", this.costoReserva);
+            object.put("checkIn", this.checkIn);
+            object.put("checkOut", this.checkOut);
 
             for(String e:extras){
 

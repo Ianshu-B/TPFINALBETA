@@ -3,6 +3,7 @@ package MODELO;
 import INTERFACE.IJson;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class habitacionEstandar extends Habitaciones implements IJson {
     //Sin atributos especificos
@@ -28,5 +29,10 @@ public class habitacionEstandar extends Habitaciones implements IJson {
     {
         JSONArray jsonArray = super.backup();
         return jsonArray;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        return super.toJson();
     }
 }

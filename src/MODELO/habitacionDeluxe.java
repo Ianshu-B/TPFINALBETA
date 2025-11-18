@@ -63,4 +63,16 @@ public class habitacionDeluxe extends Habitaciones implements IJson {
         }
         return jsonArray;
     }
+
+    public JSONObject toJson(){
+        JSONObject object=super.toJson();
+
+        try {
+            object.put("hidromasaje",this.hidromasaje);
+            object.put("jacuzzi",this.jacuzzi);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+return object;
+    }
 }
