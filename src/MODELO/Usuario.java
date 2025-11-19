@@ -69,6 +69,7 @@ public abstract class Usuario extends Persona implements IJson {
                 '}';
     }
 
+
     public JSONObject toJson() throws JSONException
     {
         JSONObject jsonObject = super.toJson(); //Paso todo lo de su clase Padre que es Persona y sigo completando con los atributos especificos

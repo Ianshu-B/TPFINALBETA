@@ -108,7 +108,8 @@ try {
 
                     Pasajero nuevoPasajero = new Pasajero(nombre, documento, userName, contrasena, nacionalidad, domicilio);
                     try {
-                        administrador1.agregarUsuarioLista(nuevoPasajero);
+                         msj = administrador1.agregarUsuarioLista(nuevoPasajero);
+                        System.out.println(msj);
                     } catch (elementoNuloException e) {
                         System.out.println(e.getMessage());
                     }
@@ -166,9 +167,9 @@ try {
                                             System.out.println(aux);
                                             break;
                                         case 3:
-                                            System.out.println("Ingrese el nombre de usuario a eliminar: ");
-                                            nombre = sc.nextLine();
-                                            msj = administrador1.eliminarUsuario(nombre);
+                                            System.out.println("Ingrese el documento del usuario a eliminar: ");
+                                            String documentoo = sc.nextLine();
+                                            msj = administrador1.eliminarUsuario(documentoo);
                                             System.out.println(msj);
                                             break;
 
