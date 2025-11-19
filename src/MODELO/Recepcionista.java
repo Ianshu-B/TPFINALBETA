@@ -244,42 +244,46 @@ public static String cargarReservaPendiente(Habitaciones habitacion, Pasajero pa
 
     public boolean realizarReserva(int idReserva) throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection, JSONException,HabitacionNoReservableExpection{
 
-        if (!puedeReservar){
-        throw new sinPermisoParaReservaExpection("No tienes permiso para realizar una reserva");
+        if (!puedeReservar) {
+
+            throw new sinPermisoParaReservaExpection("No tienes permiso para realizar una reserva");
         }
 
-        Reserva reserva=reservaPendiente.get(idReserva);
+        Reserva reserva = reservaPendiente.get(idReserva);
 
-        if(reserva.getHabitacion().getEstadoHabitacion()!=estadoHabitacion.DISPONIBLE) {
-            throw new HabitacionNoReservableExpection("No es posible reservar una habitacion en el siguiente estado"+reserva.getHabitacion().getEstadoHabitacion());
-        }
-
-        if (reserva == null) {
+            if (reserva == null) {
             throw new FechaInvalidaExpection("La reserva pendiente con ese ID no existe");
-        }
+          }
 
         if (reserva.getFechaFin().before(reserva.getFechaInicio())) {
-            throw new FechaInvalidaExpection("La fecha de fin no puede ser anterior a la fecha de inicio");
+            throw new FechaInvalidaExpection  ("La fecha de fin no puede ser anterior a la fecha de inicio");
         }
 
-        for(Reserva r:reservas.values()){
-            if(r.getHabitacion().equals(reserva.getHabitacion())){
-                if(r.isEstado() && fechasSeSuperponen(reserva.getFechaInicio(),reserva.getFechaFin(),r.getFechaInicio(),r.getFechaFin())){
-                    throw new HabitacionYaRervadaExpection("La habitacion ya fue reservada");
+        if (reserva.getHabitacion().getEstadoHabitacion() == estadoHabitacion.MANTENIMIENTO) {
+            throw new HabitacionNoReservableExpection("La habitación no se puede reservar porque está en mantenimiento");
+        }
 
+        for (Reserva r : reservas.values()) {
+            if (r.getHabitacion().equals(reserva.getHabitacion())) {
+
+                if (r.isEstado() && fechasSeSuperponen(reserva.getFechaInicio(), reserva.getFechaFin(), r.getFechaInicio(), r.getFechaFin())) {
+                    throw new HabitacionYaRervadaExpection("La habitacion ya fue reservada para esas fechas");
                 }
+
+
             }
         }
 
-
-        //Esto cambia el estado de pendiente a confirmado
-        reservas.put(idReserva,reserva);
+        reservas.put(idReserva, reserva);
         reserva.setEstado(true);
+
         reserva.getHabitacion().setEstadoHabitacion(estadoHabitacion.RESERVADA);
         reservaPendiente.remove(idReserva);
-        //Actualiza la informacion de los JSON cada vez que se realice una operacion de reserva
+
         guardarReservasPendientes();
+
         guardarReservasConfirmadas();
+
         return true;
     }
 
