@@ -225,7 +225,7 @@ public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fro
             }
         return totalElementosJsonArray;
     }
-    public void backupReservas(HashMap<String, Reserva> reservas,HashMap<Integer,Reserva>reservaPendiente) throws listaReservasVaciaException
+    public void backupReservas(HashMap<Integer, Reserva> reservas,HashMap<Integer,Reserva>reservaPendiente) throws listaReservasVaciaException
     {
         if(reservaPendiente.isEmpty() && reservas.isEmpty())
         {

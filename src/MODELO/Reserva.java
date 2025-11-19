@@ -266,16 +266,7 @@ public final class Reserva implements IJson {
 
 
 
-    //metodo para cancelar una reserva, si la reserva no fue ya cancelada
-    public String cancelarReserva() throws reservaYaCanceladaExpection {
 
-        if(!estado){
-            throw new reservaYaCanceladaExpection("La reserva ya estaba cancelada");
-        }
-        this.estado=false;
-        this.habitacion.setEstadoHabitacion(estadoHabitacion.LIBRE);
-        return "Reserva cancelada con exito";
-    }
 
 
 
@@ -336,4 +327,8 @@ public final class Reserva implements IJson {
                 ", checkOut=" + checkOut +
                 '}';
     }
+
+
+
 }
+

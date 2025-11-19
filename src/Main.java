@@ -414,51 +414,60 @@ try {
 
                                             sc.nextLine(); //SALTO DE LINEA
 
-                                            System.out.println("Desea agregar extras a su habitacion?");
+                                            System.out.println("Desea agregar extras a su habitacion? (S/N)");
                                             String deseaExtras = sc.nextLine();
-                                            boolean boolExtras = deseaExtras.equalsIgnoreCase("S");
+                                            boolean quiereExtras = deseaExtras.equalsIgnoreCase("S");
 
-                                            if(boolExtras){
+                                            if(quiereExtras){
+
+                                                // ============================
+                                                // HABITACIÓN MEDIUM
+                                                // ============================
                                                 if(habitacion instanceof habitacionMedium){
+
                                                     System.out.println("Desea incluir caja de seguridad? (S/N)");
-                                                    extraRespuesta = sc.nextLine();
-                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
-                                                    if(boolExtras){ listaExtras.add("CAJA_SEGURIDAD"); }
+                                                    boolean respuestaExtra = sc.nextLine().equalsIgnoreCase("S");
+                                                    if(respuestaExtra) listaExtras.add("CAJA_SEGURIDAD");
 
                                                     System.out.println("Desea incluir desayuno? (S/N)");
-                                                    extraRespuesta = sc.nextLine();
-                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
-                                                    if(boolExtras){ listaExtras.add("DESAYUNO");}
+                                                    respuestaExtra = sc.nextLine().equalsIgnoreCase("S");
+                                                    if(respuestaExtra) listaExtras.add("DESAYUNO");
 
                                                     System.out.println("Desea incluir room service? (S/N)");
-                                                    extraRespuesta = sc.nextLine();
-                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
-                                                    if(boolExtras){listaExtras.add("ROOM_SERVICE");}
-                                                } else if (habitacion instanceof habitacionPremium) {
+                                                    respuestaExtra = sc.nextLine().equalsIgnoreCase("S");
+                                                    if(respuestaExtra) listaExtras.add("ROOM_SERVICE");
+                                                }
+
+                                                // ============================
+                                                // HABITACIÓN PREMIUM
+                                                // ============================
+                                                else if(habitacion instanceof habitacionPremium){
+
                                                     System.out.println("Desea incluir minibar? (S/N)");
-                                                    extraRespuesta = sc.nextLine();
-                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
-                                                    if(boolExtras){ listaExtras.add("MINIBAR");}
+                                                    boolean respuestaExtra = sc.nextLine().equalsIgnoreCase("S");
+                                                    if(respuestaExtra) listaExtras.add("MINIBAR");
 
                                                     System.out.println("Desea incluir spa? (S/N)");
-                                                    extraRespuesta = sc.nextLine();
-                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
-                                                    if(boolExtras){ listaExtras.add("SPA");}
+                                                    respuestaExtra = sc.nextLine().equalsIgnoreCase("S");
+                                                    if(respuestaExtra) listaExtras.add("SPA");
 
                                                     System.out.println("Desea incluir vistamar? (S/N)");
-                                                    extraRespuesta = sc.nextLine();
-                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
-                                                    if(boolExtras){ listaExtras.add("VISTAMAR");}
-                                                } else if (habitacion instanceof habitacionDeluxe) {
+                                                    respuestaExtra = sc.nextLine().equalsIgnoreCase("S");
+                                                    if(respuestaExtra) listaExtras.add("VISTAMAR");
+                                                }
+
+                                                // ============================
+                                                // HABITACIÓN DELUXE
+                                                // ============================
+                                                else if(habitacion instanceof habitacionDeluxe){
+
                                                     System.out.println("Desea incluir jacuzzi? (S/N)");
-                                                    extraRespuesta = sc.nextLine();
-                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
-                                                    if(boolExtras){ listaExtras.add("JACUZZI");}
+                                                    boolean respuestaExtra = sc.nextLine().equalsIgnoreCase("S");
+                                                    if(respuestaExtra) listaExtras.add("JACUZZI");
 
                                                     System.out.println("Desea incluir hidromasaje? (S/N)");
-                                                    extraRespuesta = sc.nextLine();
-                                                    boolExtras = extraRespuesta.equalsIgnoreCase("S");
-                                                    if(boolExtras){ listaExtras.add("HIDROMASAJE");}
+                                                    respuestaExtra = sc.nextLine().equalsIgnoreCase("S");
+                                                    if(respuestaExtra) listaExtras.add("HIDROMASAJE");
                                                 }
                                             }
 
@@ -490,7 +499,8 @@ try {
                                 System.out.println("2: Realizar CheckOut");
                                 System.out.println("3: Verificar Reservas Pendientes");
                                 System.out.println("4: Realizar una Reserva Pendiente");
-                                System.out.println("5: Salir");
+                                System.out.println("5: Cancelar Reserva");
+                                System.out.println("6: Salir");
                                 System.out.println("Opcion: ");
 
                                 int op = sc.nextInt();
@@ -546,6 +556,14 @@ try {
                                         break;
 
                                     case 5:
+
+                                        System.out.println("Ingrese el ID  de la reserva a cancelar");
+                                        int id=sc.nextInt();
+                                        System.out.println(recepcionista.cancelarReserva(id));
+
+                                        break;
+
+                                    case 6:
                                         System.out.println("Saliendo...");
                                         continuar = false;
                                         break;
@@ -558,7 +576,7 @@ try {
                             }
 
                         }
-                    } catch (UsuarioNoEncontradoException | RecepcionistaNoEncontradoException e) {
+                    } catch (UsuarioNoEncontradoException | RecepcionistaNoEncontradoException | JSONException e ) {
                         System.out.println(e.getMessage());
                     }
                 } else if (opcion == 3) {
@@ -566,7 +584,15 @@ try {
                         System.out.println("SALIENDO DEL SISTEMA");
                         jsonTotal = administrador1.backup();
                         JsonUtiles.grabarUnJson(jsonTotal, "totalBackup.json");
-                    }catch (listaUsuariosVacioException e)
+
+                        String jsonReservasConfirmadas = JsonUtiles.leer("ReservasConfirmadas"); //No hace falta especificar el formato porque la libreria castea el texto.
+                        JSONArray jsonConfirmadas = new JSONArray(jsonReservasConfirmadas); //Convierto el String en formato json a un objeto json
+                        recepcionista1.devolverReservasConfirmadas(jsonConfirmadas);
+
+                        String jsonReservasPendientes = JsonUtiles.leer("ReservasPendientes"); //No hace falta especificar el formato porque la libreria castea el texto.
+                        JSONArray jsonPendientes = new JSONArray(jsonReservasPendientes); //Convierto el String en formato json a un objeto json
+                        recepcionista1.devolverReservasPendientes(jsonPendientes);
+                    }catch (listaUsuariosVacioException | JSONException e )
                     {
                         System.out.println(e.getMessage());
                     }

@@ -19,8 +19,8 @@ public final class Recepcionista extends Usuario implements IJson {
     private boolean puedeReservar;
     private boolean puedeCheckIN;
     private boolean puedeCheckOUT;
-    private HashMap<String,Reserva> reservas;
-    private HashMap<Integer,Reserva>reservaPendiente;
+    private HashMap<Integer,Reserva> reservas;
+    private static HashMap<Integer,Reserva>reservaPendiente;
 
 
     public Recepcionista(String nombre, String documento, ROL rol, String username, String password ) {
@@ -39,7 +39,7 @@ public final class Recepcionista extends Usuario implements IJson {
 
 
 
-    public HashMap<String, Reserva> getReservas() {
+    public HashMap<Integer, Reserva> getReservas() {
         return reservas;
     }
 
@@ -47,7 +47,7 @@ public final class Recepcionista extends Usuario implements IJson {
         return reservaPendiente;
     }
 
-    public void setReservas(HashMap<String, Reserva> reservas) {
+    public void setReservas(HashMap<Integer, Reserva> reservas) {
         this.reservas = reservas;
     }
 
@@ -126,7 +126,7 @@ public final class Recepcionista extends Usuario implements IJson {
         try { //Faltaria verificar que no esten vacios pero no se si funciona unicamente con null
             for (int i = 0; i < jsonArray.length(); i++) {
                 Reserva r = Reserva.fromJson(jsonArray.getJSONObject(i)); //Paso el jsonObject y lo casteo a uno de reserva
-                reservas.put(r.getPasajero().getDocumento(), r); //Lo vuelvo a meter en su lista correspondiente mediante el documento
+                reservas.put(r.getIdReserva(), r); //Lo vuelvo a meter en su lista correspondiente mediante el documento
             }
         }catch (JSONException e)
         {
@@ -193,7 +193,7 @@ public final class Recepcionista extends Usuario implements IJson {
 
 
 //AGREGAR VERIFICACIONES
-public String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
+public static String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
                                    Date fechaInicio, Date fechaFin,
                                    Boolean estado, int cantidadPersonas, ArrayList<String> extras) throws elementoRepetidoException {
     //Creamos una reserva pendiente
@@ -269,7 +269,7 @@ public String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
 
 
         //Esto cambia el estado de pendiente a confirmado
-        reservas.put(reserva.getPasajero().getDocumento(),reserva);
+        reservas.put(idReserva,reserva);
         reserva.setEstado(true);
         reserva.getHabitacion().setEstadoHabitacion(estadoHabitacion.RESERVADA);
         reservaPendiente.remove(idReserva);
@@ -365,4 +365,31 @@ public String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
     }
 
 
+    public boolean cancelarReserva(int id) throws reservaYaCanceladaExpection, JSONException {
+
+        Reserva r=buscarReservaXId(id);
+
+        if(!r.isEstado()){
+            throw new reservaYaCanceladaExpection("La reserva ya fue cancelada");
+        }
+
+        reservas.remove(id);
+
+        r.getHabitacion().setEstadoHabitacion(estadoHabitacion.LIBRE);
+        guardarReservasConfirmadas();
+        return true;
+    }
+
+
+    public Reserva buscarReservaXId(int id){
+
+        Reserva aux;
+
+        if(reservas.containsKey(id)){
+                aux=reservas.get(id);
+
+                return aux;
+            }
+        return null;
+        }
 }
