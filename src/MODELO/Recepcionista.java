@@ -196,8 +196,6 @@ public final class Recepcionista extends Usuario implements IJson {
 public static String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero, Date fechaInicio, Date fechaFin, Boolean estado, int cantidadPersonas, ArrayList<String> extras) throws elementoRepetidoException, JSONException {
     //Creamos una reserva pendiente
     Reserva pendiente = new Reserva(estado, fechaFin, fechaInicio, habitacion, pasajero, cantidadPersonas, extras);
-    pendiente.setIdReserva(contador++);
-
     pendiente.setEstado(false); // Pendiente = false (aún no confirmada)
     if (reservaPendiente.containsKey(pendiente.getIdReserva())) {
         throw new elementoRepetidoException("Ya existe una reserva con el ID " + pendiente.getIdReserva());
