@@ -10,17 +10,13 @@
     },
     "estado": true,
     "checkIn": false,
-    "fechaInicio": 1050116400000,
-    "cantidadPersonas": 2,
-    "extras": [
-        "MINIBAR",
-        "SPA",
-        "VISTAMAR"
-    ],
+    "fechaInicio": "19-11-2025",
+    "cantidadPersonas": 3,
+    "extras": ["MINIBAR"],
     "checkOut": false,
-    "fechaFin": 1053831600000,
-    "costoReserva": 17390,
-    "idReserva": 1,
+    "fechaFin": "19-11-2025",
+    "costoReserva": 470,
+    "idReserva": 4,
     "habitacion": {
         "tamanioHabitacion": "GRANDE",
         "tipo": "habitacionPremium",

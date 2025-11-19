@@ -18,6 +18,15 @@
         "username": "ianshuLIN"
     },
     {
+        "password": "2",
+        "domicilio": "2",
+        "documento": "2",
+        "origen": "2",
+        "nombre": "2",
+        "rol": "PASAJERO",
+        "username": "2"
+    },
+    {
         "password": "45",
         "domicilio": "chilechile",
         "documento": "4545",
