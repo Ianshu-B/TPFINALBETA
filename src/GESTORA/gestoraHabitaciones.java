@@ -16,6 +16,10 @@ public class gestoraHabitaciones implements IJson {
         this.listaHabitaciones = new HashSet<>();
     }
 
+    public HashSet<Habitaciones> getListaHabitaciones() {
+        return listaHabitaciones;
+    }
+
     //AGREGAR
     public String agregarHabitacion(Habitaciones h) throws elementoNuloException, elementoInsertadoException, elementoRepetidoException{
         StringBuilder sb = new StringBuilder();
@@ -111,6 +115,24 @@ public class gestoraHabitaciones implements IJson {
         }
         return jsonArray;
     }
+
+    public void devolverHabitacion(JSONArray jsonArray) throws JSONException //Reconstruyo la collection desde el json
+    {
+
+        try {
+            for(int i = 0; i < jsonArray.length();i++)
+            {
+                Habitaciones h = Habitaciones.fromJson(jsonArray.getJSONObject(i));
+                listaHabitaciones.add(h);
+            }
+
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 

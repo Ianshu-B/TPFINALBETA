@@ -267,6 +267,19 @@ public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fro
             e.printStackTrace();
         }
     }
+    public void backUpHabitaciones(HashSet<Habitaciones> listaHabitaciones) throws listaHabitacionesVaciaException
+    {
+        JSONArray jsonArray = new JSONArray();
+        if(listaHabitaciones.isEmpty())
+        {
+            throw new listaHabitacionesVaciaException("La lista de habitaciones se encuentra vacia, no se hara backup!");
+        }
+        for(Habitaciones h : listaHabitaciones)
+        {
+            jsonArray.put(h.toJson());
+        }
+        JsonUtiles.grabarUnJson(jsonArray,"HabitacionesRespaldo.json");
+    }
 //Persistencia de datos de Usuarios
     public void devolverDatosJson(JSONArray jsonArray) throws JSONException
     {

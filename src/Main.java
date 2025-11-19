@@ -78,6 +78,11 @@ try {
             JSONArray jsonPendientes = new JSONArray(jsonReservasPendientes); //Convierto el String en formato json a un objeto json
             Recepcionista.devolverReservasPendientes(jsonPendientes);
 
+            String jsonHabitaciones = JsonUtiles.leer("HabitacionesRespaldo");
+            JSONArray jsonHabitacionesAux = new JSONArray(jsonHabitaciones);
+            gestoraHabitaciones.devolverHabitacion(jsonHabitacionesAux);
+
+
 
 
         }catch (JSONException e)
@@ -344,6 +349,7 @@ try {
                                             jsonTotal = administrador1.backup(); //USUARIOS
                                             administrador1.backupReservas(recepcionista1.getReservas(),recepcionista1.getReservaPendiente()); //RESERVAS
                                             JsonUtiles.grabarUnJson(jsonTotal,"totalBackup.json"); //TOTAL USUARIOS
+                                            administrador1.backUpHabitaciones(gestoraHabitaciones.getListaHabitaciones()); //HABITACIONES
                                             System.out.println("Backup realizado correctamente");
                                             break;
 
@@ -371,7 +377,7 @@ try {
                                     }
                                 } catch (elementoNuloException | FechaInvalidaExpection | elementoInsertadoException |
                                          elementoRepetidoException | listaUsuariosVacioException | JSONException |
-                                         elementoBorradoException | NumeroNegativoException | listaReservasVaciaException e) {
+                                         elementoBorradoException | NumeroNegativoException | listaReservasVaciaException | listaHabitacionesVaciaException e) {
                                     System.out.println(e.getMessage());
                                 } catch (IllegalArgumentException e){
                                     System.out.println("Tamanio de habitacion no valido.");
@@ -618,7 +624,10 @@ try {
                         String jsonReservasPendientes = JsonUtiles.leer("ReservasPendientes"); //No hace falta especificar el formato porque la libreria castea el texto.
                         JSONArray jsonPendientes = new JSONArray(jsonReservasPendientes); //Convierto el String en formato json a un objeto json
                         Recepcionista.devolverReservasPendientes(jsonPendientes);
-                    }catch (listaUsuariosVacioException | JSONException e )
+                        //Aca basicamente reconstruyo las listas si se llegaron a modificar por las dudas, pero no tiene sentido porque lo reconstruyo al iniciar el sistema
+                        //Pero lo dejo por las dudas
+                        administrador1.backUpHabitaciones(gestoraHabitaciones.getListaHabitaciones());
+                    }catch (listaUsuariosVacioException | JSONException | listaHabitacionesVaciaException e )
                     {
                         System.out.println(e.getMessage());
                     }

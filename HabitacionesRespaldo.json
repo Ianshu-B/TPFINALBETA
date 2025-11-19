@@ -1,0 +1,34 @@
+[
+    {
+        "tamanioHabitacion": "GRANDE",
+        "tipo": "habitacionPremium",
+        "costoHabitacion": 400,
+        "listaOcupantesHabitacion": [],
+        "numeroHabitacion": 0,
+        "estadoHabitacion": "LIBRE"
+    },
+    {
+        "tamanioHabitacion": "PEQUENIA",
+        "tipo": "habitacionEstandar",
+        "costoHabitacion": 100,
+        "listaOcupantesHabitacion": [],
+        "numeroHabitacion": 4,
+        "estadoHabitacion": "LIBRE"
+    },
+    {
+        "tamanioHabitacion": "GRANDE",
+        "tipo": "habitacionDeluxe",
+        "costoHabitacion": 600,
+        "listaOcupantesHabitacion": [],
+        "numeroHabitacion": 23,
+        "estadoHabitacion": "LIBRE"
+    },
+    {
+        "tamanioHabitacion": "GRANDE",
+        "tipo": "habitacionMedium",
+        "costoHabitacion": 200,
+        "listaOcupantesHabitacion": [],
+        "numeroHabitacion": 42,
+        "estadoHabitacion": "LIBRE"
+    }
+]
