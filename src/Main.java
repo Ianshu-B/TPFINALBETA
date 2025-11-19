@@ -581,7 +581,7 @@ try {
 
                                         estadoHabitacion estado=estadoHabitacion.valueOf(ingreso);
 
-                                        recepcionista.cambiarEstado(h,estado);
+                                        System.out.println(recepcionista.cambiarEstado(h,estado));
 
                                         break;
 
