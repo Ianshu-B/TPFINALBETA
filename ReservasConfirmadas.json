@@ -1,21 +1,25 @@
 [{
     "pasajero": {
         "password": "45",
-        "domicilio": "chilechile",
-        "documento": "4545",
-        "origen": "argentina",
+        "domicilio": "chil",
+        "documento": "45",
+        "origen": "arge",
         "nombre": "ian",
         "rol": "PASAJERO",
-        "username": "ianshuNuevoNuevoNuevo"
+        "username": "usuarioCreadoDesdeAdmin"
     },
     "estado": true,
     "checkIn": false,
-    "fechaInicio": "19-11-2025",
-    "cantidadPersonas": 3,
-    "extras": ["MINIBAR"],
+    "fechaInicio": "29-11-2025",
+    "cantidadPersonas": 1,
+    "extras": [
+        "MINIBAR",
+        "SPA",
+        "VISTAMAR"
+    ],
     "checkOut": false,
-    "fechaFin": "19-11-2025",
-    "costoReserva": 470,
+    "fechaFin": "29-11-2025",
+    "costoReserva": 590,
     "idReserva": 4,
     "habitacion": {
         "tamanioHabitacion": "GRANDE",

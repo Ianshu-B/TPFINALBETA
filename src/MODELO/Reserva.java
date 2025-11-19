@@ -80,9 +80,7 @@ public final class Reserva implements IJson {
     }
 
 
-    public static void setContadorID(int contadorID) {
-        Reserva.contadorID = contadorID;
-    }
+
 
     public void setExtras(ArrayList<String> extras) {
         this.extras = extras;
@@ -171,15 +169,16 @@ public final class Reserva implements IJson {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Reserva reserva)) return false;
-        return Objects.equals(fechaInicio, reserva.fechaInicio) && Objects.equals(fechaFin, reserva.fechaFin);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reserva reserva = (Reserva) o;
+        return idReserva == reserva.idReserva;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fechaInicio, fechaFin);
+        return Objects.hash(idReserva);
     }
-
 
     public JSONObject toJson() throws JSONException {
 
@@ -235,7 +234,7 @@ public final class Reserva implements IJson {
                 reserva.setFechaInicio(formatter.parse(object.getString("fechaInicio")));
                 reserva.setFechaFin(formatter.parse(object.getString("fechaFin")));
             } catch (ParseException e) {
-                throw new RuntimeException("Error al parsear la fecha.", e);
+                e.printStackTrace();
             }
 
             JSONArray extrasJson=object.getJSONArray("extras");
