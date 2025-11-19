@@ -9,6 +9,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -184,15 +186,15 @@ public final class Reserva implements IJson {
 
         JSONArray aux=new JSONArray();
         JSONObject object=new JSONObject();
-
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         try {
 
             object.put("idReserva",this.idReserva);
             object.put("habitacion",this.habitacion.toJson());
             object.put("pasajero",this.pasajero.toJson());
-            object.put("fechaInicio",this.fechaInicio.getTime());
-            object.put("fechaFin",this.fechaFin.getTime());
+            object.put("fechaInicio", formatter.format(this.fechaInicio));
+            object.put("fechaFin", formatter.format(this.fechaFin));
             object.put("estado",this.estado);
             object.put("cantidadPersonas",this.cantidadPersonas);
             object.put("costoReserva",this.costoReserva);
@@ -217,6 +219,8 @@ public final class Reserva implements IJson {
     public static Reserva fromJson(JSONObject object){
 
         Reserva reserva=new Reserva();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
         try {
 
             reserva.setIdReserva(object.getInt("idReserva"));
@@ -227,8 +231,12 @@ public final class Reserva implements IJson {
             reserva.setEstado(object.getBoolean("estado"));
             reserva.setHabitacion(Habitaciones.fromJson(object.getJSONObject("habitacion")));
             reserva.setPasajero(Pasajero.fromJson(object.getJSONObject("pasajero")));
-            reserva.setFechaInicio( new Date(object.getLong("fechaInicio")) );
-            reserva.setFechaFin( new Date(object.getLong("fechaFin")) );
+            try {
+                reserva.setFechaInicio(formatter.parse(object.getString("fechaInicio")));
+                reserva.setFechaFin(formatter.parse(object.getString("fechaFin")));
+            } catch (ParseException e) {
+                throw new RuntimeException("Error al parsear la fecha.", e);
+            }
 
             JSONArray extrasJson=object.getJSONArray("extras");
             ArrayList<String>extrasLista=new ArrayList<>();
@@ -258,11 +266,13 @@ public final class Reserva implements IJson {
         JSONArray arregloReserva=new JSONArray();
         JSONObject object=new JSONObject();
         JSONArray aux=new JSONArray();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
         try {
             object.put("idReserva", this.idReserva);
             object.put("estado", this.estado);
-            object.put("fechaInicio", this.fechaInicio.toString());
-            object.put("fechaFin", this.fechaFin.toString());
+            object.put("fechaInicio", formatter.format(this.fechaInicio));
+            object.put("fechaFin", formatter.format(this.fechaFin));
             object.put("habitacion", this.habitacion.toJson());
             object.put("pasajero", this.pasajero.toJson());
             object.put("cantidadPersonas", this.cantidadPersonas);
