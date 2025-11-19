@@ -28,5 +28,11 @@
         "listaOcupantesHabitacion": [],
         "numeroHabitacion": 42,
         "estadoHabitacion": "LIBRE"
+    }],
+    [{
+        "tamanioHabitacion": "GRANDE",
+        "listaOcupantesHabitacion": [],
+        "numeroHabitacion": 77,
+        "estadoHabitacion": "LIBRE"
     }]
 ]

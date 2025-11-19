@@ -10,10 +10,7 @@ import org.json.JSONException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
@@ -437,9 +434,7 @@ try {
 
                                             if(quiereExtras){
 
-                                                // ============================
-                                                // HABITACIÓN MEDIUM
-                                                // ============================
+
                                                 if(habitacion instanceof habitacionMedium){
 
                                                     System.out.println("Desea incluir caja de seguridad? (S/N)");
@@ -455,9 +450,7 @@ try {
                                                     if(respuestaExtra) listaExtras.add("ROOM_SERVICE");
                                                 }
 
-                                                // ============================
-                                                // HABITACIÓN PREMIUM
-                                                // ============================
+
                                                 else if(habitacion instanceof habitacionPremium){
 
                                                     System.out.println("Desea incluir minibar? (S/N)");
@@ -473,9 +466,7 @@ try {
                                                     if(respuestaExtra) listaExtras.add("VISTAMAR");
                                                 }
 
-                                                // ============================
-                                                // HABITACIÓN DELUXE
-                                                // ============================
+
                                                 else if(habitacion instanceof habitacionDeluxe){
 
                                                     System.out.println("Desea incluir jacuzzi? (S/N)");
@@ -584,10 +575,31 @@ try {
                                     case 6:
                                         System.out.println("Ingrese un numero de habitacion para cambiar su estado: ");
                                         int nmr=sc.nextInt();
+                                        sc.nextLine();
                                         Habitaciones h=gestoraHabitaciones.buscarHabitacion(nmr);
-
+                                        String ingreso;
                                         System.out.println("Ingrese el estado: ");
-                                        String ingreso=sc.nextLine().toUpperCase();
+                                        List<String> permitidos = Arrays.asList(
+                                                "MANTENIMIENTO",
+                                                "DESINFECCION",
+                                                "LIMPIEZA"
+                                        );
+
+                                        System.out.println(
+
+                                                        "MANTENIMIENTO\n" +
+                                                        "DESINFECCION\n" +
+                                                        "LIMPIEZA\n"
+
+                                        );
+
+                                             ingreso=sc.nextLine().toUpperCase();
+
+                                            if(!permitidos.contains(ingreso)){
+                                                throw new IllegalArgumentException("El estado no corresponde a los disponibles");
+                                            }
+
+
 
                                         estadoHabitacion estado=estadoHabitacion.valueOf(ingreso);
 
@@ -608,7 +620,7 @@ try {
                             }
 
                         }
-                    } catch (UsuarioNoEncontradoException | RecepcionistaNoEncontradoException | JSONException | NumeroNegativoException e ) {
+                    } catch (UsuarioNoEncontradoException | RecepcionistaNoEncontradoException | JSONException | NumeroNegativoException | IllegalArgumentException e ) {
                         System.out.println(e.getMessage());
                     }
                 } else if (opcion == 3) {

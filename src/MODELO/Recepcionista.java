@@ -354,7 +354,10 @@ public static String cargarReservaPendiente(Habitaciones habitacion, Pasajero pa
 
     //METODO CHECKOUT
         public String realizarCheckOut(String documento)
-            throws sinPermisoParaCheckInExpection, DocumentoNoCoincideExpection {
+            throws sinPermisoParaCheckInExpection, DocumentoNoCoincideExpection,JSONException {
+
+
+
 
         if (!puedeCheckIN) {
             throw new sinPermisoParaCheckInExpection("No tienes permiso para realizar un check-out");
@@ -368,14 +371,18 @@ public static String cargarReservaPendiente(Habitaciones habitacion, Pasajero pa
 
                 r.setCheckOut(true);
                 r.getHabitacion().setEstadoHabitacion(estadoHabitacion.LIBRE);
+                reservas.remove(r.getIdReserva(),r);
+                guardarReservasConfirmadas();
                 r.setEstado(false); // la reserva ya finalizó
 
                 return "Check-out realizado con éxito para el pasajero con documento: " + documento;
             }
         }
 
+
         throw new DocumentoNoCoincideExpection("El documento no coincide con ninguna reserva existente");
     }
+
 
     //metodo para verificar superposicion de fechas
     private boolean fechasSeSuperponen(Date inicio1, Date fin1, Date inicio2, Date fin2) {
@@ -427,6 +434,8 @@ public static String cargarReservaPendiente(Habitaciones habitacion, Pasajero pa
             }
         return null;
         }
+
+
 
 
     public String cambiarEstado(Habitaciones habitacion, estadoHabitacion estado) throws HabitacionYaRervadaExpection{
