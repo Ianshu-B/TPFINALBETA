@@ -72,10 +72,17 @@ public final class Recepcionista extends Usuario implements IJson {
 
     @Override
     public String toString() {
-        return "Recepcionista{" +
+        return "\n" +
+                "══════════════════════════════════════════\n" +
+                "🛎️  FICHA DE RECEPCIONISTA (ID: " + this.ID + ")\n" +
+                "══════════════════════════════════════════\n" +
                 super.toString() + "\n" +
-                "ID='" + ID + "\n"  +
-                '}';
+                "------------------------------------------\n" +
+                "PERMISOS:\n" +
+                "Puede Check-In:  " + (this.puedeCheckIN ? "[SI]" : "[NO]") + "\n" +
+                "Puede Check-Out: " + (this.puedeCheckOUT ? "[SI]" : "[NO]") + "\n" +
+                "Puede Reservar:  " + (this.puedeReservar ? "[SI]" : "[NO]") + "\n" +
+                "══════════════════════════════════════════\n";
     }
     public JSONObject toJson() throws JSONException //toJson de recepcionista, no de reservas
     {

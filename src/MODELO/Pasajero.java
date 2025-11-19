@@ -45,11 +45,14 @@ public final class Pasajero extends Usuario implements IJson {
 
     @Override
     public String toString() {
-        return "Pasajero{" +
+        return "\n" +
+                "══════════════════════════════════════════\n" +
+                "👤 FICHA DE PASAJERO\n" +
+                "══════════════════════════════════════════\n" +
                 super.toString() + "\n" +
-                "origen='" + origen + "\n" +
-                ", domicilio='" + domicilio + "\n" +
-                '}';
+                "Origen:    " + this.origen + "\n" +
+                "Domicilio: " + this.domicilio + "\n" +
+                "══════════════════════════════════════════\n";
     }
     public JSONObject toJson() throws JSONException
     {

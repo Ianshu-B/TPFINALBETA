@@ -25,6 +25,14 @@
     },
     {
         "tamanioHabitacion": "GRANDE",
+        "tipo": "habitacionDeluxe",
+        "costoHabitacion": 600,
+        "listaOcupantesHabitacion": [],
+        "numeroHabitacion": 999,
+        "estadoHabitacion": "LIBRE"
+    },
+    {
+        "tamanioHabitacion": "GRANDE",
         "tipo": "habitacionMedium",
         "costoHabitacion": 200,
         "listaOcupantesHabitacion": [],

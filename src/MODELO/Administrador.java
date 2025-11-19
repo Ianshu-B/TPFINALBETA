@@ -49,9 +49,13 @@ public final class  Administrador extends Usuario implements IJson {
 
     @Override
     public String toString() {
-        return "Administrador{" +
+        return "\n" +
+                "══════════════════════════════════════════\n" +
+                "🛡️  ADMINISTRADOR DEL SISTEMA\n" +
+                "══════════════════════════════════════════\n" +
                 super.toString() + "\n" +
-                '}';
+                "Usuarios Creados: " + this.listaUsuariosCreados.size() + "\n" +
+                "══════════════════════════════════════════\n";
     }
     //METODO agregarUsuarioLista
     public String agregarUsuarioLista(Usuario u) throws elementoNuloException {

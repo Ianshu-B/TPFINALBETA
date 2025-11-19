@@ -20,7 +20,8 @@ public final class habitacionMedium extends Habitaciones implements IJson {
 
     @Override
     public String toString() {
-        return "habitacionMedium{" +
+        return "\n" +
+                "🏨 HABITACIÓN MEDIUM\n" +
                 super.toString();
     }
 

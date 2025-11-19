@@ -124,12 +124,13 @@ public abstract class Habitaciones implements IJson {
 
     @Override
     public String toString() {
-        return "Habitaciones{" + "\n" +
-                "numeroHabitacion=" + numeroHabitacion + "\n" +
-                ", estadoHabitacion=" + estadoHabitacion + "\n" +
-                ", tamanioHabitacion=" + tamanioHabitacion + "\n" +
-                ", listaOcupantesHabitacion=" + listarOcupantes() + "\n" +
-                '}';
+        return "------------------------------------------\n" +
+                "Nº Habitacion:   " + this.numeroHabitacion + "\n" +
+                "Estado:          " + this.estadoHabitacion + "\n" +
+                "Tamaño:          " + this.tamanioHabitacion + "\n" +
+                "Costo Base:      $" + this.costoHabitacion + "\n" +
+                "Ocupantes:       " + listarOcupantes() + "\n" +
+                "------------------------------------------\n";
     }
 
     @Override

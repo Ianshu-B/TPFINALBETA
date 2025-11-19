@@ -61,12 +61,10 @@ public abstract class Usuario extends Persona implements IJson {
 
     @Override
     public String toString() {
-        return "Usuario{" + "\n" +
-                super.toString() + "\n" +
-                "rol=" + rol + "\n" +
-                ", username='" + username + "\n" +
-                ", password='" + password  + "\n" +
-                '}';
+        return super.toString() + "\n" +
+                "Usuario:   " + this.username + "\n" +
+                "Rol:       " + this.rol + "\n" +
+                "Password:  " + this.password;
     }
 
 

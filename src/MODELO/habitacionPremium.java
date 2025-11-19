@@ -20,7 +20,8 @@ public final class habitacionPremium extends Habitaciones implements IJson {
 
     @Override
     public String toString() {
-        return "habitacionPremium{" +
+        return "\n" +
+                "💎 HABITACIÓN PREMIUM 💎\n" +
                 super.toString();
     }
     //FALTAN METODOS ESPECIFICOS

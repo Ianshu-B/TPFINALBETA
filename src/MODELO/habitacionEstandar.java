@@ -18,10 +18,9 @@ public final class habitacionEstandar extends Habitaciones implements IJson {
 
     @Override
     public String toString() {
-        return "habitacionEstandar{" +
-                super.toString() + "\n" +
-
-                '}';
+        return "\n" +
+                "🏠 HABITACIÓN ESTÁNDAR\n" +
+                super.toString();
     }
     //FALTAN LOS METODOS ESPECIFICOS
 

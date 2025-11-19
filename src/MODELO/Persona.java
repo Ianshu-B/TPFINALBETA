@@ -49,10 +49,8 @@ public abstract class Persona implements IJson {
 
     @Override
     public String toString() {
-        return "Persona{" +
-                "nombre='" + nombre + "\n" +
-                ", documento='" + documento + "\n" +
-                '}';
+        return "Nombre:    " + this.nombre + "\n" +
+                "Documento: " + this.documento;
     }
 
 
