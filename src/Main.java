@@ -45,7 +45,7 @@ public class Main {
         Date fin = new Date(hoy.getTime() + (3 * 24 * 60 * 60 * 1000));
         Recepcionista r1=new Recepcionista("valentin","4345",ROL.RECEPCIONISTA,"valentindona","123v");
 
-        System.out.println(recepcionista1.isPuedeReservar());
+        
 
 try {
     administrador1.agregarUsuarioLista(recepcionista1);
