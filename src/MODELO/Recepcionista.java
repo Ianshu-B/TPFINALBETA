@@ -235,32 +235,39 @@ public static String cargarReservaPendiente(Habitaciones habitacion, Pasajero pa
 
 
 
-    //metodo para hacer reservas, recibe todos los valores de una reserva, y antes de crearla
-    //verificamos que tenga permiso, que la fecha de fin no sea anterior a la fecha de inicio y
-    //que las fechas no se superpongan con otras reservas
-    //si esto se cumple se crea la reserva y se la guarda en la coleccion pertinente
+
 
     public boolean realizarReserva(int idReserva) throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection, JSONException,HabitacionNoReservableExpection{
 
+
+        //REVISO SI HAY PERMISO
         if (!puedeReservar) {
 
             throw new sinPermisoParaReservaExpection("No tienes permiso para realizar una reserva");
         }
 
+        //OBTENGO LA RESERVA
+
         Reserva reserva = reservaPendiente.get(idReserva);
 
+
+        //VERIFICO QUE NO SEA NULA
             if (reserva == null) {
             throw new FechaInvalidaExpection("La reserva pendiente con ese ID no existe");
           }
 
+            //VERFICO LOGICA BASICA DE FECHAS
         if (reserva.getFechaFin().before(reserva.getFechaInicio())) {
             throw new FechaInvalidaExpection  ("La fecha de fin no puede ser anterior a la fecha de inicio");
         }
 
+        //VERIFICO QUE LA HABITACION ESTE EN MANTENIMIENTO, SI LO ESTA YA NO SE PUEDE RESERVAR
         if (reserva.getHabitacion().getEstadoHabitacion() == estadoHabitacion.MANTENIMIENTO) {
             throw new HabitacionNoReservableExpection("La habitación no se puede reservar porque está en mantenimiento");
         }
 
+
+        //VERIFICO EL ESTADO DE LA RESERVA Y SI LAS FECHAS NO SE SUPERPONEN CON OTRA RESERVAS
         for (Reserva r : reservas.values()) {
             if (r.getHabitacion().equals(reserva.getHabitacion())) {
 
@@ -271,13 +278,28 @@ public static String cargarReservaPendiente(Habitaciones habitacion, Pasajero pa
 
             }
         }
+        //VERIFICO LAS FECHAS EN PENDIENTES Y QUE "R" NO SEA LA MIMSA RESERVA CON LA QUE TRABAJO
+        for (Reserva r : reservaPendiente.values()) {
+            if (!r.equals(reserva)) {
+                if (r.getHabitacion().equals(reserva.getHabitacion())) {
+                    if (fechasSeSuperponen(reserva.getFechaInicio(), reserva.getFechaFin(), r.getFechaInicio(), r.getFechaFin())) {
+                        throw new HabitacionYaRervadaExpection("Existe conflicto de fechas con otra reserva pendiente");
+                    }
+                }
+            }
+        }
+
+        //AGREGO LA RESERVA
 
         reservas.put(idReserva, reserva);
         reserva.setEstado(true);
 
+        //CAMBIO EL ESTADO DE LA HABITACION DE LA RESERVA Y ELIMINO LA RESERVA DE PENDIENTES
+
         reserva.getHabitacion().setEstadoHabitacion(estadoHabitacion.RESERVADA);
         reservaPendiente.remove(idReserva);
 
+        //JSON
         guardarReservasPendientes();
 
         guardarReservasConfirmadas();

@@ -33,9 +33,13 @@ public class Main {
         habitacionEstandar h2=new habitacionEstandar(4,estadoHabitacion.LIBRE,tamanioHabitacion.PEQUENIA);
         habitacionMedium h3=new habitacionMedium(42,estadoHabitacion.LIBRE,tamanioHabitacion.GRANDE);
         habitacionDeluxe h4=new habitacionDeluxe(23,estadoHabitacion.LIBRE,tamanioHabitacion.GRANDE);
+
         try {
 
             gestoraHabitaciones.agregarHabitacion(h1);
+            gestoraHabitaciones.agregarHabitacion(h2);
+            gestoraHabitaciones.agregarHabitacion(h3);
+            gestoraHabitaciones.agregarHabitacion(h4);
         } catch (elementoNuloException | elementoInsertadoException | elementoRepetidoException e) {
             System.out.println(e.getMessage());
         }
