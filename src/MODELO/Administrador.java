@@ -14,17 +14,17 @@ public final class  Administrador extends Usuario implements IJson {
     //NOS CREAMOS UNA UNICA INSTANCIA STATIC DE ADMIN PARA QUE PUEDA TENER ACCESESO CONSTANTE A TODO
     private static Administrador administradorUnico=new Administrador("ADMIN","44850150",ROL.ADMINISTRADOR,"ADMIN_HOTEL","PIZZA");
 
-    private HashSet<Usuario> listaUsuariosCreados;
+    private HashMap<String,Usuario> listaUsuariosCreados;
 
     private Administrador(String nombre, String documento, ROL rol, String username, String password) {
         super(nombre, documento, rol, username, password);
-        this.listaUsuariosCreados = new HashSet<>();
-        this.listaUsuariosCreados.add(this);
+        this.listaUsuariosCreados = new HashMap<>();
+        this.listaUsuariosCreados.put(this.documento,administradorUnico);
     }
 
     public Administrador() { //COONSTRUCTOR VACIO
         super("", "", ROL.ADMINISTRADOR, "", "");
-        this.listaUsuariosCreados = new HashSet<>();
+        this.listaUsuariosCreados = new HashMap<>();
     }
 
 
@@ -37,7 +37,7 @@ public final class  Administrador extends Usuario implements IJson {
     //AGEGAR LOGICA PARA SABER QUE RECEPCIONISTA DEVOLVER.
     public Recepcionista obtenerRecepcionista(){
 
-        for(Usuario u:listaUsuariosCreados){
+        for(Usuario u:listaUsuariosCreados.values()){
             if(u instanceof Recepcionista){
                 Recepcionista r=(Recepcionista) u;
                 return r;
@@ -54,21 +54,20 @@ public final class  Administrador extends Usuario implements IJson {
                 '}';
     }
     //METODO agregarUsuarioLista
-    public String agregarUsuarioLista(Usuario u) throws elementoNuloException
-    {
+    public String agregarUsuarioLista(Usuario u) throws elementoNuloException {
         StringBuilder sb = new StringBuilder();
-        Usuario aux = buscarUsuario(u);
-        if(aux==null)
+        if (u == null)
         {
-            if(u ==null)
-            {
-                throw new elementoNuloException("No se permiten elementos nulos!");
-            }
-            listaUsuariosCreados.add(u);
-            sb.append("Elemento agregado correctamente a a lista de Usuarios del sistema!");
+            throw new elementoNuloException("No se permiten elementos nulos!");
+        }
+        Usuario aux = buscarUsuario(u);
+        if(aux == null)
+        {
+            listaUsuariosCreados.put(u.getDocumento(),u);
+            sb.append("Usuario agregado correctamente!");
         }else
         {
-            throw new elementoNuloException("El elemento ya se encuentra en la lista!");
+            throw new elementoNuloException("El usuario ya esta registrado!");
         }
 
         return sb.toString();
@@ -76,7 +75,7 @@ public final class  Administrador extends Usuario implements IJson {
     public  String listarUsuariosCreados()
     {
         StringBuilder sb = new StringBuilder();
-        for(Usuario u : listaUsuariosCreados)
+        for(Usuario u : listaUsuariosCreados.values())
         {
             sb.append(u.toString()).append("\n");
         }
@@ -84,25 +83,36 @@ public final class  Administrador extends Usuario implements IJson {
     }
     public Usuario buscarUsuario(Usuario u)
     {
-        for(Usuario uu : listaUsuariosCreados)
+        if(u == null)
         {
-            if (uu.equals(u))
-            {
-                return uu;
-            }
+            return null;
+        }
+        return listaUsuariosCreados.get(u.getDocumento()); //Te devuelve la key del usuario
+    }
+    public Usuario buscarXDocumento(String documento) throws elementoNuloException
+    {
+        Usuario aux;
+        if(documento == null)
+        {
+            throw new elementoNuloException("Documento nulo. ERROR!");
+        }
+        if(listaUsuariosCreados.containsKey(documento))
+        {
+            aux = listaUsuariosCreados.get(documento);
+            return aux;
         }
         return null;
     }
 
-    public String eliminarUsuario(String userName) throws elementoNuloException
+    public String eliminarUsuario(String documento) throws elementoNuloException
     {
         StringBuilder sb = new StringBuilder();
-        Usuario aux = buscarXUserName(userName);
+        Usuario aux = buscarXDocumento(documento);
         if(aux == null)
         {
             throw  new elementoNuloException("No se encontro el usuario a eliminar dentro de la lista!");
         }
-        if(listaUsuariosCreados.remove(aux))
+        if(listaUsuariosCreados.remove(aux.getDocumento())!=null)
         {
             sb.append("Usuario eliminado correctamente!").append("\n");
         }else
@@ -192,7 +202,7 @@ public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fro
         JSONArray jsonArrayPasajeros = new JSONArray();
         JSONArray totalElementosJsonArray = new JSONArray();
         try {
-            for(Usuario u : listaUsuariosCreados)
+            for(Usuario u : listaUsuariosCreados.values())
             {
                 if(u instanceof Recepcionista)
                 {
@@ -215,7 +225,7 @@ public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fro
         }
         //Simplemente para retornar algo en caso de que no sea valido no retornar nada, retorno el total de elementos.
             try {
-                for(Usuario u : listaUsuariosCreados)
+                for(Usuario u : listaUsuariosCreados.values())
                 {
                     totalElementosJsonArray.put(u.toJson());
                 }
@@ -270,17 +280,17 @@ public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fro
                 {
                     case PASAJERO:
                         Pasajero p = Pasajero.fromJson(jsonObject);
-                        listaUsuariosCreados.add(p); //Reconstruyo la collection de la clase desde el Json
+                        listaUsuariosCreados.put(p.getDocumento(),p); //Reconstruyo la collection de la clase desde el Json
                         break;
                     case RECEPCIONISTA:
                         Recepcionista r = Recepcionista.fromJson(jsonObject);
-                        listaUsuariosCreados.add(r); //Reconstruyo la collection de la clase desde el Json
+                        listaUsuariosCreados.put(r.getDocumento(),r); //Reconstruyo la collection de la clase desde el Json
                         break;
                     case ADMINISTRADOR:
                         Administrador a = Administrador.getAdmin(); // Guardo el retorno de getAdmin
                         a = a.fromJson(jsonObject);
                         aux = a;
-                        listaUsuariosCreados.add(aux); //Reconstruyo la collection de la clase desde el Json
+                        listaUsuariosCreados.put(aux.getDocumento(),aux); //Reconstruyo la collection de la clase desde el Json
                         break;
 
                     default:
@@ -341,7 +351,7 @@ public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fro
             throw new UsuarioNoEncontradoException("El nombre de usuario ingresado es nulo o vacío.");
         }
 
-        for (Usuario u : listaUsuariosCreados) {
+        for (Usuario u : listaUsuariosCreados.values()) {
             if (u.getUsername().equalsIgnoreCase(userName)) {
                 return u;
             }
@@ -355,7 +365,7 @@ public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fro
             throw new UsuarioNoEncontradoException("Debe ingresar usuario y contraseña.");
         }
 
-        for (Usuario u : listaUsuariosCreados) {
+        for (Usuario u : listaUsuariosCreados.values()) {
             if (u.getUsername().equalsIgnoreCase(username) && u.getPassword().equals(password)) {
                 return u;
             }
@@ -369,7 +379,7 @@ public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fro
             throw new RecepcionistaNoEncontradoException("El nombre del recepcionista no puede ser nulo o vacío.");
         }
 
-        for (Usuario u : listaUsuariosCreados) {
+        for (Usuario u : listaUsuariosCreados.values()) {
             if (u instanceof Recepcionista && u.getUsername().equalsIgnoreCase(nombre)) {
                 return (Recepcionista) u;
             }
