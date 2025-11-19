@@ -19,7 +19,7 @@ public final class Recepcionista extends Usuario implements IJson {
     private boolean puedeReservar;
     private boolean puedeCheckIN;
     private boolean puedeCheckOUT;
-    private HashMap<Integer,Reserva> reservas;
+    private static HashMap<Integer,Reserva> reservas;
     private static HashMap<Integer,Reserva>reservaPendiente;
 
 
@@ -109,7 +109,7 @@ public final class Recepcionista extends Usuario implements IJson {
         return aux;
     }
     //Metodos para cargar collections desde Json
-    public void devolverReservasPendientes(JSONArray jsonArray) throws JSONException {
+    public static void devolverReservasPendientes(JSONArray jsonArray) throws JSONException {
         try { //Faltaria verificar que no esten vacios pero no se si funciona unicamente con null
             for (int i = 0; i < jsonArray.length(); i++) {
                 Reserva r = Reserva.fromJson(jsonArray.getJSONObject(i)); //Paso el jsonObject y lo casteo a uno de reserva
@@ -122,7 +122,7 @@ public final class Recepcionista extends Usuario implements IJson {
 
     }
 
-    public void devolverReservasConfirmadas(JSONArray jsonArray) throws JSONException {
+    public static void devolverReservasConfirmadas(JSONArray jsonArray) throws JSONException {
         try { //Faltaria verificar que no esten vacios pero no se si funciona unicamente con null
             for (int i = 0; i < jsonArray.length(); i++) {
                 Reserva r = Reserva.fromJson(jsonArray.getJSONObject(i)); //Paso el jsonObject y lo casteo a uno de reserva
@@ -136,7 +136,7 @@ public final class Recepcionista extends Usuario implements IJson {
     }
     //------------------------------------------------------------------------------------------------------
     //Metodos para actualizar el contenido de JSON luego de una operacion
-    public void guardarReservasPendientes() throws JSONException
+    public static void guardarReservasPendientes() throws JSONException
     {
         JSONArray jsonArray = new JSONArray();
         try {
@@ -154,7 +154,7 @@ public final class Recepcionista extends Usuario implements IJson {
         //la reserva que ya antes se confirmo.
 
     }
-    public void guardarReservasConfirmadas() throws JSONException
+    public  void guardarReservasConfirmadas() throws JSONException
     {
         JSONArray jsonArray = new JSONArray();
         try {
@@ -195,7 +195,7 @@ public final class Recepcionista extends Usuario implements IJson {
 //AGREGAR VERIFICACIONES
 public static String cargarReservaPendiente(Habitaciones habitacion, Pasajero pasajero,
                                    Date fechaInicio, Date fechaFin,
-                                   Boolean estado, int cantidadPersonas, ArrayList<String> extras) throws elementoRepetidoException {
+                                   Boolean estado, int cantidadPersonas, ArrayList<String> extras) throws elementoRepetidoException, JSONException {
     //Creamos una reserva pendiente
     Reserva pendiente = new Reserva(estado, fechaFin, fechaInicio, habitacion, pasajero, cantidadPersonas, extras);
     pendiente.setEstado(false); // Pendiente = false (aún no confirmada)
@@ -204,7 +204,7 @@ public static String cargarReservaPendiente(Habitaciones habitacion, Pasajero pa
     }
 
     reservaPendiente.put(pendiente.getIdReserva(), pendiente);
-
+    guardarReservasPendientes();
     return "Reserva cargada correctamente";
 }
 

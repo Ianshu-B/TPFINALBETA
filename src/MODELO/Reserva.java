@@ -62,9 +62,21 @@ public final class Reserva implements IJson {
         habitacion.setEstadoHabitacion(estadoHabitacion.RESERVADA);
     }
 
+
     public Reserva() {
+        this.idReserva = contadorID++;
+        this.habitacion = null;
+        this.pasajero = null;
+        this.fechaInicio = null;
+        this.fechaFin = null;
+        this.estado = false;
+        this.cantidadPersonas = 0;
+        this.costoReserva = 0;
+        this.checkIn = false;
+        this.checkOut = false;
         this.extras = new ArrayList<>();
     }
+
 
     public void setExtras(ArrayList<String> extras) {
         this.extras = extras;
@@ -298,10 +310,8 @@ public final class Reserva implements IJson {
         return precioBase;
     }
 
-    public String listarExtras() throws listaExtrasVaciaException {
-        if(extras.isEmpty()){
-            throw new listaExtrasVaciaException("La lista de extras esta vacia.");
-        }
+    public String listarExtras()   {
+
 
         StringBuilder sb = new StringBuilder();
 

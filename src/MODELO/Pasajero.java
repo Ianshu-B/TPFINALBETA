@@ -102,7 +102,7 @@ public final class Pasajero extends Usuario implements IJson {
 
     }
 
-    public String solicitarReserva(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas, ArrayList<String> extras) throws elementoRepetidoException {
+    public String solicitarReserva(Habitaciones habitacion, Pasajero pasajero, Date fechaInico, Date fechaFin, Boolean estado, int cantidadPersonas, ArrayList<String> extras) throws elementoRepetidoException, JSONException {
 
 
         String msj = Recepcionista.cargarReservaPendiente(habitacion, pasajero,  fechaInico,  fechaFin,  estado,  cantidadPersonas, extras);

@@ -62,11 +62,11 @@ try {
             //Esta seccion es para que los datos de Reserva sean devuelvos a sus collections correspondientes
             String jsonReservasConfirmadas = JsonUtiles.leer("ReservasConfirmadas"); //No hace falta especificar el formato porque la libreria castea el texto.
             JSONArray jsonConfirmadas = new JSONArray(jsonReservasConfirmadas); //Convierto el String en formato json a un objeto json
-            recepcionista1.devolverReservasConfirmadas(jsonConfirmadas);
+            Recepcionista.devolverReservasConfirmadas(jsonConfirmadas);
 
             String jsonReservasPendientes = JsonUtiles.leer("ReservasPendientes"); //No hace falta especificar el formato porque la libreria castea el texto.
             JSONArray jsonPendientes = new JSONArray(jsonReservasPendientes); //Convierto el String en formato json a un objeto json
-            recepcionista1.devolverReservasPendientes(jsonPendientes);
+            Recepcionista.devolverReservasPendientes(jsonPendientes);
 
 
 
@@ -472,7 +472,7 @@ try {
                                                 }
                                             }
 
-                                            msj = pasajero.solicitarReserva(habitacion, pasajero, fechaInicio, fechaFin, true, cantPersonas, listaExtras);
+                                            msj = pasajero.solicitarReserva(habitacion, pasajero, fechaInicio, fechaFin, false, cantPersonas, listaExtras);
                                             System.out.println(msj);
 
                                             msj = recepcionista1.mostrarReservasPendientes();
@@ -588,11 +588,11 @@ try {
 
                         String jsonReservasConfirmadas = JsonUtiles.leer("ReservasConfirmadas"); //No hace falta especificar el formato porque la libreria castea el texto.
                         JSONArray jsonConfirmadas = new JSONArray(jsonReservasConfirmadas); //Convierto el String en formato json a un objeto json
-                        recepcionista1.devolverReservasConfirmadas(jsonConfirmadas);
+                        Recepcionista.devolverReservasConfirmadas(jsonConfirmadas);
 
                         String jsonReservasPendientes = JsonUtiles.leer("ReservasPendientes"); //No hace falta especificar el formato porque la libreria castea el texto.
                         JSONArray jsonPendientes = new JSONArray(jsonReservasPendientes); //Convierto el String en formato json a un objeto json
-                        recepcionista1.devolverReservasPendientes(jsonPendientes);
+                        Recepcionista.devolverReservasPendientes(jsonPendientes);
                     }catch (listaUsuariosVacioException | JSONException e )
                     {
                         System.out.println(e.getMessage());
