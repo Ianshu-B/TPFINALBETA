@@ -30,6 +30,9 @@ public class Main {
         gestoraHotel<Recepcionista> gestoraHotel1=new gestoraHotel<>();
         gestoraHabitaciones gestoraHabitaciones = new gestoraHabitaciones();
         habitacionPremium h1=new habitacionPremium(0, estadoHabitacion.LIBRE, tamanioHabitacion.GRANDE);
+        habitacionEstandar h2=new habitacionEstandar(4,estadoHabitacion.LIBRE,tamanioHabitacion.PEQUENIA);
+        habitacionMedium h3=new habitacionMedium(42,estadoHabitacion.LIBRE,tamanioHabitacion.GRANDE);
+        habitacionDeluxe h4=new habitacionDeluxe(23,estadoHabitacion.LIBRE,tamanioHabitacion.GRANDE);
         try {
 
             gestoraHabitaciones.agregarHabitacion(h1);
@@ -391,7 +394,7 @@ try {
                                    String nombre =  sc.nextLine();
 
                                     */
-                                            System.out.println("Habitaciones disponibles: ");
+                                            System.out.println("Habitaciones: ");
                                             System.out.println(gestoraHabitaciones.listarHabitaciones());
                                             System.out.println("Ingrese el numero de habitacion que desea reservar");
                                             int numeroHabitacion = sc.nextInt();
@@ -504,7 +507,8 @@ try {
                                 System.out.println("3: Verificar Reservas Pendientes");
                                 System.out.println("4: Realizar una Reserva Pendiente");
                                 System.out.println("5: Cancelar Reserva");
-                                System.out.println("6: Salir");
+                                System.out.println("6: Cambiar Estado Habitacion");
+                                System.out.println("7: Salir");
                                 System.out.println("Opcion: ");
 
                                 int op = sc.nextInt();
@@ -568,6 +572,20 @@ try {
                                         break;
 
                                     case 6:
+                                        System.out.println("Ingrese un numero de habitacion para cambiar su estado: ");
+                                        int nmr=sc.nextInt();
+                                        Habitaciones h=gestoraHabitaciones.buscarHabitacion(nmr);
+
+                                        System.out.println("Ingrese el estado: ");
+                                        String ingreso=sc.nextLine().toUpperCase();
+
+                                        estadoHabitacion estado=estadoHabitacion.valueOf(ingreso);
+
+                                        recepcionista.cambiarEstado(h,estado);
+
+                                        break;
+
+                                    case 7:
                                         System.out.println("Saliendo...");
                                         continuar = false;
                                         break;
@@ -580,7 +598,7 @@ try {
                             }
 
                         }
-                    } catch (UsuarioNoEncontradoException | RecepcionistaNoEncontradoException | JSONException e ) {
+                    } catch (UsuarioNoEncontradoException | RecepcionistaNoEncontradoException | JSONException | NumeroNegativoException e ) {
                         System.out.println(e.getMessage());
                     }
                 } else if (opcion == 3) {

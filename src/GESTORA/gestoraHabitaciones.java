@@ -1,5 +1,6 @@
 package GESTORA;
 
+import ENUMS.estadoHabitacion;
 import EXCEPTIONS.*;
 import INTERFACE.IJson;
 import MODELO.*;
@@ -110,4 +111,7 @@ public class gestoraHabitaciones implements IJson {
         }
         return jsonArray;
     }
+
+
+
 }

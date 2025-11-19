@@ -387,4 +387,6 @@ public  Administrador fromJson(JSONObject jsonObject) throws JSONException //fro
 
         throw new RecepcionistaNoEncontradoException("No se encontró un recepcionista con el nombre: " + nombre);
     }
+
+
 }

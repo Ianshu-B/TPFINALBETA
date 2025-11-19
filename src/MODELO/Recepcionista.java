@@ -242,13 +242,17 @@ public static String cargarReservaPendiente(Habitaciones habitacion, Pasajero pa
     //que las fechas no se superpongan con otras reservas
     //si esto se cumple se crea la reserva y se la guarda en la coleccion pertinente
 
-    public boolean realizarReserva(int idReserva) throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection, JSONException {
+    public boolean realizarReserva(int idReserva) throws sinPermisoParaReservaExpection, FechaInvalidaExpection, HabitacionYaRervadaExpection, JSONException,HabitacionNoReservableExpection{
 
         if (!puedeReservar){
         throw new sinPermisoParaReservaExpection("No tienes permiso para realizar una reserva");
         }
 
         Reserva reserva=reservaPendiente.get(idReserva);
+
+        if(reserva.getHabitacion().getEstadoHabitacion()!=estadoHabitacion.DISPONIBLE) {
+            throw new HabitacionNoReservableExpection("No es posible reservar una habitacion en el siguiente estado"+reserva.getHabitacion().getEstadoHabitacion());
+        }
 
         if (reserva == null) {
             throw new FechaInvalidaExpection("La reserva pendiente con ese ID no existe");
@@ -392,4 +396,15 @@ public static String cargarReservaPendiente(Habitaciones habitacion, Pasajero pa
             }
         return null;
         }
+
+
+    public String cambiarEstado(Habitaciones habitacion, estadoHabitacion estado) throws HabitacionYaRervadaExpection{
+
+        if(habitacion==null){
+            throw new HabitacionNulaExpection("La habitacion no existe");
+        }
+        habitacion.setEstadoHabitacion(estado);
+        return "Estado cambiado con exito a: "+estado;
+    }
+
 }
