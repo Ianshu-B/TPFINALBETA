@@ -1,6 +1,26 @@
-[[{
-    "tamanioHabitacion": "GRANDE",
-    "listaOcupantesHabitacion": [],
-    "numeroHabitacion": 0,
-    "estadoHabitacion": "RESERVADA"
-}]]
+[
+    [{
+        "tamanioHabitacion": "GRANDE",
+        "listaOcupantesHabitacion": [],
+        "numeroHabitacion": 0,
+        "estadoHabitacion": "LIBRE"
+    }],
+    [{
+        "tamanioHabitacion": "PEQUENIA",
+        "listaOcupantesHabitacion": [],
+        "numeroHabitacion": 4,
+        "estadoHabitacion": "LIBRE"
+    }],
+    [{
+        "tamanioHabitacion": "GRANDE",
+        "listaOcupantesHabitacion": [],
+        "numeroHabitacion": 23,
+        "estadoHabitacion": "LIBRE"
+    }],
+    [{
+        "tamanioHabitacion": "GRANDE",
+        "listaOcupantesHabitacion": [],
+        "numeroHabitacion": 42,
+        "estadoHabitacion": "LIBRE"
+    }]
+]

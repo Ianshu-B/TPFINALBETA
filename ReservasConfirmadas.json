@@ -1,66 +1,31 @@
-[
-    {
-        "pasajero": {
-            "password": "45",
-            "domicilio": "chilechile",
-            "documento": "4545",
-            "origen": "argentina",
-            "nombre": "ian",
-            "rol": "PASAJERO",
-            "username": "ianshuNuevoNuevoNuevo"
-        },
-        "estado": true,
-        "checkIn": false,
-        "fechaInicio": "12-04-2032",
-        "cantidadPersonas": 2,
-        "extras": [
-            "MINIBAR",
-            "SPA",
-            "VISTAMAR"
-        ],
-        "checkOut": false,
-        "fechaFin": "23-04-2032",
-        "costoReserva": 4590,
-        "idReserva": 1,
-        "habitacion": {
-            "tamanioHabitacion": "GRANDE",
-            "tipo": "habitacionPremium",
-            "costoHabitacion": 400,
-            "listaOcupantesHabitacion": [],
-            "numeroHabitacion": 0,
-            "estadoHabitacion": "RESERVADA"
-        }
+[{
+    "pasajero": {
+        "password": "2",
+        "domicilio": "2",
+        "documento": "2",
+        "origen": "2",
+        "nombre": "2",
+        "rol": "PASAJERO",
+        "username": "2"
     },
-    {
-        "pasajero": {
-            "password": "2",
-            "domicilio": "2",
-            "documento": "2",
-            "origen": "2",
-            "nombre": "2",
-            "rol": "PASAJERO",
-            "username": "2"
-        },
-        "estado": true,
-        "checkIn": false,
-        "fechaInicio": "18-04-0037",
-        "cantidadPersonas": 2,
-        "extras": [
-            "MINIBAR",
-            "SPA",
-            "VISTAMAR"
-        ],
-        "checkOut": false,
-        "fechaFin": "19-04-0037",
-        "costoReserva": 590,
-        "idReserva": 2,
-        "habitacion": {
-            "tamanioHabitacion": "GRANDE",
-            "tipo": "habitacionPremium",
-            "costoHabitacion": 400,
-            "listaOcupantesHabitacion": [],
-            "numeroHabitacion": 0,
-            "estadoHabitacion": "RESERVADA"
-        }
+    "estado": true,
+    "checkIn": false,
+    "fechaInicio": "14-04-2003",
+    "cantidadPersonas": 2,
+    "extras": [
+        "JACUZZI",
+        "HIDROMASAJE"
+    ],
+    "checkOut": false,
+    "fechaFin": "15-04-2003",
+    "costoReserva": 800,
+    "idReserva": 3,
+    "habitacion": {
+        "tamanioHabitacion": "GRANDE",
+        "tipo": "habitacionDeluxe",
+        "costoHabitacion": 600,
+        "listaOcupantesHabitacion": [],
+        "numeroHabitacion": 23,
+        "estadoHabitacion": "RESERVADA"
     }
-]
+}]

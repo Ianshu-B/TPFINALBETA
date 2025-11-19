@@ -50,6 +50,14 @@
         "username": "ADMIN_HOTEL"
     },
     {
+        "password": "contraP",
+        "documento": "234543",
+        "ID": 4,
+        "nombre": "pedro",
+        "rol": "RECEPCIONISTA",
+        "username": "pedrorecep"
+    },
+    {
         "password": "45",
         "domicilio": "chilechile",
         "documento": "4545",

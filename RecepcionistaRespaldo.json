@@ -14,5 +14,13 @@
         "nombre": "Pedro",
         "rol": "RECEPCIONISTA",
         "username": "PedroHotel"
+    },
+    {
+        "password": "contraP",
+        "documento": "234543",
+        "ID": 4,
+        "nombre": "pedro",
+        "rol": "RECEPCIONISTA",
+        "username": "pedrorecep"
     }
 ]
