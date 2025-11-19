@@ -19,6 +19,8 @@ import java.util.Scanner;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
+
+
         String msj, extraRespuesta;
         Administrador administrador1 = Administrador.getAdmin();
         Recepcionista recepcionista1=new Recepcionista("Juan","44.563.345",ROL.RECEPCIONISTA,"JuanRecep123","contraseña123");
@@ -29,6 +31,7 @@ public class Main {
         gestoraHabitaciones gestoraHabitaciones = new gestoraHabitaciones();
         habitacionPremium h1=new habitacionPremium(0, estadoHabitacion.LIBRE, tamanioHabitacion.GRANDE);
         try {
+
             gestoraHabitaciones.agregarHabitacion(h1);
         } catch (elementoNuloException | elementoInsertadoException | elementoRepetidoException e) {
             System.out.println(e.getMessage());

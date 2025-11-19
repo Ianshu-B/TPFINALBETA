@@ -78,6 +78,10 @@ public final class Reserva implements IJson {
     }
 
 
+    public static void setContadorID(int contadorID) {
+        Reserva.contadorID = contadorID;
+    }
+
     public void setExtras(ArrayList<String> extras) {
         this.extras = extras;
     }
@@ -214,6 +218,7 @@ public final class Reserva implements IJson {
 
         Reserva reserva=new Reserva();
         try {
+
             reserva.setIdReserva(object.getInt("idReserva"));
             reserva.setCantidadPersonas(object.getInt("cantidadPersonas"));
             reserva.setCostoReserva(object.getDouble("costoReserva"));
@@ -240,6 +245,10 @@ public final class Reserva implements IJson {
 
         return reserva;
     }
+
+
+
+
 
 
 
